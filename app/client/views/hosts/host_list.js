@@ -32,7 +32,7 @@ Template.hostList.hosts = function() {
     ];
   }
   var hosts = [];
-  Hosts.find(query).fetch().forEach(function(host){
+  Hosts.find(query, {"sort": {"long_addr": 1}}).fetch().forEach(function(host){
     host.os = host.os.sort(sortWeight)[0];
     hosts.push(host);
   });
