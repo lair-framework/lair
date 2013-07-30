@@ -83,7 +83,7 @@ function authorize(id, uid) {
    return Projects.findOne({"_id": id, $or: [{"owner": uid}, {"contributors": uid}]});
 }
 
-function addProject(name, businessType, description) {
+function addProject(name, industry, description) {
   if (!Meteor.user()) {
     throw new Meteor.Error(430, 'Access Denied');
   }
@@ -97,8 +97,8 @@ function addProject(name, businessType, description) {
     throw new Meteor.Error(400, 'Duplicate project name');
   }
   var project = models.project();
-  if (businessType) {
-    project.business_type = businessType;
+  if (industry) {
+    project.industry = industry;
   }
   if (description) {
     project.description = description;

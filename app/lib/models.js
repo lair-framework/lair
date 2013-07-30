@@ -5,7 +5,7 @@ models = {
   project: function() {
     return {
       'project_name': '',
-      'business_type': '',
+      'industry': '',
       'creation_date': '',
       'description': '',
       'owner': '',
