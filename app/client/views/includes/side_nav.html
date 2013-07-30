@@ -1,0 +1,14 @@
+<template name="sideNav">
+  <ul class="nav nav-list">
+  {{#with projectId}}
+    <li class="{{activeRouteClass 'hostList'}}"><a href="{{hostListPath this}}">Hosts</a></li>
+    <li class="{{activeRouteClass 'serviceSearch'}}"><a href="{{serviceSearchPath this}}">Services</a></li>
+    <li class="{{activeRouteClass 'vulnerabilityList'}}"><a href="{{vulnerabilityListPath this}}">Vulnerabilities</a></li>
+    <li class="{{activeRouteClass 'noteList'}}"><a href="{{noteListPath this}}">Notes</a></li>
+    <li class="{{activeRouteClass 'credentialList'}}"><a href="{{credentialListPath this}}">Credentials</a></li>
+    <li class="{{activeRouteClass 'contributors'}}"><a href="{{contributorsPath this}}">Contributors</a></li>
+    <li class="{{activeRouteClass 'fileList'}}"><a href="{{fileListPath this}}">Files</a></li>
+    <li class="{{activeRouteClass 'droneLog'}}"><a href="{{droneLogPath this}}">Log</a></li>
+  {{/with}}
+  </ul>
+</template>

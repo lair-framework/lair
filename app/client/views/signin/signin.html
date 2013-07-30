@@ -1,0 +1,30 @@
+<template name="signin">
+  <div class="row-fluid">
+    <div class="span12">
+      {{> alerts}}
+    </div>
+  </div>
+  {{#if initialUser}}
+  <div class="row-fluid">
+    <div class="span4 signin-form">
+      <p class="large-font">Please create a user</p>
+      <form>
+        <input name="email" type="text" class="input-block-level" placeholder="Email"/>
+        <input name="password" type="password" class="input-block-level" placeholder="Password" />
+        <button type="submit" class="btn btn-primary btn-block">Create user</button>
+      </form>
+    </div>
+  </div>
+  {{else}}
+  <div class="row-fluid">
+    <div class="span4 signin-form">
+      <p class="large-font">Please sign in</p>
+      <form>
+        <input name="email" type="text" class="input-block-level" placeholder="Email"/>
+        <input name="password" type="password" class="input-block-level" placeholder="Password"/>
+        <button type="submit" class="btn btn-primary btn-block">Sign in</button>
+      </form>
+    </div>
+  </div>
+  {{/if}}
+</template>

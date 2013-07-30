@@ -1,0 +1,58 @@
+<template name="contributors">
+  <div class="row-fluid">
+    <div class="span2">
+      {{> sideNav}}
+    </div>
+    <div class="span10">
+      <div class="row-fluid">
+        <div class="span6">
+          <button id="move-users" class="btn btn-primary">Move to contributors</button>
+        </div>
+        <div class="span6">
+          <button id="move-contributors" class="btn btn-primary">Remove contributors</button>
+        </div>
+      </div>
+      <br />
+      <div class="row-fluid">
+        <div class="span6">
+          <table class="table table-bordered table-striped">
+            <caption>Users</caption>
+            <thead>
+              <tr>
+                <th class="onepix"></th>
+                <th class="email">Username</th>
+              </tr>
+            </thead>
+            <tbody>
+            {{#each users}}
+              <tr>
+                <td><input class="user-checked" id="{{_id}}" type="checkbox" /></td>
+                <td>{{email}}</td>
+              </tr>
+            {{/each}}
+            </tbody>
+          </table>
+        </div>
+        <div class="span6">
+          <table class="table table-bordered table-striped">
+            <caption>Contributors</caption>
+            <thead>
+            <tr>
+              <th class="onepix"></th>
+              <th class="email">Username</th>
+            </tr>
+            </thead>
+            <tbody>
+            {{#each contributors}}
+            <tr>
+              <td><input class="contributor-checked" id="{{_id}}" type="checkbox" /></td>
+              <td>{{email}}</td>
+            </tr>
+            {{/each}}
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</template>

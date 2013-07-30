@@ -1,0 +1,35 @@
+<template name="hostGist">
+  {{#with host}}
+  <div class="row-fluid">
+    <div class="span4">
+      <ul class="unstyled">
+        <li><strong>IP Address: </strong>{{string_addr}}</li>
+        <li><strong>MAC Address: </strong>{{mac_addr}}</li>
+        <li><strong>Last Modified By: </strong>{{last_modified_by}}</li>
+        <li class="hover-hand host-status {{status}}">&nbsp</li>
+      </ul>
+    </div>
+    <div class="span6">
+      <ul class="unstyled">
+        <li><strong>Hostname: </strong>{{hostnames.[0]}}</li>
+        <li><strong>OS: </strong>{{os.fingerprint}}</li>
+      </ul>
+    </div>
+    <div class="span2">
+      <a href="#removeHostModal" role="button" class="btn btn-danger pull-right" data-toggle="modal"><i class="icon-trash hover-hand"></i></a>
+      <button id="next-host" class="btn pull-right"><i class="icon-fast-forward"></i></button>
+      <button id="previous-host" class="btn pull-right"><i class="icon-fast-backward"></i></button>
+    </div>
+  </div>
+  {{/with}}
+  <div id="removeHostModal" class="modal hide fade">
+    <div class="modal-header">
+      <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+      <h3>Do you really want to delete this host?</h3>
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-danger" id="remove-host" data-dismiss="modal">Confirm</button>
+      <button class="btn" data-dismiss="modal">Cancel</button>
+    </div>
+  </div>
+</template>

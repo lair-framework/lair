@@ -1,0 +1,54 @@
+<template name="hostList">
+  <div class="row-fluid">
+    <div class="span2">
+      {{> sideNav}}
+    </div>
+    <div class="span10">
+      <div class="row-fluid">
+        <div class="span12">
+          <div class="btn-group">
+            <button id="grey" type="button" class="btn host-status-button hover-hand lair-grey {{hostStatusButtonActive 'grey'}}">&nbsp&nbsp&nbsp&nbsp</button>
+            <button id="blue" type="button" class="btn host-status-button hover-hand lair-blue {{hostStatusButtonActive 'blue'}}">&nbsp&nbsp&nbsp&nbsp</button>
+            <button id="green" type="button" class="btn host-status-button hover-hand lair-green {{hostStatusButtonActive 'green'}}">&nbsp&nbsp&nbsp&nbsp</button>
+            <button id="orange" type="button" class="btn host-status-button hover-hand lair-orange {{hostStatusButtonActive 'orange'}}">&nbsp&nbsp&nbsp&nbsp</button>
+            <button id="red" type="button" class="btn host-status-button hover-hand lair-red {{hostStatusButtonActive 'red'}}">&nbsp&nbsp&nbsp&nbsp</button>
+          </div>
+          <a class="btn btn-success" href="{{addHostPath projectId}}">Add a host</a>
+          <span class="pull-right">
+            <input id="host-list-search" type="text" class="search-query" placeholder="Search" {{#if searchTerm}} value="{{searchTerm}}" {{/if}} />
+          </span>
+        </div>
+      </div>
+      <br />
+      <div class="row-fluid">
+        <div class="span12">
+          <table class="table table-bordered">
+            <thead>
+            <tr>
+              <th>IP Address</th>
+              <th>Hostname</th>
+              <th>Operating System</th>
+              <th>Last Modified By</th>
+            </tr>
+            </thead>
+            <tbody>
+            {{#each hosts}}
+            <tr class="{{status}}">
+              <td><a class="dontstyle" href="{{hostServiceListPath projectId _id}}">{{string_addr}}</a></td>
+              <td class="hover-hand host-status">{{hostnames.[0]}}</td>
+              <td class="hover-hand host-status">{{os.fingerprint}}</td>
+              <td class="hover-hand host-status">{{last_modified_by}}</td>
+            </tr>
+            {{/each}}
+            </tbody>
+          </table>
+        </div>
+      </div>
+      <div class="row-fluid">
+        <div class="span12">
+          <p>Displaying {{hosts.length}} rows</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</template>

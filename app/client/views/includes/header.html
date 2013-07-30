@@ -1,0 +1,42 @@
+<template name="header">
+  <div class="navbar navbar-fixed-top">
+    <div class="navbar-inner">
+      <div class="container-fluid">
+        <button type="button" class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+        <a class="brand" href="/">LAIR</a>
+        {{#if currentUser}}
+        <div class="nav-collapse collapse">
+          <ul class="nav pull-right">
+            <li class="dropdown">
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown">{{currentUser.emails.0.address}}<b class="caret"></b></a>
+              <ul class="dropdown-menu">
+                <li><a href="/signout">Sign out</a></li>
+                <li><a href="/changepassword">Change password</a></li>
+              </ul>
+            </li>
+          </ul>
+          {{#if currentUser.isAdmin}}
+            <ul class="nav pull-right">
+              <li><a href="/settings">Settings</a></li>
+            </ul>
+          {{/if}}
+          {{#if projectId}}
+            <ul class="nav pull-right">
+              <li class="nav-like-link">PID: {{projectId}}</a></li>
+            </ul>
+          {{/if}}
+          {{#if info}}
+          <p class="navbar-text pull-right">
+            {{info.project_name}} {{info._id}}
+          </p>
+          {{/if}}
+        </div>
+        {{/if}}
+      </div>
+    </div>
+  </div>
+</template>

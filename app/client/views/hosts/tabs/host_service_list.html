@@ -1,0 +1,57 @@
+<template name="hostServiceList">
+  <div class="row-fluid">
+    <div class="span2">
+      {{> sideNav}}
+    </div>
+    <div class="span10">
+      {{> alerts}}
+      {{> hostGist}}
+      {{> hostNav}}
+      <div class="row-fluid">
+        <div class="span12">
+          <div class="btn-group">
+            <button id="grey" type="button" class="btn port-status-button lair-grey {{portStatusButtonActive 'grey'}}">&nbsp&nbsp&nbsp&nbsp</button>
+            <button id="blue" type="button" class="btn port-status-button lair-blue {{portStatusButtonActive 'blue'}}">&nbsp&nbsp&nbsp&nbsp</button>
+            <button id="green" type="button" class="btn port-status-button lair-green {{portStatusButtonActive 'green'}}">&nbsp&nbsp&nbsp&nbsp</button>
+            <button id="orange" type="button" class="btn port-status-button  lair-orange {{portStatusButtonActive 'orange'}}">&nbsp&nbsp&nbsp&nbsp</button>
+            <button id="red" type="button" class="btn port-status-button  lair-red {{portStatusButtonActive 'red'}}">&nbsp&nbsp&nbsp&nbsp</button>
+          </div>
+          <a href="{{addPortPath projectId hostId}}" class="btn btn-success">Add a service</a>
+          <button id="remove-ports" class="btn btn-danger"><i class="icon-trash"></i></button>
+              <span class="pull-right">
+                <input type="text" id="port-search" class="search-query" placeholder="Search" {{#if searchTerm}}value="{{searchTerm}}"{{/if}}/>
+               </span>
+        </div>
+      </div>
+      <br />
+      <div class="row-fluid">
+        <div class="span12">
+          <table class="table table-bordered">
+            <thead>
+            <tr>
+              <th class="onepix"></th>
+              <th class="onepix">Port</th>
+              <th class="onepix">Protocol</th>
+              <th>Service</th>
+              <th>Product</th>
+              <th>Last Modified By</th>
+            </tr>
+            </thead>
+            <tbody>
+            {{#each services}}
+            <tr class="hover-hand">
+              <td><input class="port-checked" id="{{_id}}" type="checkbox" /></td>
+              <td class="{{status}}"><a class="dontstyle" href="{{serviceVulnerabilityListPath projectId _id}}">{{port}}</a></td>
+              <td class="{{status}} port-status">{{protocol}}</td>
+              <td class="{{status}} port-status">{{service}}</td>
+              <td class="{{status}} port-status">{{product}}</td>
+              <td class="{{status}}} port-status">{{last_modified_by}}</td>
+            </tr>
+            {{/each}}
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</template>

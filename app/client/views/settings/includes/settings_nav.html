@@ -1,0 +1,10 @@
+<template name="settingsNav">
+  <div class="row-fluid">
+    <div class="span12">
+      <ul class="nav nav-tabs">
+        <li class="{{activeRouteClass 'settings'}}"><a href="{{settingsPath projectId hostId}}">General</a></li>
+        <li class="{{activeRouteClass 'users'}}"><a href="{{usersPath projectId hostId}}">Users</a></li>
+      </ul>
+    </div>
+  </div>
+</template>

@@ -1,0 +1,15 @@
+<template name="addHostOs">
+  <div class="row-fluid">
+    <div class="span2">
+      {{> sideNav}}
+    </div>
+    <div class="span4">
+      {{> alerts}}
+      <form>
+        <input name="fingerprint" type="text" class="span12" placeholder="Fingerprint *Required" />
+        <input name="tool" type="text" class="span12" placeholder="Identified By (e.g. Manual)" />
+        <input name="weight" type="number" class="span12" min="0" max="100" step="any" placeholder="Weight" />
+        <button type="submit" class="btn btn-block btn-primary">Submit</button>
+      </form>
+    </div>
+</template>

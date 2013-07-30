@@ -1,0 +1,51 @@
+<template name="serviceGist">
+  {{#with port}}
+  <div class="row-fluid">
+    <div class="span4">
+      <ul class="unstyled">
+        <li><strong>Port: </strong>{{port.port}}/{{protocol}}</li>
+        <li><strong>Service: </strong>{{service}}
+        <li><strong>Product: </strong>{{product}}</li>
+        <li><strong>Last Modified By: </strong>{{last_modified_by}}</li>
+        <li class="hover-hand port-status {{status}}">&nbsp</li>
+      </ul>
+    </div>
+    <div class="span4">
+      <ul class="unstyled">
+        <li><strong>Host: </strong><a href="{{hostServiceListPath projectId host_id}}">{{string_addr}}</a></li>
+      </ul>
+    </div>
+    <div class="span4">
+      <a href="#removePortModal" role="button" class="btn btn-danger pull-right" data-toggle="modal"><i class="icon-trash hover-hand"></i></a>
+      <button id="next-port" class="btn pull-right"><i class="icon-fast-forward"></i></button>
+      <button id="previous-port" class="btn pull-right"><i class="icon-fast-backward"></i></button>
+      <a href="#editPortModal " role="button" data-toggle="modal" class="btn btn-primary"><i class="icon-edit"> </i>Edit service/product</a>
+    </div>
+  </div>
+  <div id="editPortModal" class="modal hide fade">
+    <div class="modal-header">
+      <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+      <h3>Edit {{port.port}}/{{protocol}}</h3>
+    </div>
+    <div class="modal-body">
+      <form style="text-align: center">
+        <input type="text" placeholder="{{service}}" name="edit-service" class="span7" />
+        <input type="text" placeholder="{{product}}" name="edit-product" class="span7" />
+      </form>
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-primary" type="submit" id="edit-port" data-dismiss="modal">Save</button>
+    </div>
+  </div>
+  {{/with}}
+  <div id="removePortModal" class="modal hide fade">
+    <div class="modal-header">
+      <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+      <h3>Do you really want to delete this service?</h3>
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-danger" id="remove-port" data-dismiss="modal">Confirm</button>
+      <button class="btn" data-dismiss="modal">Cancel</button>
+    </div>
+  </div>
+</template>

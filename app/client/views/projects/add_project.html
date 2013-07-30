@@ -1,0 +1,13 @@
+<template name="addProject">
+  <div class="row-fluid">
+    <div class="span4">
+      {{> alerts}}
+      <form>
+        <input type="text" class="span12" placeholder="Name *Required" name="name" />
+        <input type="text" class="span12" placeholder="Business Type" name="business-type" />
+        <textarea class="span12" placeholder="Description" name="description"></textarea>
+        <button type="submit" class="btn btn-primary btn-block">Submit</button>
+      </form>
+    </div>
+  </div>
+</template>

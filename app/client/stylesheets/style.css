@@ -1,0 +1,206 @@
+html, body{
+    height: 100%;
+}
+
+#wrap {
+    min-height: 100%;
+    height: auto !important;
+    height: 100%;
+    margin: 0 auto -60px;
+}
+#push, #footer {
+    height: 60px;
+}
+#footer {
+    background-color: #f5f5f5;
+}
+
+#wrap > .container-fluid {
+    padding-top: 60px;
+    padding-bottom: 10px;
+}
+.container-fluid .credit {
+    margin: 20px 0;
+}
+
+.hover-hand {
+    cursor: pointer!important;
+}
+
+.onepix {
+    width: 1px;
+    white-space: nowrap;
+}
+
+
+/* signin form */
+.signin-form {
+    max-width: 350px;
+    float: none!important;
+    margin-left: auto!important;
+    margin-right: auto!important;
+}
+
+/* font styles */
+.large-font {
+    font-size: 24.5px;
+}
+.medium-font {
+    font-size: 20px;
+}
+
+
+/* STATUS MAPPING COLORS */
+.lair-grey {
+    background-color: rgba(61, 72, 91, 0.34)!important;
+    border-color: rgb(149, 149, 149) !important;
+}
+
+.lair-grey td {
+    border-color: rgb(149, 149, 149) !important;
+}
+
+.lair-blue {
+    background-color: rgba(103, 194, 239, 0.58)!important;
+    border-color: rgb(103,194,239)!important;
+}
+
+.lair-blue td{
+    border-color: rgb(103,194,239)!important;
+}
+
+.lair-green {
+    background-color: rgba(128, 205, 59, 0.58)!important;
+    border-color: rgb(128,205,59)!important;
+}
+.lair-green td{
+    border-color: rgb(128,205,59)!important;
+}
+
+.lair-orange {
+    background-color: rgba(250, 154, 76, 0.58)!important;
+    border-color: rgb(250, 154, 76) !important;
+}
+
+.lair-orange td {
+    border-color: rgb(250, 154, 75)!important;
+}
+
+.lair-red {
+    background-color: rgba(250, 96, 61, 0.58)!important;
+    border-color: rgb(250, 96, 61)!important;
+}
+
+.lair-red td {
+    border-color: rgb(250, 96, 61)!important;
+}
+
+th {
+    font-weight: normal!important;
+}
+
+a.dontstyle:link, a.dontstyle:visited {
+    text-decoration: none;
+    color: #000000;
+}
+a.dontstyle:hover {
+    text-decoration: underline;
+}
+
+
+/* textareas */
+.copyonly {
+    box-shadow:none;
+    border: none!important;
+    resize: none!important;
+    cursor: default!important;
+    background-color: #ffffff!important;
+}
+textarea {
+    max-width: 100%;
+}
+
+.full-height {
+    min-height: 100%!important;
+}
+
+/* VULNERABILITY CVSS COLORS */
+.high {
+    background-color: rgba(250, 96, 61, 0.58);
+    border-color: rgb(250,96,61)!important;
+
+}
+
+.medium {
+    background-color: rgba(255, 169, 0, 0.58);
+    border-color: rgb(255,169,0)!important;
+}
+
+.low {
+    background-color: rgba(103, 194, 239, 0.58);
+    border-color: rgb(103,194,239)!important;
+}
+
+.host-count {
+    border-color: #444444!important;
+    background-color: #868686;
+}
+
+/* Chat Window */
+.new-message {
+    color: #fa5a3d;
+}
+
+#chat-window {
+    background: #ffffff;
+    z-index: 1;
+    position: fixed;
+    width: 250px;
+    right: 0px;
+    bottom: 0px;
+    border: 1px solid #000000 !important;
+}
+
+#chat-title {
+    text-shadow: none;
+    padding-left: 5px;
+    padding-right: 10px;
+}
+
+#chat-title h3 {
+    line-height: 10px;
+    display: inline;
+    font-size: 12px;
+    margin: 0px;
+    font-weight: normal;
+}
+#chat-content {
+    font-size: 12px;
+    height: 250px;
+    max-width: 250px;
+    padding-left: 5px;
+    overflow-x: auto;
+}
+
+#chat-message textarea {
+    resize: none;
+    width: 238px;
+    margin-bottom: 0px;
+    border-bottom: none;
+    border-right: none;
+    border-left: none;
+}
+
+.message {
+    max-width: 95%;
+    width: 95%;
+    word-wrap: break-word;
+}
+
+.nav-like-link {
+    float: none;
+    padding: 10px 15px 10px;
+    color: #777;
+    text-decoration: none;
+    text-shadow: 0 1px 0 #fff;
+}

@@ -1,0 +1,14 @@
+<template name="hostNav">
+  <div class="row-fluid">
+    <div class="span12">
+      <ul class="nav nav-tabs">
+        <li class="{{activeRouteClass 'hostServiceList'}}"><a href="{{hostServiceListPath projectId hostId}}">Services</a></li>
+        <li class="{{activeRouteClass 'hostVulnerabilityList'}}"><a href="{{hostVulnerabilityListPath projectId hostId}}">Vulnerabilities</a></li>
+        <li class="{{activeRouteClass 'hostOsList'}}"><a href="{{hostOsListPath projectId hostId}}">Operating Systems</a></li>
+        <li class="{{activeRouteClass 'hostNoteList'}}"><a href="{{hostNoteListPath projectId hostId}}">Notes</a></li>
+        <li class="{{activeRouteClass 'hostHostnameList'}}"><a href="{{hostHostnameListPath projectId hostId}}">Hostnames</a></li>
+        <li class="{{activeRouteClass 'hostCredentialList'}}"><a href="{{hostCredentialListPath projectId hostId}}">Credentials</a></li>
+      </ul>
+    </div>
+  </div>
+</template>

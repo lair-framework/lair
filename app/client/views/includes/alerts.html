@@ -1,0 +1,8 @@
+<template name="alerts">
+  {{#each alerts}}
+  <div class="alert {{class}}">
+    <a class="close">x</a>
+    <strong>{{strong}}: </strong>{{message}}!
+  </div>
+  {{/each}}
+</template>

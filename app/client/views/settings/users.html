@@ -1,0 +1,50 @@
+<template name="users">
+  {{> alerts}}
+  {{> settingsNav}}
+  <div class="row-fluid">
+    <div class="span12">
+      <a href="{{addUserPath}}" class="btn btn-success">Add a new user</a>
+      <a href="#removeUserModal" role="button" class="btn btn-danger" data-toggle="modal"><i class="icon-trash"></i></a>
+    </div>
+  </div>
+  <br />
+  <div class="row-fluid">
+    <div class="span6">
+      <table class="table table-bordered table-striped">
+        <thead>
+        <tr>
+          <th class="onepix"></th>
+          <th>Username</th>
+          <th class="onepix">Admin</th>
+        </tr>
+        </thead>
+        <tbody>
+        {{#each users}}
+        <tr>
+          <td><input class="user-checked" id="{{_id}}" type="checkbox" /></td>
+          <td>{{emails.0.address}}</td>
+          <td class="xsmall-cell">
+            {{#if isAdmin}}
+            <i class="icon-ok"></i>
+            {{/if}}
+          </td>
+        </tr>
+        {{/each}}
+        </tbody>
+      </table>
+    </div>
+  </div>
+  <div id="removeUserModal" class="modal hide fade">
+    <div class="modal-header">
+      <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+      <h3>Confirm User Delete</h3>
+    </div>
+    <div class="modal-body">
+      <p>Are you sure you want to remove these user(s)? Removing users also permanently deletes the users projects and all associated data. This can't be undone.</p>
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-danger" id="remove-user" data-dismiss="modal">Confirm</button>
+      <button class="btn" data-dismiss="modal">Cancel</button>
+    </div>
+  </div>
+</template>

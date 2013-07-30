@@ -1,0 +1,9 @@
+.DS_Store
+.idea/
+node_modules/
+*.idea
+*.pyc
+*.swp
+config.json
+drones/dist
+drones/dist/*.tar.gz

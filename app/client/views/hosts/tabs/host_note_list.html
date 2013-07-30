@@ -1,0 +1,57 @@
+<template name="hostNoteList">
+  <div class="row-fluid">
+    <div class="span2">
+      {{> sideNav}}
+    </div>
+    <div class="span10">
+      {{> alerts}}
+      {{> hostGist}}
+      {{> hostNav}}
+      <div class="row-fluid">
+        <div class="span12">
+          <button class="btn btn-success" id="new-note">Create a new note</button>
+          <button id="remove-notes" class="btn btn-danger"><i class="icon-trash"></i></button>
+        </div>
+      </div>
+      <br />
+      <div class="row-fluid">
+        <div class="span6">
+          <table class="table table-bordered table-striped">
+            <thead>
+            <tr>
+              <th class="onepix"></th>
+              <th>Title</th>
+              <th>Last Modified By</th>
+            </tr>
+            </thead>
+            <tbody>
+            {{#each notes}}
+            <tr>
+              <td><input class="note-checked" id="{{title}}" type="checkbox" /></td>
+              <td class="hover-hand host-note">{{title}}</td>
+              <td class="hover-hand host-note">{{last_modified_by}}</td>
+            </tr>
+            {{/each}}
+            </tbody>
+          </table>
+        </div>
+        <div class="span6">
+          {{#if note}}
+          <form>
+            <p class="medium-font" style="padding-left: 5px">{{note.title}}</p>
+            <textarea name="content" class="span12" rows="15">{{note.content}}</textarea>
+            <button type="submit" class="btn btn-primary" id="save-note">Save</button>
+          </form>
+          {{else}}
+          <form>
+            <input type="text" name="title" placeholder="Title" class="input-block-level" />
+            <textarea class="span12" rows="15" name="content" placeholder="Content"></textarea>
+            <button type="submit" class="btn btn-primary">Save</button>
+          </form>
+          {{/if}}
+
+        </div>
+      </div>
+    </div>
+  </div>
+</template>

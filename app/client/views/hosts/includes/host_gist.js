@@ -1,0 +1,54 @@
+// Copyright (c) 2013 Tom Steele, Dan Kottmann, FishNet Security
+// See the file license.txt for copying permission
+
+Template.hostGist.host = function() {
+  var host = Hosts.findOne(Session.get('hostId'));
+  if (host) {
+    host.os = host.os.sort(sortWeight)[0];
+    return host;
+  }
+  return {};
+};
+
+Template.hostGist.events({
+  'click .host-status': function() {
+    var status = STATUS_MAP[STATUS_MAP.indexOf(this.status) + 1];
+    if (STATUS_MAP.indexOf(this.status) + 1 > 4) {
+      status = STATUS_MAP[0];
+    }
+    return Meteor.call('setHostStatus', Session.get('projectId'), this._id, status);
+  },
+
+  'click #next-host': function() {
+    var id = Session.get('projectId');
+    var hosts = Hosts.find({"project_id": id}).fetch().sort(sortLongAddr);
+    var i = _.indexOf(_.pluck(hosts, '_id'), Session.get('hostId')) + 1;
+    if (i >= hosts.length) {
+      i = 0;
+    }
+    return Meteor.Router.to('/project/' + id + '/hosts/' + hosts[i]._id);
+  },
+
+  'click #previous-host': function() {
+    var id = Session.get('projectId');
+    var hosts = Hosts.find({"project_id": id}).fetch().sort(sortLongAddr);
+    var i = _.indexOf(_.pluck(hosts, '_id'), Session.get('hostId')) - 1;
+    if (i < 0) {
+      i = hosts.length - 1;
+    }
+    return Meteor.Router.to('/project/' + id + '/hosts/' + hosts[i]._id);
+  },
+
+  'click #remove-host': function() {
+    var id = Session.get('projectId');
+    var hid = Session.get('hostId');
+    var host = Hosts.findOne(Session.get('hostId'));
+    Meteor.call('removeHost', id, hid, function(err) {
+      if (!err) {
+        Meteor.call('removeHostFromVulnerabilities', Session.get('projectId'), host.string_addr);
+        return Meteor.Router.to('/project/' + id);
+      }
+      return Alerts.insert({"class": "alert-error", "strong": "Error", "message": err.reason});
+    });
+  }
+});

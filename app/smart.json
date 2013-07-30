@@ -1,0 +1,9 @@
+{
+  "packages": {
+    "font-awesome": {},
+    "router": {},
+    "flatstrap": {},
+    "chartjs": {},
+    "moment": {}
+  }
+}
