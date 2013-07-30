@@ -72,8 +72,7 @@ fi
 
 echo "Starting stunnel on $1:11014"
 if [ ! -a 'deps/etc/stunnel.conf' ]; then
-  echo "SSLVersion=SSLv3" > deps/etc/stunnel.conf
-  echo "cert=deps/etc/lair.pem" >> deps/etc/stunnel.conf
+  echo "cert=deps/etc/lair.pem" > deps/etc/stunnel.conf
   echo "key=deps/etc/lair-key.pem" >> deps/etc/stunnel.conf
   echo "pid=/tmp/stunnel.pid" >> deps/etc/stunnel.conf
   stunnel -version 2>&1 | grep FIPS
