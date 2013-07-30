@@ -21,7 +21,7 @@ Template.hostGist.events({
 
   'click #next-host': function() {
     var id = Session.get('projectId');
-    var hosts = Hosts.find({"project_id": id}).fetch().sort(sortLongAddr);
+    var hosts = Hosts.find({"project_id": id}, {"sort": {"long_addr": 1}}).fetch();
     var i = _.indexOf(_.pluck(hosts, '_id'), Session.get('hostId')) + 1;
     if (i >= hosts.length) {
       i = 0;
@@ -31,7 +31,7 @@ Template.hostGist.events({
 
   'click #previous-host': function() {
     var id = Session.get('projectId');
-    var hosts = Hosts.find({"project_id": id}).fetch().sort(sortLongAddr);
+    var hosts = Hosts.find({"project_id": id}, {"sort": {"long_addr": 1}}).fetch();
     var i = _.indexOf(_.pluck(hosts, '_id'), Session.get('hostId')) - 1;
     if (i < 0) {
       i = hosts.length - 1;
