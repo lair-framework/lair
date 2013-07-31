@@ -1,0 +1,257 @@
+#!/usr/bin/env python
+# Copyright (c) 2013 Tom Steele, Dan Kottmann, FishNet Security
+# See the file license.txt for copying permission
+
+import os
+import sys
+try:
+    import xml.etree.ElementTree as et
+except ImportError:
+    print "drone-burp requires the lxml module"
+    sys.exit(1)
+
+sys.path.append(os.path.abspath(
+    os.path.join(os.path.dirname(__file__), '..'))
+)
+
+from optparse import OptionParser
+from urlparse import urlparse
+from lairdrone import api, drone_models as models
+from lairdrone import helper
+
+OS_WEIGHT = 75
+TOOL = "burp"
+
+
+def parse(project, burp_file, db, options):
+    """Parses a Burp file and updates the Lair database
+
+    :param project: The project id
+    :param burp_file: The Burp xml file to be parsed
+    :param db: A database connection
+    """
+    try:
+        import xml.etree.ElementTree as et
+    except ImportError as e:
+        print "[!] Error: {0}. Install/upgrade module".format(e)
+        exit(1)
+
+    tree = et.parse(burp_file)
+    root = tree.getroot()
+
+    # Create the project dictionary which acts as foundation of document
+    project_dict = dict(models.project_model)
+    project_dict['commands'] = list()
+    project_dict['vulnerabilities'] = list()
+    project_dict['project_id'] = project
+
+    # Temp dicts used to ensure no duplicate hosts or ports are added
+    temp_vulns = dict()
+    temp_hosts = list()
+
+    command_dict = dict(models.command_model)
+    command_dict['tool'] = TOOL
+    command_dict['command'] = 'Active scan'
+    project_dict['commands'].append(command_dict)
+
+    for issue in root.iter('issue'):
+
+        v = dict(models.vulnerability_model)
+        v['cves'] = list()
+        v['plugin_ids'] = list()
+        v['identified_by'] = list()
+        v['hosts'] = list()
+        v['notes'] = list()
+
+        # Set CVSS
+        severity = issue.find('severity')
+        if severity is not None:
+            s = severity.text
+            if s == 'High':
+                v['cvss'] = 10.0
+            # TODO: Confirm literal 'Medium' in XML file
+            elif s == 'Medium':
+                v['cvss'] = 5.0
+            elif s == 'Low':
+                v['cvss'] = 3.0
+            else:
+                v['cvss'] = 0.0
+
+        # Set title
+        name = issue.find('name')
+        if name is not None:
+            v['title'] = name.text
+
+        # Set plugin
+        plugin_elem = issue.find('type')
+        if plugin_elem is not None:
+            plugin_id = plugin_elem.text
+
+        plugin_dict = dict(models.plugin_id_model)
+        plugin_dict['tool'] = TOOL
+        plugin_dict['id'] = plugin_id
+        v['plugin_ids'].append(plugin_dict)
+
+        # Set identified by information
+        identified_dict = dict(models.identified_by_model)
+        identified_dict['tool'] = TOOL
+        identified_dict['id'] = plugin_id
+        v['identified_by'].append(identified_dict)
+
+        # Search for solution
+        solution = issue.find('remediationBackground')
+        if solution is not None:
+            v['solution'] = solution.text
+
+        # Search for description
+        description = issue.find('issueBackground')
+        if description is not None:
+            v['description'] = description.text
+
+        # Search for evidence
+        evidence = issue.find('issueDetail')
+        if evidence is not None:
+            v['evidence'] = evidence.text
+            evidence = evidence.text
+
+        if plugin_id not in temp_vulns:
+            # New vulnerability not already identified
+            # By default, don't include informational findings unless
+            # explicitly told to do so.
+            if v['cvss'] == 0 and not options.include_informational:
+                continue
+            temp_vulns[plugin_id] = v
+
+        host_dict = dict(models.host_model)
+        host_dict['os'] = list()
+        host_dict['ports'] = list()
+        host_dict['hostnames'] = list()
+
+        # Used later for adding a note to specify location of vulnerability
+        # on the server.
+        path = ''
+        path_elem = issue.find('path')
+        if path_elem is not None:
+            path = path_elem.text
+
+        # Search for host element
+        host_elem = issue.find('host')
+        if host_elem is not None:
+            string_addr = host_elem.attrib['ip']
+            # Occasionally, host name is present but no IP address. Ignore
+            # those findings.
+            if not string_addr:
+                continue
+
+            long_addr = helper.ip2long(string_addr)
+            host_dict['string_addr'] = string_addr
+            host_dict['long_addr'] = long_addr
+
+            # Determine port
+            port_dict = dict(models.port_model)
+            port_dict['port'] = 80
+            port_dict['protocol'] = models.PROTOCOL_TCP
+
+            result = urlparse(host_elem.text)
+
+            # Determine if service is http or https
+            if result.port:
+                port_dict['port'] = result.port
+            else:
+                if result.scheme == 'https':
+                    port_dict['port'] = 443
+
+            if result.scheme == 'https':
+                port_dict['service'] = 'https'
+            else:
+                port_dict['service'] = 'http'
+
+            # Grab the hostname
+            if result.hostname:
+                host_dict['hostnames'].append(result.hostname)
+
+            # Add a note regarding vulnerable path
+            if path:
+                content = host_elem.text + path
+
+                # Include evidence in the note as many times this includes
+                # specific paramaters and test strings that ultimately will
+                # make it easier to validate from the UI
+                if evidence:
+                    content += "\n" + evidence
+
+                note_dict = dict(models.note_model)
+                note_dict['title'] = 'Details'
+                note_dict['content'] = content
+                v['notes'].append(note_dict)
+
+            host_dict['ports'].append(port_dict)
+
+            # Don't set an OS
+            os_dict = dict(models.os_model)
+            os_dict['tool'] = TOOL
+            host_dict['os'].append(os_dict)
+
+            # Check if host/port is already associated with project.
+            found_host = False
+            for h in temp_hosts:
+                if h['string_addr'] == string_addr:
+                    found_host = True
+
+                    found_port = False
+                    for p in h['ports']:
+                        if p['port'] == port_dict['port']:
+                            # Do nothing as host/port is in the list already
+                            found_port = True
+
+                    # Did not find port, add it
+                    if not found_port:
+                        h['ports'].append(port_dict)
+
+            # Host has not yet been encountered
+            if not found_host:
+                temp_hosts.append(host_dict)
+
+            host_key_dict = dict(models.host_key_model)
+            host_key_dict['string_addr'] = string_addr
+            host_key_dict['port'] = port_dict['port']
+
+            # Check if host/port is already associated with vuln, add if not
+            if plugin_id in temp_vulns and \
+                    host_key_dict not in temp_vulns[plugin_id]['hosts']:
+                temp_vulns[plugin_id]['hosts'].append(host_key_dict)
+
+    project_dict['vulnerabilities'] = temp_vulns.values()
+    project_dict['hosts'] = temp_hosts
+
+    return project_dict
+
+if __name__ == '__main__':
+
+    usage = "usage: %prog <project_id> <file>"
+    description = "%prog imports Burp files into Lair"
+
+    parser = OptionParser(usage=usage, description=description,
+                          version="%prog 0.0.1")
+    parser.add_option(
+        "--include-informational",
+        dest="include_informational",
+        default=False,
+        action="store_true",
+        help="Forces informational plugins to be loaded"
+    )
+
+    (options, args) = parser.parse_args()
+
+    if len(args) != 2:
+        print parser.get_usage()
+        exit(1)
+
+    # Connect to the database
+    db = api.db_connect()
+
+    project = parse(args[0], args[1], db, options)
+
+    api.save(project, db, TOOL)
+
+    exit(0)
