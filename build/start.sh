@@ -75,7 +75,7 @@ if [ ! -a 'deps/etc/stunnel.conf' ]; then
   echo "cert=deps/etc/lair.pem" > deps/etc/stunnel.conf
   echo "key=deps/etc/lair-key.pem" >> deps/etc/stunnel.conf
   echo "pid=/tmp/stunnel.pid" >> deps/etc/stunnel.conf
-  stunnel -version 2>&1 | grep FIPS
+  deps/bin/stunnel -version 2>&1 | grep FIPS
   if [ "$?" == 0 ]; then
     echo "fips=no" >> deps/etc/stunnel.conf
   fi
