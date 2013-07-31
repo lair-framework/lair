@@ -11,19 +11,19 @@ Template.hostServiceList.hostId = function() {
 
 Template.hostServiceList.services = function() {
   var query = {"project_id": Session.get('projectId'), "host_id": Session.get('hostId'), "status": {"$in": []}};
-  if (!Session.equals('portStatusButtongrey', 'disabled')) {
+  if (!Session.equals('portListStatusButtongrey', 'disabled')) {
     query.status.$in.push('lair-grey');
   }
-  if (!Session.equals('portStatusButtonblue', 'disabled')) {
+  if (!Session.equals('portListStatusButtonblue', 'disabled')) {
     query.status.$in.push('lair-blue');
   }
-  if (!Session.equals('portStatusButtongreen', 'disabled')) {
+  if (!Session.equals('portListStatusButtongreen', 'disabled')) {
     query.status.$in.push('lair-green');
   }
-  if (!Session.equals('portStatusButtonorange', 'disabled')) {
+  if (!Session.equals('portListStatusButtonorange', 'disabled')) {
     query.status.$in.push('lair-orange');
   }
-  if (!Session.equals('portStatusButtonred', 'disabled')) {
+  if (!Session.equals('portListStatusButtonred', 'disabled')) {
     query.status.$in.push('lair-red');
   }
   var search = Session.get('portSearch');
@@ -43,8 +43,8 @@ Template.hostServiceList.searchTerm = function() {
   return Session.get('portSearch');
 };
 
-Template.hostServiceList.portStatusButtonActive = function(status) {
-  if (Session.equals('portStatusButton' + status, 'disabled')) {
+Template.hostServiceList.portListStatusButtonActive = function(status) {
+  if (Session.equals('portListStatusButton' + status, 'disabled')) {
     return 'disabled';
   }
   return false;
@@ -52,7 +52,7 @@ Template.hostServiceList.portStatusButtonActive = function(status) {
 
 Template.hostServiceList.events({
   'click .port-status-button': function(event) {
-    var id = 'portStatusButton' + event.toElement.id;
+    var id = 'portListStatusButton' + event.toElement.id;
     if (Session.equals(id, null)) {
       return Session.set(id, 'disabled');
     }

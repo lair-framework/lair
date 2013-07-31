@@ -18,8 +18,8 @@ Meteor.Router.add({
   '/project/:pid': {
      to: 'hostList',
      and: function(pid) {
-            Session.set('hostListSearch', null);
             Session.set('projectId', pid);
+            unsetHostStatusButtons();
      }
   },
 
@@ -27,8 +27,8 @@ Meteor.Router.add({
   '/project/:pid/hosts': {
     to:  'hostList',
     and: function(pid) {
-           Session.set('hostListSearch', null);
            Session.set('projectId', pid);
+           unsetHostStatusButtons();
     }
   },
   '/project/:pid/hosts/new': {
@@ -42,6 +42,7 @@ Meteor.Router.add({
     and: function(pid, hid) {
            Session.set('projectId', pid);
            Session.set('hostId', hid);
+           unsetPortStatusButtons();
     }
   },
   '/project/:pid/hosts/:hid/services': {
@@ -49,6 +50,7 @@ Meteor.Router.add({
     and: function(pid, hid) {
            Session.set('projectId', pid);
            Session.set('hostId', hid);
+           unsetPortStatusButtons();
     }
   },
   '/project/:pid/hosts/:hid/services/new': {
@@ -62,15 +64,17 @@ Meteor.Router.add({
   '/project/:pid/services/:sid': {
     to: 'serviceVulnerabilityList',
     and: function(pid, sid) {
-      Session.set('projectId', pid);
-      Session.set('portId', sid);
+           Session.set('projectId', pid);
+           Session.set('portId', sid);
+           unsetVulnerabilityStatusButtons();
     }
   },
   '/project/:pid/services/:sid/vulnerabilities': {
     to: 'serviceVulnerabilityList',
     and: function(pid, sid) {
-      Session.set('projectId', pid);
-      Session.set('portId', sid);
+           Session.set('projectId', pid);
+           Session.set('portId', sid);
+           unsetVulnerabilityStatusButtons();
     }
   },
   '/project/:pid/services/:sid/notes': {
@@ -100,35 +104,36 @@ Meteor.Router.add({
     and: function(pid, hid) {
            Session.set('projectId', pid);
            Session.set('hostId', hid);
+           unsetVulnerabilityStatusButtons();
     }
   },
   '/project/:pid/hosts/:hid/os': {
     to: 'hostOsList',
     and: function(pid, hid) {
-      Session.set('projectId', pid);
-      Session.set('hostId', hid);
+           Session.set('projectId', pid);
+           Session.set('hostId', hid);
     }
   },
   '/project/:pid/hosts/:hid/os/new': {
     to: 'addHostOs',
     and: function(pid, hid) {
-      Session.set('projectId', pid);
-      Session.set('hostId', hid);
+           Session.set('projectId', pid);
+           Session.set('hostId', hid);
     }
   },
   '/project/:pid/hosts/:hid/notes': {
     to: 'hostNoteList',
     and: function(pid, hid) {
-      Session.set('projectId', pid);
-      Session.set('hostId', hid);
-      Session.set('noteTitle', null);
+           Session.set('projectId', pid);
+           Session.set('hostId', hid);
+           Session.set('noteTitle', null);
     }
   },
   '/project/:pid/hosts/:hid/hostnames': {
     to: 'hostHostnameList',
     and: function(pid, hid) {
-      Session.set('projectId', pid);
-      Session.set('hostId', hid);
+           Session.set('projectId', pid);
+           Session.set('hostId', hid);
     }
   },
   '/project/:pid/hosts/:hid/hostnames/new': {
@@ -141,8 +146,8 @@ Meteor.Router.add({
   '/project/:pid/hosts/:hid/credentials': {
     to: 'hostCredentialList',
     and: function(pid, hid) {
-      Session.set('projectId', pid);
-      Session.set('hostId', hid);
+           Session.set('projectId', pid);
+           Session.set('hostId', hid);
     }
   },
 
@@ -151,6 +156,7 @@ Meteor.Router.add({
     to: 'serviceSearch',
     and: function(pid) {
            Session.set('projectId', pid);
+           Session.set('servicesViewQuery', null);
     }
   },
 
@@ -159,6 +165,7 @@ Meteor.Router.add({
     to: 'vulnerabilityList',
     and: function(pid) {
            Session.set('projectId', pid);
+           unsetVulnerabilityStatusButtons();
     }
   },
   '/project/:pid/vulnerabilities/new': {
@@ -294,3 +301,28 @@ Meteor.Router.filters({
 });
 Meteor.Router.filter('requireLogin');
 Meteor.Router.filter('clearErrors');
+
+function unsetVulnerabilityStatusButtons() {
+  Session.set('vulnerabilitySearch', null);
+  Session.set('vulnerabilityListStatusButtongrey', null);
+  Session.set('vulnerabilityListStatusButtonblue', null)
+  Session.set('vulnerabilityListStatusButtongreen', null)
+  Session.set('vulnerabilityListStatusButtonorange', null)
+  Session.set('vulnerabilityListStatusButtonred', null)
+}
+function unsetHostStatusButtons() {
+  Session.set('hostListSearch', null);
+  Session.set('hostListStatusButtongrey', null);
+  Session.set('hostListStatusButtonblue', null)
+  Session.set('hostListStatusButtongreen', null)
+  Session.set('hostListStatusButtonorange', null)
+  Session.set('hostListStatusButtonred', null)
+}
+function unsetPortStatusButtons() {
+  Session.set('portSearch', null);
+  Session.set('portListStatusButtongrey', null);
+  Session.set('portListStatusButtonblue', null)
+  Session.set('portListStatusButtongreen', null)
+  Session.set('portListStatusButtonorange', null)
+  Session.set('portListStatusButtonred', null)
+}
