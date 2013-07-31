@@ -7,3 +7,4 @@ preserve-inputs
 jquery
 accounts-password
 http
+force-ssl
