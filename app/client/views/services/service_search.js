@@ -36,9 +36,9 @@ Template.serviceSearch.events({
   'submit form': function(event, tpl) {
     event.preventDefault();
     var port = parseInt(tpl.find('[name=port]').value);
-    var protocol = tpl.find('[name=protocol]').value.replace(/[^a-zA-Z0-9\s]/g, '');
-    var service = tpl.find('[name=service]').value.replace(/[^a-zA-Z0-9\s]/g, '');
-    var product = tpl.find('[name=product]').value.replace(/[^a-zA-Z0-9\s]/g, '');
+    var protocol = escapeRegex(tpl.find('[name=protocol]').value);
+    var service = escapeRegex(tpl.find('[name=service]').value);
+    var product = escapeRegex(tpl.find('[name=product]').value);
     var query = {"project_id": Session.get('projectId')};
     if (port && !isNaN(port)) {
       query.port = port;

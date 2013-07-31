@@ -60,7 +60,7 @@ Template.hostList.events({
   },
 
   'keyup #host-list-search': function(event, tpl)  {
-    Session.set('hostListSearch', tpl.find('#host-list-search').value.replace(/[^a-zA-Z0-9\s]/g, ''));
+    Session.set('hostListSearch', escapeRegex(tpl.find('#host-list-search').value));
   },
 
   'click .host-status': function() {

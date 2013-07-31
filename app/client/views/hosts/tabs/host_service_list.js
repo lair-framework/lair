@@ -60,7 +60,7 @@ Template.hostServiceList.events({
   },
 
   'keyup #port-search': function(event, tpl)  {
-    Session.set('portSearch', tpl.find('#port-search').value.replace(/[^a-zA-Z0-9\s]/g, ''));
+    Session.set('portSearch', escapeRegex(tpl.find('#port-search').value));
   },
 
   'click .port-status': function() {
