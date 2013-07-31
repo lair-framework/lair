@@ -2,7 +2,12 @@
 // See the file license.txt for copying permission
 
 Meteor.Router.add({
-  '/' : 'projects',
+  '/' : {
+    to: 'projects',
+    and: function() {
+           Session.set('projectId', null);
+    }
+  },
   '/signin': 'signin',
   '/signout': {
     to: 'signin',
