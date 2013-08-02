@@ -1,11 +1,8 @@
 ##Installation##
 
-Precompiled packages are available for Linux and OS X. Previus and current releases are available [here](https://www.github.com/fishnetsecurity/Lair/releases). Download one of the current application packages below:
+Precompiled packages are available for Linux and OS X. Previous and current releases are available [here](https://www.github.com/fishnetsecurity/Lair/releases). Download one of the current application packages below (we will upload these packages after DEF CON):
 
-
-Next, download the drones python package:
-
-Running lair from the application pacakge above is self-explanatory.
+Running lair from the application package above is self-explanatory.
 To start Lair and all the required services:
 
 
