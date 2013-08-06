@@ -110,7 +110,7 @@ def save(document, db, tool):
 
     # Add the industry if not already set
     if 'industry' not in project or not project['industry']:
-        project['industry'] = document['industry']
+        project['industry'] = document.get('industry', 'N/A')
 
     # Add the creation date if not already set
     if 'creation_date' not in project or not project['creation_date']:
@@ -118,7 +118,7 @@ def save(document, db, tool):
 
     # Add the description if not already set
     if 'description' not in project or not project['description']:
-        project['description'] = document['description']
+        project['description'] = document.get('description', '')
 
     if 'hosts' not in project:
         project['hosts'] = list()
