@@ -8,7 +8,7 @@ Precompiled application packages are available for Linux and OS X. Download one 
 
 [lair-v1.0.0-linux-x86.7z](https://github.com/fishnetsecurity/Lair/releases/download/v1.0.0/lair-v1.0.0-linux-x86.7z)
 
-Next, download the drones python package: [lairdrone-0.1.4.tar.gz](https://github.com/fishnetsecurity/Lair/releases/download/v1.0.0/lairdrone-0.1.4.tar.gz)
+Next, download the drones python package: [lairdrone-0.1.5.tar.gz](https://github.com/fishnetsecurity/Lair/releases/download/v1.0.0/lairdrone-0.1.5.tar.gz)
 
 Running lair from the application package above is self-explanatory.
 To start Lair and all the required services:
