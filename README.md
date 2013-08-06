@@ -1,12 +1,20 @@
 ##Installation##
 
-Precompiled packages are available for Linux and OS X. Previous and current releases are available [here](https://www.github.com/fishnetsecurity/Lair/releases). Download one of the current application packages below (we will upload these packages after DEF CON):
+Precompiled application packages are available for Linux and OS X. Download one of the current application packages below:
+
+[lair-v1.0.0-darwin-x64.7z](https://github.com/fishnetsecurity/Lair/releases/download/v1.0.0/lair-v1.0.0-darwin-x64.7z)
+
+[lair-v1.0.0-linux-x64.7z](https://github.com/fishnetsecurity/Lair/releases/download/v1.0.0/lair-v1.0.0-linux-x64.7z)
+
+[lair-v1.0.0-linux-x86.7z](https://github.com/fishnetsecurity/Lair/releases/download/v1.0.0/lair-v1.0.0-linux-x86.7z)
+
+Next, download the drones python package: [lairdrone-0.1.4.tar.gz](https://github.com/fishnetsecurity/Lair/releases/download/v1.0.0/lairdrone-0.1.4.tar.gz)
 
 Running lair from the application package above is self-explanatory.
 To start Lair and all the required services:
 
 
-        ./start.sh
+        ./start.sh <ip>
 
 To stop Lair:
 
@@ -29,3 +37,15 @@ You can install the drones to PATH with pip
 
 
         pip install lairdrone-<version>.tar.gz
+        
+
+##Contact##
+If you need assistance with installation, usage, or are interested in contributing, please contact either Dan Kottmann or Tom Steele at any of the below. IRC is the best way to get a quick response.
+
+Tom Steele
+- tom@huptwo34.com
+- [@_tomsteele](https://twitter.com/_tomsteele)
+- freenode: hydrawat
+
+Dan Kottmann
+- [@djkottmann](https://twitter.com/djkottmann)
