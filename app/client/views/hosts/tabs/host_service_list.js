@@ -52,7 +52,7 @@ Template.hostServiceList.portListStatusButtonActive = function(status) {
 
 Template.hostServiceList.events({
   'click .port-status-button': function(event) {
-    var id = 'portListStatusButton' + event.toElement.id;
+    var id = 'portListStatusButton' + event.target.id;
     if (Session.equals(id, null)) {
       return Session.set(id, 'disabled');
     }

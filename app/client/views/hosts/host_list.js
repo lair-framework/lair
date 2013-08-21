@@ -52,7 +52,7 @@ Template.hostList.hostStatusButtonActive = function(status) {
 
 Template.hostList.events({
   'click .host-status-button': function(event) {
-    var id = 'hostListStatusButton' + event.toElement.id;
+    var id = 'hostListStatusButton' + event.target.id;
     if (Session.equals(id, null)) {
       return Session.set(id, 'disabled');
     }
