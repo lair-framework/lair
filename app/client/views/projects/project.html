@@ -17,7 +17,7 @@
       <ul class="unstyled">
         <li><strong>Created on: </strong>{{creation_date}}</li>
         <li><strong>Owner: </strong>{{owner}}</li>
-        <li><strong>Contributors: </strong>{{#if contributors}}{{#each contributors}}{{this}},{{/each}}{{else}}None{{/if}}</li>
+        <li><strong>Contributors: </strong>{{#if contributors}}{{#each contributors}}{{emails.0.address}} {{/each}}{{else}}None{{/if}}</li>
         <li><strong>Industry: </strong>{{#if industry}}{{industry}}{{else}}None{{/if}}</li>
         <li><p><strong>Description: </strong>{{#if description}}{{description}}{{else}}None{{/if}}</p></li>
       </ul>

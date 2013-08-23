@@ -67,6 +67,7 @@ Template.project.project = function() {
   Session.set('serviceChartData', serviceData);
   Session.set('vulnerabilityChartData', vulnerabilityData);
   project.isOwner = project.owner === Meteor.userId();
+  project.contributors = Meteor.users.find({"_id": {$in: project.contributors}}).fetch();
   project.owner = Meteor.users.findOne(project.owner).emails[0].address;
   return project;
 };
