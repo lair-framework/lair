@@ -2,7 +2,7 @@
 // See the file license.txt for copying permission
 
 Template.projects.projects = function() {
-  return Projects.find({}, {sort: {project_name: 1}});
+  return Projects.find({}, {sort: {project_name: 1}}).fetch();
 };
 
 Template.projects.events({

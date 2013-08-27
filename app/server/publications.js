@@ -4,7 +4,7 @@
 // owners and contributors can only see their own projects
 Meteor.publish("projectListing", function() {
   return Projects.find({$or: [{owner: this.userId}, {contributors: this.userId}]},
-                       {fields: {project_name: 1, owner:1, contributors: 1}});
+                       {fields: {project_name: 1, owner:1, contributors: 1, creation_date: 1}});
 });
 
 // session variable controls the selected project
