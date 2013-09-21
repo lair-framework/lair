@@ -5,7 +5,6 @@
       "font-awesome": {},
       "router": {},
       "flatstrap": {},
-      "chartjs": {},
       "moment": {}
     },
     "packages": {
@@ -23,11 +22,6 @@
         "git": "https://github.com/fraherm/flatstrap.git",
         "tag": "v1.0.0",
         "commit": "f6f79e940524bdd1aa379fd708d8eda0f83dc557"
-      },
-      "chartjs": {
-        "git": "https://github.com/donskifarrell/meteor-chartjs.git",
-        "tag": "v0.0.3",
-        "commit": "cd3339ccbc99eb8fe7664a918aef25423bdaca3b"
       },
       "moment": {
         "git": "https://github.com/possibilities/meteor-moment.git",
