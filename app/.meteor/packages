@@ -8,3 +8,9 @@ jquery
 accounts-password
 http
 force-ssl
+standard-app-packages
+flatstrap
+font-awesome
+moment
+page-js-ie-support
+router
