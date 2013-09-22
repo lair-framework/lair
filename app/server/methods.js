@@ -517,7 +517,7 @@ function setOsWeight(id, hostId, os, weight) {
   if (!authorize(id, this.userId)) {
     throw new Meteor.Error(403, 'Access Denied');
   }
-  return Hosts.update({"project_id": id, "_id": hostId, "os": os},
+  return Hosts.update({"project_id": id, "_id": hostId, "os.fingerprint": os.fingerprint, "os.weight": os.weight, "os.tool": os.tool},
                       {$set: {"os.$.weight": weight, "last_modified_by": Meteor.user().emails[0].address}});
 }
 
