@@ -26,13 +26,9 @@
           {{/if}}
           {{#if projectId}}
             <ul class="nav pull-right">
+              <li class="nav-like-link">Name: {{projectName}}</a></li>
               <li class="nav-like-link">PID: {{projectId}}</a></li>
             </ul>
-          {{/if}}
-          {{#if info}}
-          <p class="navbar-text pull-right">
-            {{info.project_name}} {{info._id}}
-          </p>
           {{/if}}
         </div>
         {{/if}}

@@ -4,3 +4,7 @@
 Template.header.projectId = function() {
   return Session.get('projectId');
 };
+
+Template.header.projectName = function() {
+  return Projects.findOne(Session.get('projectId')).project_name;
+};
