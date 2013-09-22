@@ -23,6 +23,7 @@ Meteor.Router.add({
   '/project/:pid': {
      to: 'hostList',
      and: function(pid) {
+            Session.set('hostsViewLimit', null);
             Session.set('projectId', pid);
             unsetHostStatusButtons();
      }
@@ -32,6 +33,7 @@ Meteor.Router.add({
   '/project/:pid/hosts': {
     to:  'hostList',
     and: function(pid) {
+           Session.set('hostsViewLimit', null);
            Session.set('projectId', pid);
            unsetHostStatusButtons();
     }
@@ -47,6 +49,7 @@ Meteor.Router.add({
     and: function(pid, hid) {
            Session.set('projectId', pid);
            Session.set('hostId', hid);
+           Session.set('hostServiceLimit', null);
            unsetPortStatusButtons();
     }
   },
@@ -55,6 +58,7 @@ Meteor.Router.add({
     and: function(pid, hid) {
            Session.set('projectId', pid);
            Session.set('hostId', hid);
+           Session.set('hostServiceLimit', null);
            unsetPortStatusButtons();
     }
   },
@@ -170,6 +174,7 @@ Meteor.Router.add({
     to: 'vulnerabilityList',
     and: function(pid) {
            Session.set('projectId', pid);
+           Session.set('vulnerabilityViewLimit', null);
            unsetVulnerabilityStatusButtons();
     }
   },

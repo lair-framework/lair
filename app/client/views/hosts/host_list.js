@@ -1,11 +1,23 @@
 // Copyright (c) 2013 Tom Steele, Dan Kottmann, FishNet Security
 // See the file license.txt for copying permission
-
 Template.hostList.projectId = function() {
   return Session.get('projectId');
 };
 
+Template.hostList.moreToShow = function() {
+  if (Template.hostList.total() > Session.get('hostsViewLimit')) {
+    return true;
+  } else {
+    return false;
+  }
+};
+
+Template.hostList.total = function() {
+  return Hosts.find({"project_id": Session.get('projectId')}).count();
+};
+
 Template.hostList.hosts = function() {
+  var limit = Session.get('hostsViewLimit') || 25;
   var query = {"project_id": Session.get('projectId'), "status": {"$in": []}};
   if (!Session.equals('hostListStatusButtongrey', 'disabled')) {
     query.status.$in.push('lair-grey');
@@ -32,7 +44,7 @@ Template.hostList.hosts = function() {
     ];
   }
   var hosts = [];
-  Hosts.find(query, {"sort": {"long_addr": 1}}).fetch().forEach(function(host){
+  Hosts.find(query, {"sort": {"long_addr": 1}, "limit": limit}).fetch().forEach(function(host){
     host.os = host.os.sort(sortWeight)[0];
     hosts.push(host);
   });
@@ -69,5 +81,15 @@ Template.hostList.events({
       status = STATUS_MAP[0];
     }
     return Meteor.call('setHostStatus', Session.get('projectId'), this._id, status);
+  },
+
+  'click #load-more': function() {
+    var previousLimit = Session.get('hostsViewLimit') || 25;
+    var newLimit = previousLimit + 25;
+    Session.set('hostsViewLimit', newLimit);
+  },
+
+  'click #load-all': function() {
+    Session.set('hostsViewLimit', 10000);
   }
 });

@@ -1,4 +1,4 @@
-// Copyright (c) 2013 Tom Steele, Dan Kottmann, FishNet Security
+// Copyright (c) 2014 Tom Steele, Dan Kottmann, FishNet Security
 // See the file license.txt for copying permission
 
 Template.hostServiceList.projectId = function() {
@@ -9,7 +9,20 @@ Template.hostServiceList.hostId = function() {
   return Session.get('hostId');
 };
 
+Template.hostServiceList.moreToShow = function() {
+  if (Template.hostServiceList.total() > Session.get('hostServiceLimit')) {
+    return true;
+  } else {
+    return false;
+  }
+};
+
+Template.hostServiceList.total = function() {
+  return Ports.find({"project_id": Session.get('projectId'), "host_id": Session.get('hostId')}).count();
+};
+
 Template.hostServiceList.services = function() {
+  var limit = Session.get('hostServiceLimit') || 25;
   var query = {"project_id": Session.get('projectId'), "host_id": Session.get('hostId'), "status": {"$in": []}};
   if (!Session.equals('portListStatusButtongrey', 'disabled')) {
     query.status.$in.push('lair-grey');
@@ -36,7 +49,7 @@ Template.hostServiceList.services = function() {
       {"last_modified_by": {$regex: search, "$options": "i"}}
     ];
   }
-  return Ports.find(query).fetch();
+  return Ports.find(query, {"limit": limit}).fetch();
 };
 
 Template.hostServiceList.searchTerm = function() {
@@ -83,5 +96,15 @@ Template.hostServiceList.events({
     portIds.forEach(function(id) {
       Meteor.call('removePort', projectId, id);
     });
+  },
+
+  'click #load-more': function() {
+    var previousLimit = Session.get('hostServiceLimit') || 25;
+    var newLimit = previousLimit + 25;
+    Session.set('hostServiceLimit', newLimit);
+  },
+
+  'click #load-all': function() {
+    Session.set('hostServiceLimit', 65535);
   }
 });
