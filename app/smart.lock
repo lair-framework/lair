@@ -5,18 +5,19 @@
       "font-awesome": {},
       "router": {},
       "flatstrap": {},
-      "moment": {}
+      "moment": {},
+      "mongo-long": {}
     },
     "packages": {
       "font-awesome": {
         "git": "https://github.com/nate-strauser/meteor-font-awesome.git",
-        "tag": "v3.2.0",
-        "commit": "2cba6f907a2579cae2d399b522f9544c13d5e091"
+        "tag": "v3.2.1",
+        "commit": "38bdfff72dfb8857b272f9a9b056045d6a015489"
       },
       "router": {
         "git": "https://github.com/tmeasday/meteor-router.git",
-        "tag": "v0.5.3",
-        "commit": "7bd3a1bdd1099625bb8b49406d9b8f961d6f4a17"
+        "tag": "v0.5.4.1",
+        "commit": "d00e380dda2184b70e909fc4a0fb5358d602c586"
       },
       "flatstrap": {
         "git": "https://github.com/fraherm/flatstrap.git",
@@ -24,14 +25,24 @@
         "commit": "f6f79e940524bdd1aa379fd708d8eda0f83dc557"
       },
       "moment": {
-        "git": "https://github.com/possibilities/meteor-moment.git",
-        "tag": "v1.7.0",
-        "commit": "c64b6ec0e714b9556f4b6643d430b868ba69d3d7"
+        "git": "https://github.com/acreeger/meteor-moment.git",
+        "tag": "v2.2.1",
+        "commit": "9ee12e714afe56b189f53076447b7b54f3012065"
+      },
+      "mongo-long": {
+        "git": "https://github.com/tomsteele/meteor-mongo-long",
+        "tag": "v0.0.1",
+        "commit": "96b6220139a2ed870e7cf41e6c25f7e4a7edb4bc"
       },
       "page-js-ie-support": {
         "git": "https://github.com/tmeasday/meteor-page-js-ie-support.git",
         "tag": "v1.3.5",
         "commit": "b99ed8380aefd10b2afc8f18d9eed4dd0d8ea9cb"
+      },
+      "HTML5-History-API": {
+        "git": "https://github.com/tmeasday/meteor-HTML5-History-API.git",
+        "tag": "v4.0.0",
+        "commit": "dc4965f1424cfca625ec3fbea17eace03f8e32c5"
       }
     }
   }

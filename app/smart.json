@@ -3,6 +3,7 @@
     "font-awesome": {},
     "router": {},
     "flatstrap": {},
-    "moment": {}
+    "moment": {},
+    "mongo-long": {}
   }
 }

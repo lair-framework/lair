@@ -1,8 +1,6 @@
 // Copyright (c) 2013 Tom Steele, Dan Kottmann, FishNet Security
 // See the file license.txt for copying permission
 
-// this is either an amazing hack, or a huge mistake. time will tell.
-var Long = Npm.require('../app/packages/mongo-livedata/node_modules/mongodb').Long;
 
 Meteor.methods({
   // project collections functions
@@ -354,7 +352,7 @@ function addHost(id, ip, mac) {
     host.mac = mac;
   }
   // generate a long int style number and then use mongodb to convert it to a Long object
-  host.long_addr = Long(ipUtils.ip2Long(ip));
+  host.long_addr = MongoLong(ipUtils.ip2Long(ip));
   host.string_addr = ip;
   host.last_modified_by = Meteor.user().emails[0].address;
   host.project_id = id;
