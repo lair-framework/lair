@@ -6,7 +6,8 @@
       "router": {},
       "flatstrap": {},
       "moment": {},
-      "mongo-long": {}
+      "mongo-long": {},
+      "spin": {}
     },
     "packages": {
       "font-awesome": {
@@ -33,6 +34,11 @@
         "git": "https://github.com/tomsteele/meteor-mongo-long",
         "tag": "v0.0.1",
         "commit": "96b6220139a2ed870e7cf41e6c25f7e4a7edb4bc"
+      },
+      "spin": {
+        "git": "https://github.com/SachaG/meteor-spin.git",
+        "tag": "v0.2.0",
+        "commit": "fd3a2871a69442848b4b4e74f5e1ae28fa4a95a4"
       },
       "page-js-ie-support": {
         "git": "https://github.com/tmeasday/meteor-page-js-ie-support.git",

@@ -21,6 +21,9 @@
       </div>
       <br />
       <div class="row-fluid">
+      {{#if loading}}
+        {{> spinner}}
+      {{else}}
         <div class="span12">
           <table class="table table-bordered">
             <thead>
@@ -44,6 +47,7 @@
           </table>
         </div>
       </div>
+      {{/if}}
       <div class="row-fluid">
         <div class="span6">
           <p>Displaying {{hosts.length}} of {{total}} rows.</p>

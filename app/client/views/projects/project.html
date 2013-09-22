@@ -1,6 +1,13 @@
 <template name="project">
   {{#if project}}
   {{#with project}}
+  {{#if loading}}
+  <div style="margin-top: 100px" class="row-fluid">
+    <div class="span12">
+      {{> spinner}}
+    </div>
+  </div>
+  {{else}}
   <p>
     <span class="large-font">{{project_name}}</span><span class="pull-right">
           <a class="btn btn-primary" href="/project/{{_id}}"><i class="icon-dashboard"> </i>Load</a>
@@ -37,6 +44,7 @@
       <canvas id="vulnerabilityChart" width="{{width}}" height="{{height}}"></canvas><br />
     </div>
   </div>
+  {{/if}}
   {{/with}}
   {{else}}
   <div class="row-fluid">

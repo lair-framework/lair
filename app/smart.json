@@ -4,6 +4,7 @@
     "router": {},
     "flatstrap": {},
     "moment": {},
-    "mongo-long": {}
+    "mongo-long": {},
+    "spin": {}
   }
 }

@@ -62,6 +62,10 @@ Template.hostList.hostStatusButtonActive = function(status) {
   return false;
 };
 
+Template.hostList.loading = function() {
+  return Session.get('loading');
+};
+
 Template.hostList.events({
   'click .host-status-button': function(event) {
     var id = 'hostListStatusButton' + event.target.id;

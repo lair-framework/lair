@@ -6,7 +6,7 @@ Template.project.rendered = function() {
   Template.project.width = 404 / pixelRatio;
   Template.project.height = 404 / pixelRatio;
 
-  if (!Session.equals('projectId', null)) {
+  if (!Session.equals('projectId', null) && Session.equals('loading', false)) {
     var hostChartCtx = $("#hostChart").get(0).getContext("2d");
     var serviceChartCtx = $("#serviceChart").get(0).getContext("2d");
     var vulnerabilityChartCtx = $("#vulnerabilityChart").get(0).getContext("2d");
@@ -70,6 +70,10 @@ Template.project.project = function() {
   project.contributors = Meteor.users.find({"_id": {$in: project.contributors}}).fetch();
   project.owner = Meteor.users.findOne(project.owner).emails[0].address;
   return project;
+};
+
+Template.project.loading = function() {
+  return Session.get('loading');
 };
 
 Template.project.events({

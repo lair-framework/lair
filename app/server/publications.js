@@ -21,6 +21,29 @@ Meteor.publish("project", function(id) {
    return false;
 });
 
+Meteor.publish("hosts", function(id) {
+  var project = Projects.findOne(id);
+  if (project && (project.owner == this.userId || _.indexOf(project.contributors, this.userId) > -1)) {
+    return Hosts.find({'project_id': id});
+  }
+  return false;
+});
+
+Meteor.publish("ports", function(id) {
+  var project = Projects.findOne(id);
+  if (project && (project.owner == this.userId || _.indexOf(project.contributors, this.userId) > -1)) {
+    return Ports.find({'project_id': id});
+  }
+  return false;
+});
+
+Meteor.publish("vulnerabilities", function(id) {
+  var project = Projects.findOne(id);
+  if (project && (project.owner == this.userId || _.indexOf(project.contributors, this.userId) > -1)) {
+    return Vulnerablities.find({'project_id': id});
+  }
+  return false;
+});
 // publish meteor users so you can add contributors
 // check if logged in first to avoid user account enumeration
 Meteor.publish("directory", function () {
