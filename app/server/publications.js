@@ -13,10 +13,7 @@ Meteor.publish("projectListing", function() {
 Meteor.publish("project", function(id) {
    var project = Projects.findOne(id);
    if (project && (project.owner === this.userId || _.indexOf(project.contributors, this.userId) > -1)) {
-     return [Projects.find(id),
-             Hosts.find({'project_id': id}),
-             Ports.find({'project_id': id}),
-             Vulnerabilities.find({'project_id': id})];
+     return Projects.find(id);
    }
    return false;
 });
@@ -40,7 +37,7 @@ Meteor.publish("ports", function(id) {
 Meteor.publish("vulnerabilities", function(id) {
   var project = Projects.findOne(id);
   if (project && (project.owner == this.userId || _.indexOf(project.contributors, this.userId) > -1)) {
-    return Vulnerablities.find({'project_id': id});
+    return Vulnerabilities.find({'project_id': id});
   }
   return false;
 });

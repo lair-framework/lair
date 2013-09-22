@@ -7,18 +7,28 @@ Meteor.subscribe('directory');
 Meteor.subscribe('projectListing');
 // this goes in an autorun because the session variable will change
 Deps.autorun(function() {
+  var count = 0;
   Meteor.subscribe('project', Session.get('projectId'), function() {
-    Session.set('loading', false);
+    count++;
+    loaded();
   });
   Meteor.subscribe('hosts', Session.get('projectId'), function() {
-    Session.set('loading', false);
+    count++;
+    loaded();
   });
   Meteor.subscribe('ports', Session.get('projectId'), function() {
-    Session.set('loading', false);
+    count++;
+    loaded();
   });
   Meteor.subscribe('vulnerabilities', Session.get('projectId'), function() {
-    Session.set('loading', false);
+    count++;
+    loaded();
   });
+  function loaded() {
+    if (count === 4) {
+      Session.set('loading', false);
+    }
+  }
 });
 // subscribe to settings
 Meteor.subscribe('settings');
