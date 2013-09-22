@@ -6,5 +6,10 @@ Template.header.projectId = function() {
 };
 
 Template.header.projectName = function() {
-  return Projects.findOne(Session.get('projectId')).project_name;
+  var project = Projects.findOne(Session.get('projectId'));
+  if (typeof project === 'undefined') {
+    return null;
+  } else {
+    return project.project_name;
+  }
 };

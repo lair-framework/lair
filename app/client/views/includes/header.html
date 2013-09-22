@@ -24,12 +24,14 @@
               <li><a href="/settings">Settings</a></li>
             </ul>
           {{/if}}
+          <ul class="nav pull-right">
           {{#if projectId}}
-            <ul class="nav pull-right">
-              <li class="nav-like-link">Name: {{projectName}}</a></li>
-              <li class="nav-like-link">PID: {{projectId}}</a></li>
-            </ul>
+            <li class="nav-like-link">PID: {{projectId}}</a></li>
           {{/if}}
+          {{#if projectName}}
+            <li class="nav-like-link">Name: {{projectName}}</a></li>
+          {{/if}}
+          </ul>
         </div>
         {{/if}}
       </div>
