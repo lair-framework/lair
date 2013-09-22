@@ -7,6 +7,7 @@ Template.projects.projects = function() {
 
 Template.projects.events({
   'click .project': function() {
+    Session.set('loading', true);
     Session.set('projectId', this._id);
   }
 });
