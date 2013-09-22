@@ -149,21 +149,22 @@ function exportProject(id, url, username, password) {
   });
   project.hosts = hosts;
   project.vulnerabilities = vulnerabilities;
+  var result = null;
   if (username && password) {
     project.username = username;
     project.password = password;
-    var result = Meteor.http.post(url, {"data": project});
+    result = HTTP.post(url, {"data": project});
   }
   else if (!username && password) {
     project.password = password;
-    var result = Meteor.http.post(url, {"data": project});
+    result = HTTP.post(url, {"data": project});
   }
   else if (username && !password) {
     project.username = username;
-    var result = Meteor.http.post(url, {"data": project});
+    result = HTTP.post(url, {"data": project});
   }
   else {
-    var result = Meteor.http.post(url, {"data": project});
+    result = HTTP.post(url, {"data": project});
   }
   if (result.statusCode !== 200) {
     throw new Meteor.Error(500, 'Non 200 status code returned from server: ' + result.statusCode);
