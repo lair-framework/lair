@@ -51,13 +51,13 @@ cp README.md $LINUX64/
 cp README.md $OSX/
 
 tar -xzf bundle.tar.gz
-rm -rf bundle/server/node_modules/fibers
+rm -rf bundle/programs/server/node_modules/fibers
 cp -R bundle $LINUX32
 cp -R bundle $LINUX64
 cp -R bundle $OSX
-cp -R linux32/fibers $LINUX32/bundle/server/node_modules/
-cp -R linux64/fibers $LINUX64/bundle/server/node_modules/
-cp -R osx/fibers $OSX/bundle/server/node_modules/
+cp -R linux32/fibers $LINUX32/bundle/programs/server/node_modules/
+cp -R linux64/fibers $LINUX64/bundle/programs/server/node_modules/
+cp -R osx/fibers $OSX/bundle/programs/server/node_modules/
 rm -rf bundle
 
 cp src/stunnel-4.56.tar.gz $OSX/deps/src/
