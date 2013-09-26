@@ -55,9 +55,9 @@ rm -rf bundle/programs/server/node_modules/fibers
 cp -R bundle $LINUX32
 cp -R bundle $LINUX64
 cp -R bundle $OSX
-cp -R linux32/fibers $LINUX32/bundle/programs/server/node_modules/
-cp -R linux64/fibers $LINUX64/bundle/programs/server/node_modules/
-cp -R osx/fibers $OSX/bundle/programs/server/node_modules/
+cp -R src/fibers $LINUX32/bundle/programs/server/node_modules/
+cp -R src/fibers $LINUX64/bundle/programs/server/node_modules/
+cp -R src/fibers $OSX/bundle/programs/server/node_modules/
 rm -rf bundle
 
 cp src/stunnel-4.56.tar.gz $OSX/deps/src/
@@ -110,9 +110,9 @@ cp lair-scripts/deluser.sh $LINUX32/
 cp lair-scripts/deluser.sh $LINUX64/
 cp lair-scripts/deluser.sh $OSX/
 
-tar -czf $LINUX32.tar.gz $LINUX32
-tar -czf $LINUX64.tar.gz $LINUX64
-tar -czf $OSX.tar.gz $OSX
+7z a $LINUX32.7z $LINUX32
+7z a $LINUX64.7z $LINUX64
+7z a $OSX.7z $OSX
 rm -rf $LINUX32
 rm -rf $LINUX64
 rm -rf $OSX
