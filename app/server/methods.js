@@ -359,7 +359,7 @@ function addHost(id, ip, mac) {
     host.mac = mac;
   }
   // generate a long int style number and then use mongodb to convert it to a Long object
-  host.long_addr = MongoLong(ipUtils.ip2Long(ip));
+  host.long_addr = ipUtils.ip2Long(ip);
   host.string_addr = ip;
   host.last_modified_by = Meteor.user().emails[0].address;
   host.project_id = id;

@@ -3,7 +3,5 @@ router
 page-js-ie-support
 flatstrap
 moment
-/HTML5-History-API
-/mongo-long
-/mongo-long
 /spin
+/HTML5-History-API
