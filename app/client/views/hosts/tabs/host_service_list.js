@@ -64,6 +64,14 @@ Template.hostServiceList.portListStatusButtonActive = function(status) {
 };
 
 Template.hostServiceList.events({
+  'click .flag-enabled': function() {
+    return Meteor.call('disablePortFlag', Session.get('projectId'), this._id);
+  },
+
+  'click .flag-disabled': function() {
+    return Meteor.call('enablePortFlag', Session.get('projectId'), this._id);
+  },
+
   'click .port-status-button': function(event) {
     var id = 'portListStatusButton' + event.target.id;
     if (Session.equals(id, null)) {

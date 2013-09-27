@@ -13,6 +13,16 @@
     <div class="span4">
       <ul class="unstyled">
         <li><strong>Host: </strong><a href="{{hostServiceListPath projectId host_id}}">{{string_addr}}</a></li>
+        <li>&nbsp</li>
+        <li>&nbsp</li>
+        <li>&nbsp</li>
+        <li>
+        {{#if flag}}
+          <i class="icon-flag flag-enabled hover-hand"></i>
+        {{else}}
+          <i class="icon-flag flag-disabled hover-hand"></i>
+        {{/if}}
+        </li>
       </ul>
     </div>
     <div class="span4">

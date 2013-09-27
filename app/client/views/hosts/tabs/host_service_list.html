@@ -30,6 +30,7 @@
             <thead>
             <tr>
               <th class="onepix"></th>
+              <th class="onepix"></th>
               <th class="onepix">Port</th>
               <th class="onepix">Protocol</th>
               <th>Service</th>
@@ -41,6 +42,13 @@
             {{#each services}}
             <tr class="hover-hand">
               <td><input class="port-checked" id="{{_id}}" type="checkbox" /></td>
+              <td>
+              {{#if flag}}
+                <i class="icon-flag flag-enabled hover-hand"></i>
+              {{else}}
+                <i class="icon-flag flag-disabled hover-hand"></i>
+              {{/if}}
+              </td>
               <td class="{{status}}"><a class="dontstyle" href="{{serviceVulnerabilityListPath projectId _id}}">{{port}}</a></td>
               <td class="{{status}} port-status">{{protocol}}</td>
               <td class="{{status}} port-status">{{service}}</td>

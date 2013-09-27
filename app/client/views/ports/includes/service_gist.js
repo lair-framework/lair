@@ -20,6 +20,14 @@ Template.serviceGist.port = function() {
 };
 
 Template.serviceGist.events({
+  'click .flag-enabled': function() {
+    return Meteor.call('disablePortFlag', Session.get('projectId'), this._id);
+  },
+
+  'click .flag-disabled': function() {
+    return Meteor.call('enablePortFlag', Session.get('projectId'), this._id);
+  },
+
   'click .port-status': function() {
     var status = STATUS_MAP[STATUS_MAP.indexOf(this.status) + 1];
     if (STATUS_MAP.indexOf(this.status) + 1 > 4) {

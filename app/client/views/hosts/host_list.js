@@ -67,6 +67,14 @@ Template.hostList.loading = function() {
 };
 
 Template.hostList.events({
+  'click .flag-enabled': function() {
+    return Meteor.call('disableHostFlag', Session.get('projectId'), this._id);
+  },
+
+  'click .flag-disabled': function() {
+    return Meteor.call('enableHostFlag', Session.get('projectId'), this._id);
+  },
+
   'click .host-status-button': function(event) {
     var id = 'hostListStatusButton' + event.target.id;
     if (Session.equals(id, null)) {

@@ -11,6 +11,14 @@ Template.hostGist.host = function() {
 };
 
 Template.hostGist.events({
+  'click .flag-enabled': function() {
+    return Meteor.call('disableHostFlag', Session.get('projectId'), this._id);
+  },
+
+  'click .flag-disabled': function() {
+    return Meteor.call('enableHostFlag', Session.get('projectId'), this._id);
+  },
+
   'click .host-status': function() {
     var status = STATUS_MAP[STATUS_MAP.indexOf(this.status) + 1];
     if (STATUS_MAP.indexOf(this.status) + 1 > 4) {
