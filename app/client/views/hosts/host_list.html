@@ -37,7 +37,7 @@
             </thead>
             <tbody>
             {{#each hosts}}
-            <tr class="{{status}}">
+            <tr>
               <td>
               {{#if flag}}
                 <i class="icon-flag flag-enabled hover-hand"></i>
@@ -45,10 +45,10 @@
                 <i class="icon-flag flag-disabled hover-hand"></i>
               {{/if}}
               </td>
-              <td><a class="dontstyle" href="{{hostServiceListPath projectId _id}}">{{string_addr}}</a></td>
-              <td class="hover-hand host-status">{{hostnames.[0]}}</td>
-              <td class="hover-hand host-status">{{os.fingerprint}}</td>
-              <td class="hover-hand host-status">{{last_modified_by}}</td>
+              <td class="{{status}}"><a class="dontstyle" href="{{hostServiceListPath projectId _id}}">{{string_addr}}</a></td>
+              <td class="hover-hand host-status {{status}}">{{hostnames.[0]}}</td>
+              <td class="hover-hand host-status {{status}}">{{os.fingerprint}}</td>
+              <td class="hover-hand host-status {{status}}">{{last_modified_by}}</td>
             </tr>
             {{/each}}
             </tbody>
