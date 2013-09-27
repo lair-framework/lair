@@ -4,7 +4,7 @@
 // sorting functions
 // heard you like ternary, so i put a ternary in your ternary
 sortLongAddr = function(a,b) {
-  return (a.long_addr.low_ > b.long_addr.low_) ? 1 : ((b.long_addr.low_ > a.long_addr.low_) ? -1 : 0);
+  return (a.long_addr > b.long_addr) ? 1 : ((b.long_addr > a.long_addr) ? -1 : 0);
 };
 
 sortPort = function(a,b) {
