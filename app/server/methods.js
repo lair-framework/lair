@@ -28,6 +28,8 @@ Meteor.methods({
   'addHostNote': addHostNote,
   'removeHostNote': removeHostNote,
   'setHostNoteContent': setHostNoteContent,
+  'enableHostFlag': enableHostFlag,
+  'disableHostFlag': disableHostFlag,
   // ports collection functions
   'addPort': addPort,
   'removePort': removePort,
@@ -39,6 +41,8 @@ Meteor.methods({
   'addPortNote': addPortNote,
   'removePortNote': removePortNote,
   'setPortNoteContent': setPortNoteContent,
+  'enablePortFlag': enablePortFlag,
+  'disablePortFlag': disablePortFlag,
   // vulnerabilities collection functions
   'addVulnerability': addVulnerability,
   'removeVulnerability': removeVulnerability,
@@ -55,6 +59,8 @@ Meteor.methods({
   'removeHostFromVulnerability': removeHostFromVulnerability,
   'removeHostFromVulnerabilities': removeHostFromVulnerabilities,
   'removePortFromVulnerabilities': removePortFromVulnerabilities,
+  'enableVulnerabilityFlag': enableVulnerabilityFlag,
+  'disableVulnerabilityFlag': disableVulnerabilityFlag,
   'addCve': addCve,
   'removeCve': removeCve,
   // users
@@ -598,6 +604,34 @@ function setHostNoteContent(id, hostId, title, content) {
                        "last_modified_by": email}});
 }
 
+function enableHostFlag(id, hostId) {
+  if (typeof id === 'undefined' || typeof hostId === 'undefined') {
+    throw new Meteor.Error(400, 'Missing required argument');
+  }
+  if (typeof id !== 'string' || !id.match(/^[a-zA-Z0-9]{17,24}$/)) {
+    throw new Meteor.Error(400, 'Invalid project id');
+  }
+  if (typeof hostId !== 'string' || !hostId.match(/^[a-zA-Z0-9]{17,24}$/)) {
+    throw new Meteor.Error(400, 'Invalid host id');
+  }
+  var email = Meteor.user().emails[0].address;
+  return Hosts.update({"project_id": id, "_id": hostId}, {$set: {"flag": true, "last_modified_by": email}});
+}
+
+function disableHostFlag(id, hostId) {
+  if (typeof id === 'undefined' || typeof hostId === 'undefined') {
+    throw new Meteor.Error(400, 'Missing required argument');
+  }
+  if (typeof id !== 'string' || !id.match(/^[a-zA-Z0-9]{17,24}$/)) {
+    throw new Meteor.Error(400, 'Invalid project id');
+  }
+  if (typeof hostId !== 'string' || !hostId.match(/^[a-zA-Z0-9]{17,24}$/)) {
+    throw new Meteor.Error(400, 'Invalid host id');
+  }
+  var email = Meteor.user().emails[0].address;
+  return Hosts.update({"project_id": id, "_id": hostId}, {$set: {"flag": false, "last_modified_by": email}});
+}
+
 function addPort(id, hostId, port, protocol, service, product) {
   if (typeof id === 'undefined' || typeof hostId === 'undefined' || typeof port === 'undefined' || typeof protocol === 'undefined' || typeof service === 'undefined' || typeof product === 'undefined') {
     throw new Meteor.Error(400, 'Missing required argument');
@@ -652,6 +686,34 @@ function removePort(id, portId) {
     throw new Meteor.Error(403, 'Access Denied');
   }
   return Ports.remove({"project_id": id, "_id": portId});
+}
+
+function enablePortFlag(id, portId) {
+  if (typeof id === 'undefined' || typeof portId === 'undefined') {
+    throw new Meteor.Error(400, 'Missing required argument');
+  }
+  if (typeof id !== 'string' || !id.match(/^[a-zA-Z0-9]{17,24}$/)) {
+    throw new Meteor.Error(400, 'Invalid project id');
+  }
+  if (typeof portId !== 'string' || !portId.match(/^[a-zA-Z0-9]{17,24}$/)) {
+    throw new Meteor.Error(400, 'Invalid port id');
+  }
+  var email = Meteor.user().emails[0].address;
+  return Ports.update({"project_id": id, "_id": portId}, {$set: {"flag": true, "last_modified_by": email}});
+}
+
+function disablePortFlag(id, portId) {
+  if (typeof id === 'undefined' || typeof portId === 'undefined') {
+    throw new Meteor.Error(400, 'Missing required argument');
+  }
+  if (typeof id !== 'string' || !id.match(/^[a-zA-Z0-9]{17,24}$/)) {
+    throw new Meteor.Error(400, 'Invalid project id');
+  }
+  if (typeof portId !== 'string' || !portId.match(/^[a-zA-Z0-9]{17,24}$/)) {
+    throw new Meteor.Error(400, 'Invalid port id');
+  }
+  var email = Meteor.user().emails[0].address;
+  return Ports.update({"project_id": id, "_id": portId}, {$set: {"flag": false, "last_modified_by": email}});
 }
 
 function setPortStatus(id, portId, status) {
@@ -1231,6 +1293,34 @@ function removeCve(id, vulnId, cve) {
   return Vulnerabilities.update({"project_id": id, "_id": vulnId},
                                 {$pull: {"cves": cve},
                                  $set: {"last_modified_by": Meteor.user().emails[0].address}});
+}
+
+function enableVulnerabilityFlag(id, vulnId) {
+  if (typeof id === 'undefined' || typeof vulnId === 'undefined') {
+    throw new Meteor.Error(400, 'Missing required argument');
+  }
+  if (typeof id !== 'string' || !id.match(/^[a-zA-Z0-9]{17,24}$/)) {
+    throw new Meteor.Error(400, 'Invalid project id');
+  }
+  if (typeof vulnId !== 'string' || !vulnId.match(/^[a-zA-Z0-9]{17,24}$/)) {
+    throw new Meteor.Error(400, 'Invalid vulnerability id');
+  }
+  var email = Meteor.user().emails[0].address;
+  return Vulnerabilities.update({"project_id": id, "_id": vulnId}, {$set: {"flag": true, "last_modified_by": email}});
+}
+
+function disableVulnerabilityFlag(id, vulnId) {
+  if (typeof id === 'undefined' || typeof vulnId === 'undefined') {
+    throw new Meteor.Error(400, 'Missing required argument');
+  }
+  if (typeof id !== 'string' || !id.match(/^[a-zA-Z0-9]{17,24}$/)) {
+    throw new Meteor.Error(400, 'Invalid project id');
+  }
+  if (typeof vulnId !== 'string' || !vulnId.match(/^[a-zA-Z0-9]{17,24}$/)) {
+    throw new Meteor.Error(400, 'Invalid vulnerability id');
+  }
+  var email = Meteor.user().emails[0].address;
+  return Vulnerabilities.update({"project_id": id, "_id": vulnId}, {$set: {"flag": false, "last_modified_by": email}});
 }
 
 function createLairUser(email, password, isAdmin) {
