@@ -204,3 +204,11 @@ textarea {
     text-decoration: none;
     text-shadow: 0 1px 0 #fff;
 }
+
+.flag-enabled {
+    color: #000000;
+}
+
+.flag-disabled {
+    color: rgba(114, 114, 114, 0.29)
+}
