@@ -43,7 +43,8 @@ models = {
       'notes': [],
       'alive': true,
       'status': STATUS_GREY,
-      'last_modified_by': ''
+      'last_modified_by': '',
+      'flag': false
     };
   },
 
@@ -75,7 +76,8 @@ models = {
       'status': STATUS_GREY,
       'credentials': [],
       'notes': [],
-      'last_modified_by': ''
+      'last_modified_by': '',
+      'flag': false
     };
   },
  
@@ -102,7 +104,8 @@ models = {
       'notes': [],
       'evidence': '',
       'hosts': [],
-      'last_modified_by': ''
+      'last_modified_by': '',
+      'flag': false
     };
   },
 
