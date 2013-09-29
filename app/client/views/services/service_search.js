@@ -28,7 +28,7 @@ Template.serviceSearch.rendered = function() {
 };
 
 Template.serviceSearch.hosts = function() {
-  var hosts = Hosts.find({"_id": {"$in": _.uniq(hostIds)}}).fetch().sort(sortLongAddr);
+  var hosts = Hosts.find({"_id": {"$in": _.uniq(hostIds)}}, {"sort": {"long_addr": 1}}).fetch();
   return _.pluck(hosts, 'string_addr').join('\n');
 };
 
