@@ -315,6 +315,10 @@ def save(document, db, tool):
             db_vuln['cves'] = list(set(db_vuln['cves']))
             db_vuln['identified_by'].extend(file_vuln['identified_by'])
 
+            # Only set 'flag' if it's true for parsed vuln
+            db_vuln['flag'] = file_vuln['flag'] \
+                if file_vuln.get('flag', False) else db_vuln.get('flag', False)
+
             # Include any script output for the port
             if file_vuln['notes']:
                 db_vuln['notes'].extend(file_vuln['notes'])

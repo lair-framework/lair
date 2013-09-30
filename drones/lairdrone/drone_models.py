@@ -87,6 +87,7 @@ vulnerability_model = {
     'plugin_ids': [],           # plugin_id_models
     'identified_by': [],        # identified_by_models
     'confirmed': False,
+    'flag': False,
     'notes': [],                # note_models
     'evidence': '',
     'hosts': [],                # host_key_model

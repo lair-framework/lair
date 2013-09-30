@@ -153,7 +153,7 @@ def parse(project, nessus_file, db, options):
             # while ensuring no duplicate data exists.
             if plugin_id not in vuln_host_map:
 
-                v = dict(models.vulnerability_model)
+                v = copy.deepcopy(models.vulnerability_model)
                 v['cves'] = list()
                 v['plugin_ids'] = list()
                 v['identified_by'] = list()
@@ -175,6 +175,74 @@ def parse(project, nessus_file, db, options):
                 # Set the evidence
                 if evidence is not None:
                     v['evidence'] = evidence.text
+
+                # Set the vulnerability flag if exploit exists
+                exploit = item.find('exploit_available')
+                if exploit is not None:
+                    v['flag'] = exploit.text == 'true'
+
+                    # Grab Metasploit details
+                    exploit_detail = item.find('exploit_framework_metasploit')
+                    if exploit_detail is not None and \
+                            exploit_detail.text == 'true':
+                        note_dict = copy.deepcopy(models.note_model)
+                        note_dict['title'] = 'Metasploit Exploit'
+                        note_dict['content'] = 'Exploit exists. Details unknown.'
+                        module = item.find('metasploit_name')
+                        if module is not None:
+                            note_dict['content'] = module.text
+                        note_dict['last_modified_by'] = TOOL
+                        v['notes'].append(note_dict)
+
+                    # Grab Canvas details
+                    exploit_detail = item.find('exploit_framework_canvas')
+                    if exploit_detail is not None and \
+                            exploit_detail.text == 'true':
+                        note_dict = copy.deepcopy(models.note_model)
+                        note_dict['title'] = 'Canvas Exploit'
+                        note_dict['content'] = 'Exploit exists. Details unknown.'
+                        module = item.find('canvas_package')
+                        if module is not None:
+                            note_dict['content'] = module.text
+                        note_dict['last_modified_by'] = TOOL
+                        v['notes'].append(note_dict)
+
+                    # Grab Core Impact details
+                    exploit_detail = item.find('exploit_framework_core')
+                    if exploit_detail is not None and \
+                            exploit_detail.text == 'true':
+                        note_dict = copy.deepcopy(models.note_model)
+                        note_dict['title'] = 'Core Impact Exploit'
+                        note_dict['content'] = 'Exploit exists. Details unknown.'
+                        module = item.find('core_name')
+                        if module is not None:
+                            note_dict['content'] = module.text
+                        note_dict['last_modified_by'] = TOOL
+                        v['notes'].append(note_dict)
+
+                    # Grab ExploitHub SKUs
+                    exploit_detail = item.find('exploit_framework_exploithub')
+                    if exploit_detail is not None and \
+                            exploit_detail.text == 'true':
+                        note_dict = copy.deepcopy(models.note_model)
+                        note_dict['title'] = 'Exploit Hub Exploit'
+                        note_dict['content'] = 'Exploit exists. Details unknown.'
+                        module = item.find('exploithub_sku')
+                        if module is not None:
+                            note_dict['content'] = module.text
+                        note_dict['last_modified_by'] = TOOL
+                        v['notes'].append(note_dict)
+
+                    # Grab any and all ExploitDB IDs
+                    details = item.iter('edb-id')
+                    if details is not None:
+                        for module in details:
+                            note_dict = copy.deepcopy(models.note_model)
+                            note_dict['title'] = 'Exploit-DB Exploit ' \
+                                                 '({0})'.format(module.text)
+                            note_dict['content'] = module.text
+                            note_dict['last_modified_by'] = TOOL
+                            v['notes'].append(note_dict)
 
                 # Set the CVSS score
                 cvss = item.find('cvss_base_score')
@@ -265,7 +333,7 @@ if __name__ == '__main__':
     description = "%prog imports Nessus files into Lair"
 
     parser = OptionParser(usage=usage, description=description,
-                          version="%prog 0.0.1")
+                          version="%prog 0.0.2")
     parser.add_option(
         "--include-informational",
         dest="include_informational",

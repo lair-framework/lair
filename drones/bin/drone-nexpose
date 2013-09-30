@@ -53,7 +53,7 @@ def parse(project, nexpose_file, db, options):
     vuln_host_map = dict()
 
     for vuln in root.iter('vulnerability'):
-        v = dict(models.vulnerability_model)
+        v = copy.deepcopy(models.vulnerability_model)
         v['cves'] = list()
         v['plugin_ids'] = list()
         v['identified_by'] = list()
@@ -74,6 +74,21 @@ def parse(project, nexpose_file, db, options):
         identified_dict['tool'] = TOOL
         identified_dict['id'] = plugin_id
         v['identified_by'].append(identified_dict)
+
+        # Search for exploits
+        for exploit in vuln.iter('exploit'):
+            v['flag'] = True
+            note_dict = copy.deepcopy(models.note_model)
+            note_dict['title'] = "{0} ({1})".format(
+                exploit.attrib['type'],
+                exploit.attrib['id']
+            )
+            note_dict['content'] = "{0}\n{1}".format(
+                exploit.attrib['title'],
+                exploit.attrib['link']
+            )
+            note_dict['last_modified_by'] = TOOL
+            v['notes'].append(note_dict)
 
         # Search for CVE references
         for reference in vuln.iter('reference'):
@@ -271,7 +286,7 @@ if __name__ == '__main__':
     description = "%prog imports Nexpose files into Lair"
 
     parser = OptionParser(usage=usage, description=description,
-                          version="%prog 0.0.1")
+                          version="%prog 0.0.2")
     parser.add_option(
         "--include-informational",
         dest="include_informational",
