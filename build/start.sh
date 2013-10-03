@@ -103,7 +103,7 @@ if [ "$?" != 0 ]; then
   exit 1;
 fi
 
-read -p "Have you previously added mongodb users? [y/n] " -n 1
+read -p "Have you previously added mongodb users? [y/n] "
 echo
 if [[ $REPLY =~ ^[Yy]$ ]]; then
   read -p "Enter lair database username: " -e -r
