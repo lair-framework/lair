@@ -18,12 +18,12 @@ OS_WEIGHT = 75
 TOOL = "nexpose"
 
 
-def parse(project, nexpose_file, options):
+def parse(project, nexpose_file, include_informational=False):
     """Parses a Nexpose XMLv2 file and updates the Lair database
 
     :param project: The project id
     :param nexpose_file: The Nexpose xml file to be parsed
-    :param db: A database connection
+    :include_informational: Whether to include info findings in data. Default False
     """
 
     cve_pattern = re.compile(r'(CVE-|CAN-)')
@@ -271,7 +271,7 @@ def parse(project, nexpose_file, options):
 
         # By default, don't include informational findings unless
         # explicitly told to do so.
-        if data['vuln']['cvss'] == 0 and not options.include_informational:
+        if data['vuln']['cvss'] == 0 and not include_informational:
             continue
 
         project_dict['vulnerabilities'].append(data['vuln'])

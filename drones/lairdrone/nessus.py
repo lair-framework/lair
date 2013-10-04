@@ -12,12 +12,13 @@ OS_WEIGHT = 75
 TOOL = "nessus"
 
 
-def parse(project, nessus_file, options):
+def parse(project, nessus_file, include_informational=False, min_note_sev=2):
     """Parses a Nessus XMLv2 file and updates the Hive database
 
     :param project: The project id
     :param nessus_file: The Nessus xml file to be parsed
-    :param db: A database connection
+    :param include_informational: Whether to include info findings in data. Default False
+    :min_note_sev: The minimum severity of notes that will be saved. Default 2
     """
 
     cve_pattern = re.compile(r'(CVE-|CAN-)')
@@ -107,7 +108,7 @@ def parse(project, nessus_file, options):
 
             # Set the evidence as a port note if it exists
             if evidence is not None and \
-                    severity >= options.min_note_severity and \
+                    severity >= min_note_sev and \
                     plugin_family != 'Port scanners' and \
                     plugin_family != 'Service detection':
                 note_dict = copy.deepcopy(models.note_model)
@@ -273,7 +274,7 @@ def parse(project, nessus_file, options):
 
                 # By default, don't include informational findings unless
                 # explicitly told to do so.
-                if v['cvss'] == 0 and not options.include_informational:
+                if v['cvss'] == 0 and not include_informational:
                     continue
 
                 vuln_host_map[plugin_id] = dict()
