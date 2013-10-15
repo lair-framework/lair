@@ -319,4 +319,13 @@ def parse(project, nessus_file, include_informational=False, min_note_sev=2):
 
         project_dict['vulnerabilities'].append(data['vuln'])
 
+    if not project_dict['commands']:
+        # Adds a dummy 'command' in the event the the Nessus plugin used
+        # to populate the data was not run. The Lair API expects it to
+        # contain a value.
+        command = copy.deepcopy(models.command_model)
+        command['tool'] = TOOL
+        command['command'] = "Nessus scan - command unknown"
+        project_dict['commands'].append(command)
+
     return project_dict

@@ -19,7 +19,7 @@ if __name__ == '__main__':
     description = "%prog imports Nessus files into Lair"
 
     parser = OptionParser(usage=usage, description=description,
-                          version="%prog 0.0.3")
+                          version="%prog 0.0.4")
     parser.add_option(
         "--include-informational",
         dest="include_informational",
