@@ -89,7 +89,10 @@ def parse(project, resource):
             if service is not None:
                 port_dict['service'] = service.attrib['name']
                 if 'product' in service.attrib:
-                    port_dict['product'] = service.attrib['product']
+                    if 'version' in service.attrib:
+                        port_dict['product'] = service.attrib['product'] + " " + service.attrib['version']
+                    else:    
+                        port_dict['product'] = service.attrib['product']
                 else:
                     port_dict['product'] = "unknown"
 
