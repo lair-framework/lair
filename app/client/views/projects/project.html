@@ -9,7 +9,8 @@
   </div>
   {{else}}
   <p>
-    <span class="large-font">{{project_name}}</span><span class="pull-right">
+    <span class="large-font"><a href="/project/{{_id}}">{{project_name}}</a></span>
+        <span class="pull-right">
           <a class="btn btn-primary" href="/project/{{_id}}"><i class="icon-dashboard"> </i>Load</a>
           <a href="#exportModal" role="button" class="btn btn-success" data-toggle="modal"><i class="icon-share-alt"> </i>Export</a>
           {{#if isOwner}}
