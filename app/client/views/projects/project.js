@@ -77,6 +77,13 @@ Template.project.loading = function() {
 };
 
 Template.project.events({
+  'click #export-local': function() {
+    var projectId = Session.get('projectId');
+    var data = prepareExport(projectId);
+    var blob = new Blob([JSON.stringify(data, null, 4)], {type: "text/plain;charset=utf-8"});
+    return saveAs(blob, projectId + ".json");
+  },
+
   'click #export-project': function(event, tpl) {
     var url = tpl.find('[name=url]').value;
     var username = tpl.find('[name=username]').value;

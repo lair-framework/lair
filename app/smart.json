@@ -4,6 +4,7 @@
     "router": {},
     "flatstrap": {},
     "moment": {},
-    "spin": {}
+    "spin": {},
+    "filesaver": {}
   }
 }

@@ -6,7 +6,8 @@
       "router": {},
       "flatstrap": {},
       "moment": {},
-      "spin": {}
+      "spin": {},
+      "filesaver": {}
     },
     "packages": {
       "font-awesome": {
@@ -33,6 +34,11 @@
         "git": "https://github.com/SachaG/meteor-spin.git",
         "tag": "v0.2.0",
         "commit": "fd3a2871a69442848b4b4e74f5e1ae28fa4a95a4"
+      },
+      "filesaver": {
+        "git": "https://github.com/Meloncon/meteor-filesaver.git",
+        "tag": "v0.0.1",
+        "commit": "650d840d168cf9905908fbfb714cb33388321d4d"
       },
       "page-js-ie-support": {
         "git": "https://github.com/tmeasday/meteor-page-js-ie-support.git",

@@ -61,7 +61,8 @@
     <div class="modal-body">
       <div id="export-message"></div>
       {{> alerts}}
-      <p>Place a URL for an http(s) listener. The project will be exported as JSON and sent to the server.</p>
+      <p>Place a URL for an http(s) listener. The project will be exported as JSON and sent to the server.<p> 
+      <p>A local download can be performed by selecting the "Download" button below.</p>
       <br />
       <form style="text-align: center">
         <input type="text" class="span7" name="url" placeholder="HTTP(s) listener *Required"/><br />
@@ -70,6 +71,7 @@
       </form>
     </div>
     <div class="modal-footer">
+      <button id="export-local" class="btn btn-primary"><i class="fa fa-download fa-wt"></i>Download</button>
       <button id="export-project" class="btn btn-success">Export</button>
     </div>
   </div>

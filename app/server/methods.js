@@ -140,21 +140,7 @@ function exportProject(id, url, username, password) {
   if (typeof id !== 'string' || !id.match(/^[a-zA-Z0-9]{17,24}$/)) {
     throw new Meteor.Error(400, 'Invalid project id');
   }
-  // quick and dirty, this may be really slow
-  var project = Projects.findOne({_id: id});
-  var hosts = Hosts.find({"project_id": id}).fetch() || [];
-  var ports = Ports.find({"project_id": id}).fetch() || [];
-  var vulnerabilities = Vulnerabilities.find({"project_id": id}).fetch() || [];
-  hosts.forEach(function(host) {
-    host.ports = [];
-    ports.forEach(function(port) {
-      if (port.host_id === host._id) {
-        host.ports.push(port);
-      }
-    });
-  });
-  project.hosts = hosts;
-  project.vulnerabilities = vulnerabilities;
+  var project = prepareExport(id);
   var result = null;
   if (username && password) {
     project.username = username;
