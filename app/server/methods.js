@@ -908,7 +908,7 @@ function addVulnerability(id, title, cvss, description, evidence, solution) {
   if (typeof id !== 'string' || !id.match(/^[a-zA-Z0-9]{17,24}$/)) {
     throw new Meteor.Error(400, 'Invalid project id');
   }
-  if (typeof title !== 'string') {
+  if (typeof title !== 'string' || title === "") {
     throw new Meteor.Error(400, 'Invalid title');
   }
   cvss = parseFloat(cvss);
