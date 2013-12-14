@@ -56,7 +56,7 @@ Template.hostServiceList.services = function() {
       {"last_modified_by": {$regex: search, "$options": "i"}}
     ];
   }
-  return Ports.find(query, {"limit": limit, "port": 1}).fetch();
+  return Ports.find(query, {"limit": limit, sort: {"port": 1}}).fetch();
 };
 
 Template.hostServiceList.searchTerm = function() {
