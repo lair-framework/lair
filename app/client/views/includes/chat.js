@@ -4,10 +4,10 @@
 Template.chat.messages = function() {
   var project = Projects.findOne(Session.get("projectId"));
   if (!project) {
-    return {};
+    return [];
   }
   if (!project.messages) {
-    return {};
+    return [];
   }
   return project.messages;
 };
