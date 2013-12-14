@@ -10,12 +10,12 @@
   {{else}}
   <p>
     <span class="large-font">{{project_name}}</span><span class="pull-right">
-          <a class="btn btn-primary" href="/project/{{_id}}"><i class="icon-dashboard"> </i>Load</a>
-          <a href="#exportModal" role="button" class="btn btn-success" data-toggle="modal"><i class="icon-share-alt"> </i>Export</a>
+          <a class="btn btn-primary" href="/project/{{_id}}"><i class="fa fa-dashboard fa-wt"></i>Load</a>
+          <a href="#exportModal" role="button" class="btn btn-success" data-toggle="modal"><i class="fa fa-share-alt fa-wt"></i>Export</a>
           {{#if isOwner}}
-            <a href="#removeProjectModal" role="button" data-toggle="modal"><button class="btn btn-danger"><i class="icon-trash"> </i>Delete</button></a>
+            <a href="#removeProjectModal" role="button" data-toggle="modal"><button class="btn btn-danger"><i class="fa fa-trash-o fa-wt"></i>Delete</button></a>
           {{else}}
-            <button class="btn btn-warning" id="leave-project"><i class="icon-external-link"> </i>Leave</button>
+            <button class="btn btn-warning" id="leave-project"><i class="fa fa-external-link fa-wt"></i>Leave</button>
           {{/if}}
         </span>
   </p>

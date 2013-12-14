@@ -17,7 +17,7 @@
             <button id="red" type="button" class="btn port-status-button  lair-red {{portListStatusButtonActive 'red'}}">&nbsp&nbsp&nbsp&nbsp</button>
           </div>
           <a href="{{addPortPath projectId hostId}}" class="btn btn-success">Add a service</a>
-          <button id="remove-ports" class="btn btn-danger"><i class="icon-trash"></i></button>
+          <button id="remove-ports" class="btn btn-danger"><i class="fa fa-trash-o"></i></button>
               <span class="pull-right">
                 <input type="text" id="port-search" class="search-query" placeholder="Search" {{#if searchTerm}}value="{{searchTerm}}"{{/if}}/>
                </span>
@@ -44,9 +44,9 @@
               <td><input class="port-checked" id="{{_id}}" type="checkbox" /></td>
               <td>
               {{#if flag}}
-                <i class="icon-flag flag-enabled hover-hand"></i>
+                <i class="fa fa-flag flag-enabled hover-hand"></i>
               {{else}}
-                <i class="icon-flag flag-disabled hover-hand"></i>
+                <i class="fa fa-flag-o flag-disabled hover-hand"></i>
               {{/if}}
               </td>
               <td class="{{status}}"><a class="dontstyle" href="{{serviceVulnerabilityListPath projectId _id}}">{{port}}</a></td>
