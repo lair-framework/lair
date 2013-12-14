@@ -4,7 +4,7 @@
 // constants to be utilized by clients for consistency
 // these should sync up with drones
 DOC_VERSION = '0.1.0';
-VERSION = '1.0.2';
+VERSION = '1.0.4';
 STATUS_GREY = 'lair-grey';
 STATUS_BLUE = 'lair-blue';
 STATUS_GREEN = 'lair-green';
