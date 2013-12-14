@@ -4,7 +4,7 @@
 Alerts = new Meteor.Collection(null);
 
 Template.alerts.alerts = function() {
-  return Alerts.find();
+  return Alerts.find({}).fetch();
 };
 
 Template.alerts.events({
