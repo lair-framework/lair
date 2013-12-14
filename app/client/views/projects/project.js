@@ -90,7 +90,6 @@ Template.project.events({
     var password = tpl.find('[name=password]').value;
     Meteor.call('exportProject', Session.get('projectId'), url, username, password, function(err){
       if (err) {
-        console.log(err.reason);
         return Alerts.insert({"class": "alert-error", "strong": "Error", "message": "Export Failed"});
       }
       return Alerts.insert({"class": "alert-success", "strong": "Success", "message": "Export Complete"});
@@ -99,6 +98,7 @@ Template.project.events({
 
   'click #remove-project': function() {
     return Meteor.call('removeProject', Session.get('projectId'), function(err) {
+      Session.set('projectId', null);
       if (err) {
         Alerts.insert({"class": "alert-error", "strong": "Error", "message": err.reason});
       }
@@ -107,6 +107,7 @@ Template.project.events({
 
   'click #leave-project': function() {
     return Meteor.call('removeContributor', Session.get('projectId'), Meteor.userId(), function(err) {
+      Session.set('projectId', null);
       if (err) {
         Alerts.insert({"class": "alert-error", "strong": "Error", "message": err.reason});
       }
