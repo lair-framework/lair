@@ -1212,7 +1212,8 @@ function removeHostFromVulnerabilities(id, ip) {
   }
   return Vulnerabilities.update({"project_id": id},
                                 {$pull: {"hosts": {"string_addr": ip}},
-                                 $set: {"last_modified_by": Meteor.user().emails[0].address}});
+                                 $set: {"last_modified_by": Meteor.user().emails[0].address}},
+                                 {multi: true});
 }
 
 function removePortFromVulnerabilities(id, ip, port, protocol) {
@@ -1236,7 +1237,8 @@ function removePortFromVulnerabilities(id, ip, port, protocol) {
   }
   return Vulnerabilities.update({"project_id": id},
                                 {$pull: {"hosts": {"string_addr": ip, "port": port, "protocol": protocol}},
-                                 $set: {"last_modified_by": Meteor.user().emails[0].address}});
+                                 $set: {"last_modified_by": Meteor.user().emails[0].address}},
+                                 {multi: true});
 }
 
 function addCve(id, vulnId, cve) {

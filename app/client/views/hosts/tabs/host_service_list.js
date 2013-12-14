@@ -117,7 +117,13 @@ Template.hostServiceList.events({
       }
     });
     portIds.forEach(function(id) {
-      Meteor.call('removePort', projectId, id);
+      var port = Ports.findOne(id);
+      var host = Hosts.findOne(port.host_id);
+      Meteor.call('removePort', projectId, id, function(err) {
+        if (!err) {
+          Meteor.call('removePortFromVulnerabilities', projectId, host.string_addr, port.port, port.protocol);
+        }
+      });
     });
   },
 
