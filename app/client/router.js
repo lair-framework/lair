@@ -265,6 +265,12 @@ Meteor.Router.add({
            Session.set('projectId', pid);
     }
   },
+  '/project/:pid/credentials/new': {
+    to: 'addCredentialFull',
+    and: function(pid) {
+           Session.set('projectId', pid);
+    }
+  },
 
   // contributors
   '/project/:pid/contributors': {
