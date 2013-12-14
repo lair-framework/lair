@@ -16,13 +16,16 @@ var opts = {
 
 Projects.allow({
   insert: function(userId, doc) {
-    return (allowClientSideUpdates && userId && (doc.owner === userId || doc.contributors.indexOf(userId) !== -1))
+    var allow = Settings.findOne({"setting": "allowClientSideUpdates", "enabled": true});
+    return (allow && userId && (doc.owner === userId || doc.contributors.indexOf(userId) !== -1))
   },
   update: function(userId, doc) {
-    return (allowClientSideUpdates && userId && (doc.owner === userId || doc.contributors.indexOf(userId) !== -1))
+    var allow = Settings.findOne({"setting": "allowClientSideUpdates", "enabled": true});
+    return (allow && userId && (doc.owner === userId || doc.contributors.indexOf(userId) !== -1))
   },
   remove: function(userId, doc) {
-    return (allowClientSideUpdates && userId && (doc.owner === userId || doc.contributors.indexOf(userId) !== -1))
+    var allow = Settings.findOne({"setting": "allowClientSideUpdates", "enabled": true});
+    return (allow && userId && (doc.owner === userId || doc.contributors.indexOf(userId) !== -1))
   },
   fetch: ['owner', 'contributors']
 });
