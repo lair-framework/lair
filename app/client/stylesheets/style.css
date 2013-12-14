@@ -50,7 +50,11 @@ html, body{
 }
 
 
-.host-status-button, .port-status-button, .vulnerability-status-button {
+.flag-filter {
+    border-color: rgb(149, 149, 149) !important;
+}
+
+.host-status-button, .port-status-button, .vulnerability-status-button, .flag-filter {
   width: 50px;
   height: 30px;
 }

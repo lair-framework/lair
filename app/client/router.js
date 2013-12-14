@@ -321,24 +321,27 @@ Meteor.Router.filter('clearErrors');
 function unsetVulnerabilityStatusButtons() {
   Session.set('vulnerabilitySearch', null);
   Session.set('vulnerabilityListStatusButtongrey', null);
-  Session.set('vulnerabilityListStatusButtonblue', null)
-  Session.set('vulnerabilityListStatusButtongreen', null)
-  Session.set('vulnerabilityListStatusButtonorange', null)
-  Session.set('vulnerabilityListStatusButtonred', null)
+  Session.set('vulnerabilityListStatusButtonblue', null);
+  Session.set('vulnerabilityListStatusButtongreen', null);
+  Session.set('vulnerabilityListStatusButtonorange', null);
+  Session.set('vulnerabilityListStatusButtonred', null);
+  Session.set('vulnerabilityListFlagFilter', null);
 }
 function unsetHostStatusButtons() {
   Session.set('hostListSearch', null);
   Session.set('hostListStatusButtongrey', null);
-  Session.set('hostListStatusButtonblue', null)
-  Session.set('hostListStatusButtongreen', null)
-  Session.set('hostListStatusButtonorange', null)
-  Session.set('hostListStatusButtonred', null)
+  Session.set('hostListStatusButtonblue', null);
+  Session.set('hostListStatusButtongreen', null);
+  Session.set('hostListStatusButtonorange', null);
+  Session.set('hostListStatusButtonred', null);
+  Session.set('hostListFlagFilter', null);
 }
 function unsetPortStatusButtons() {
   Session.set('portSearch', null);
   Session.set('portListStatusButtongrey', null);
-  Session.set('portListStatusButtonblue', null)
-  Session.set('portListStatusButtongreen', null)
-  Session.set('portListStatusButtonorange', null)
-  Session.set('portListStatusButtonred', null)
+  Session.set('portListStatusButtonblue', null);
+  Session.set('portListStatusButtongreen', null);
+  Session.set('portListStatusButtonorange', null);
+  Session.set('portListStatusButtonred', null);
+  Session.set('portListFlagFilter', null);
 }

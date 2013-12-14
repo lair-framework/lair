@@ -15,6 +15,11 @@
             <button id="green" type="button" class="btn port-status-button lair-green {{portListStatusButtonActive 'green'}}"></button>
             <button id="orange" type="button" class="btn port-status-button  lair-orange {{portListStatusButtonActive 'orange'}}"></button>
             <button id="red" type="button" class="btn port-status-button  lair-red {{portListStatusButtonActive 'red'}}"></button>
+            {{#if flagFilter}}
+              <button type="button" id="flag-filter-disable" class="btn flag-filter hover-hand"><i class="fa fa-flag"></i></button>
+            {{else}}
+              <button type="button" id="flag-filter-enable" class="btn flag-filter hover-hand"><i class="fa fa-flag-o"></i></button>
+            {{/if}}
           </div>
           <a href="{{addPortPath projectId hostId}}" class="btn btn-success">Add a service</a>
           <button id="remove-ports" class="btn btn-danger"><i class="fa fa-trash-o"></i></button>

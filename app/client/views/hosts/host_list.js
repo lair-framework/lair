@@ -16,9 +16,16 @@ Template.hostList.total = function() {
   return Hosts.find({"project_id": Session.get('projectId')}).count();
 };
 
+Template.hostList.flagFilter = function() {
+  return Session.get('hostListFlagFilter');
+};
+
 Template.hostList.hosts = function() {
   var limit = Session.get('hostsViewLimit') || 25;
   var query = {"project_id": Session.get('projectId'), "status": {"$in": []}};
+  if (Session.equals('hostListFlagFilter', 'enabled')) {
+    query.flag = true;
+  }
   if (!Session.equals('hostListStatusButtongrey', 'disabled')) {
     query.status.$in.push('lair-grey');
   }
@@ -73,6 +80,14 @@ Template.hostList.events({
 
   'click .flag-disabled': function() {
     return Meteor.call('enableHostFlag', Session.get('projectId'), this._id);
+  },
+
+  'click #flag-filter-enable': function() {
+    return Session.set('hostListFlagFilter', 'enabled');
+  },
+ 
+  'click #flag-filter-disable': function() {
+    return Session.set('hostListFlagFilter', null);
   },
 
   'click .host-status-button': function(event) {
