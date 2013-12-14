@@ -50,6 +50,10 @@ html, body{
 }
 
 
+.host-status-button, .port-status-button, .vulnerability-status-button {
+  width: 50px;
+  height: 30px;
+}
 /* STATUS MAPPING COLORS */
 .lair-grey {
     background-color: rgba(61, 72, 91, 0.34)!important;
