@@ -9,7 +9,7 @@ prepareExport = function(id) {
   var hosts = Hosts.find({"project_id": id}).fetch() || [];
   var vulnerabilities = Vulnerabilities.find({"project_id": id}).fetch() || [];
   hosts.forEach(function(host) {
-    host.port = Ports.find({"host_id": host._id}).fetch();
+    host.ports = Ports.find({"host_id": host._id}).fetch();
   });
   project.hosts = hosts;
   project.vulnerabilities = vulnerabilities;
