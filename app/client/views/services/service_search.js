@@ -55,14 +55,26 @@ Template.serviceSearch.events({
     return Session.set('servicesViewQuery', query);
   },
 
-  'click .port-row': function() {
+  'click .port-row': function(event, tpl) {
     var port = parseInt(this.port);
     var protocol = this.protocol;
     var service = this.service;
     var product = this.product;
     var query = {"project_id": Session.get('projectId'), "port": port, "protocol": protocol,
       "service": service, "product": product};
+    tpl.find('[name=port]').value = port;
+    tpl.find('[name=protocol]').value = protocol;
+    tpl.find('[name=service]').value = service;
+    tpl.find('[name=product]').value = product;
     return Session.set('servicesViewQuery', query);
+  },
+
+  'click #services-clear': function(event, tpl) {
+    tpl.find('[name=port]').value = '';
+    tpl.find('[name=protocol]').value = '';
+    tpl.find('[name=service]').value = '';
+    tpl.find('[name=product]').value = '';
+    return Session.set('servicesViewQuery', null);
   }
 
 });
