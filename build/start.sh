@@ -27,8 +27,15 @@ elif [ "$UNAME" = "Linux" ]; then
       echo "Run 'sudo apt-get install libssl-dev'."
       exit 1
     fi
+  elif [ -e '/etc/issue' ]; then
+    yum list installed openssl-devel &>/dev/null
+    if [ "$?" != 0 ]; then
+      echo "Lair requires openssl-devel."
+      echo "Run 'yum install openssl-devel'."
+      exit 1
+    fi
   else
-    echo "Lair only supports debian based systems for now."
+    echo "This script is not supported on this distro."
     exit 1
   fi
 fi
