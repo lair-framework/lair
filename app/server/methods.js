@@ -1166,7 +1166,7 @@ function addHostToVulnerability(id, vulnId, ip, port, protocol) {
     throw new Meteor.Error(400, 'Port not found');
   }
   return Vulnerabilities.update({"project_id": id, "_id": vulnId},
-                                {$push: {"hosts": {"string_addr": ip, "port": port, "protocol": protocol}},
+                                {$addToSet: {"hosts": {"string_addr": ip, "port": port, "protocol": protocol}},
                                  $set: {"last_modified_by": Meteor.user().emails[0].address}});
 }
 
