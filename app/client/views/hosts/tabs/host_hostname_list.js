@@ -31,7 +31,7 @@ Template.hostHostnameList.links = function() {
   var ports = Ports.find(query).fetch();
   ports.forEach(function(port) {
     var protocol = 'http://';
-    if (port.service.match(/(ssl|https)/gi)) {
+    if (port.service.match(/(ssl|https)/gi) || port.port === 443 || port.port === 8443) {
       protocol = 'https://';
     }
     linkList.push(protocol + host.string_addr + ':' + port.port);
