@@ -13,7 +13,7 @@ Template.hostOsList.fingerprints = function() {
   if (!host) {
     return false
   }
-  return host.os.sort(sortWeight);
+  return host.os.sort(sortWeight).sort(sortFingerprint);
 };
 
 Template.hostOsList.events({

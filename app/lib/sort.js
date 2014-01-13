@@ -19,6 +19,10 @@ sortWeight = function(a,b) {
   return (b.weight > a.weight) ? 1: ((a.weight > b.weight) ? -1: 0);
 };
 
+sortFingerprint = function(a,b) {
+  return (a.fingerprint > b.fingerprint) ? 1: ((b.fingerprint > a.fingerprint) ? -1: 0);
+};
+
 sortTitle = function(a,b) {
   return (b.title > a.title) ? 1: ((a.title > b.title) ? -1: 0);
 };
