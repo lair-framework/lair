@@ -4,7 +4,7 @@
 Template.hostGist.host = function() {
   var host = Hosts.findOne(Session.get('hostId'));
   if (host) {
-    host.os = host.os.sort(sortWeight)[0];
+    host.os = host.os.sort(sortFingerprint).sort(sortWeight)[0];
     return host;
   }
   return {};

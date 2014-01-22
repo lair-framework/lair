@@ -52,7 +52,7 @@ Template.hostList.hosts = function() {
   }
   var hosts = [];
   Hosts.find(query, {"sort": {"long_addr": 1}, "limit": limit}).fetch().forEach(function(host){
-    host.os = host.os.sort(sortWeight).sort(sortFingerprint)[0];
+    host.os = host.os.sort(sortFingerprint).sort(sortWeight)[0];
     hosts.push(host);
   });
   return hosts;
