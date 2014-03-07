@@ -30,16 +30,47 @@
               </tr>
             </thead>
             <tbody>
-            {{#each services}}
+              {{#each services}}
               <tr class="port-row hover-hand">
                 <td>{{port}}</td>
                 <td>{{protocol}}</td>
                 <td>{{service}}</td>
                 <td>{{product}}</td>
               </tr>
-            {{/each}}
+              {{/each}}
             </tbody>
           </table>
+          {{#if servicesWithHosts}}
+          <table class="table table-bordered">
+            <thead>
+              <tr>
+                <th class="onepix"></th>
+                <th class="onepix">IP Address</th>
+                <th class="onepix">Port</th>
+                <th class="onepix">Protocol</th>
+                <th>Last Modified By</th>
+              </tr>
+            </thead>
+            <tbody>
+              {{#each servicesWithHosts}}
+              <tr class="hover-hand">
+                <td>
+                  {{#if flag}}
+                  <i class="fa fa-flag flag-enabled hover-hand"></i>
+                  {{else}}
+                  <i class="fa fa-flag-o flag-disabled hover-hand"></i>
+                  {{/if}}
+                </td>
+                <td class="{{status}} port-status">{{string_addr}}</td>
+                <td class="{{status}}"><a class="dontstyle" href="{{serviceVulnerabilityListPath projectId _id}}">{{port}}</a>
+                </td>
+                <td class="{{status}} port-status">{{protocol}}</td>
+                <td class="{{status}}} port-status">{{last_modified_by}}</td>
+              </tr>
+              {{/each}}
+            </tbody>
+          </table>
+          {{/if}}
         </div>
         <div class="span6">
           <p style="padding-left: 7px">Hosts</p>
@@ -47,4 +78,5 @@
         </div>
       </div>
     </div>
+  </div>
 </template>
