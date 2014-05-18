@@ -117,6 +117,13 @@ if [[ $REPLY =~ ^[Yy]$ ]]; then
   LAIRMONGOUSER=$REPLY
   read -p "Enter password: " -e -s -r
   LAIRMONGOPASS=$REPLY
+  if [[ $LAIRMONGOPASS =~ ^.*[@:/?=].*$ ]]; then
+    echo;
+    echo "Error: Invalid character detected. Passwords cannot contain the following chars: @:/?=";
+    echo "Run db.changeUserPassword command from the mongo shell to choose a new password";
+    ./stop.sh &>/dev/null
+    exit 1;
+  fi
 else
   read -p "Enter a new mongodb administrative user: " -e -r
   MONGOADMINUSER=$REPLY 
@@ -136,6 +143,12 @@ else
   LAIRMONGOUSER=$REPLY
   read -p "Enter password: " -e -s -r
   LAIRMONGOPASS=$REPLY
+  if [[ $LAIRMONGOPASS =~ ^.*[@:/?=].*$ ]]; then
+    echo;
+    echo "Error: Invalid character detected. Passwords cannot contain the following chars: @:/?=";
+    ./stop.sh &>/dev/null
+    exit 1;
+  fi
   echo "db = db.getSiblingDB('lair')" > lair.js
   echo "db.addUser({ user: \"$LAIRMONGOUSER\", pwd: \"$LAIRMONGOPASS\", roles: [\"readWrite\", \"dbAdmin\"]})" >> lair.js
   ./deps/mongodb/bin/mongo --port 11015 admin -u $MONGOADMINUSER -p $MONGOADMINPASS lair.js 2>error.log

@@ -9,6 +9,11 @@ read -p 'Enter new username: ' -e -r
 NEWUSER=$REPLY
 read -p 'Enter password: ' -e -s -r
 NEWPASS=$REPLY 
+if [[ $NEWPASS =~ ^.*[@:/?=].*$ ]]; then
+    echo;
+    echo "Error: Invalid character detected. Passwords cannot contain the following chars: @:/?=";
+    exit 1;
+fi
 echo "db = db.getSiblingDB('lair')" > tmp.js
 echo "db.addUser({ user: \"$NEWUSER\", pwd: \"$NEWPASS\", roles: [\"readWrite\"]})" >> tmp.js
 ./deps/mongodb/bin/mongo --port 11015 admin -u $MONGOADMINUSER -p $MONGOADMINPASS tmp.js 1>/dev/null 2>error.log
