@@ -191,6 +191,13 @@ Meteor.Router.add({
            Session.set('projectId', pid);
     }
   },
+  '/project/:pid/services/:sid/vulnerabilities/new': {
+    to: 'addServiceVulnerability',
+    and: function(pid, sid) {
+           Session.set('projectId', pid);
+           Session.set('portId', sid);
+    }
+  },
   '/project/:pid/vulnerabilities/:vid': {
     to: 'vulnerabilityDescription',
     and: function(pid, vid) {

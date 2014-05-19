@@ -47,6 +47,7 @@ Meteor.methods({
   'disablePortFlag': disablePortFlag,
   // vulnerabilities collection functions
   'addVulnerability': addVulnerability,
+  'addServiceVulnerability': addServiceVulnerability,
   'removeVulnerability': removeVulnerability,
   'setVulnerabilityStatus': setVulnerabilityStatus,
   'setVulnerabilityTitle': setVulnerabilityTitle,
@@ -955,6 +956,63 @@ function addVulnerability(id, title, cvss, description, evidence, solution) {
   vuln.cvss = cvss;
   vuln.project_id = id;
   vuln.last_modified_by = Meteor.user().emails[0].address;
+  vuln.identified_by.push({'tool': 'Manual'});
+  var plugin = models.plugin_id(title);
+  plugin.tool = 'Manual';
+  vuln.plugin_ids.push(plugin);
+  if (description) {
+    vuln.description = description;
+  }
+  if (evidence) {
+    vuln.evidence = evidence;
+  }
+  if (solution) {
+    vuln.solution = solution;
+  }
+  return Vulnerabilities.insert(vuln);
+}
+
+function addServiceVulnerability(id, portId, title, cvss, description, evidence, solution) {
+
+  if (typeof id === 'undefined' || typeof portId === 'undefined' || typeof title === 'undefined' || typeof cvss === 'undefined') {
+    throw new Meteor.Error(400, 'Missing required argument');
+  }
+  if (typeof id !== 'string' || !id.match(/^[a-zA-Z0-9]{17,24}$/)) {
+    throw new Meteor.Error(400, 'Invalid project id');
+  }
+  if (typeof portId !== 'string' || !portId.match(/^[a-zA-Z0-9]{17,24}$/)) {
+    throw new Meteor.Error(400, 'Invalid port id');
+  }
+  if (typeof title !== 'string' || title === "") {
+    throw new Meteor.Error(400, 'Invalid title');
+  }
+  if (!authorize(id, this.userId)) {
+    throw new Meteor.Error(403, 'Access Denied');
+  }
+  var port = Ports.findOne({"project_id": id, "_id": portId});
+  if (!port) {
+    throw new Meteor.Error(400, 'Port not found ' + port);
+  }
+  var host = Hosts.findOne({"project_id": id, "_id": port.host_id});
+  if (!host) {
+    throw new Meteor.Error(400, 'Host not found');
+  }
+  var vuln = Vulnerabilities.findOne({"project_id": id, "title": title});
+  if (vuln) {
+    return Vulnerabilities.update({"project_id": id, "_id": vuln._id},
+                                  {$addToSet: {"hosts": {"string_addr": host.string_addr, "port": port.port, "protocol": port.protocol}},
+                                  $set: {"last_modified_by": Meteor.user().emails[0].address}});
+  }
+  cvss = parseFloat(cvss);
+  if (isNaN(cvss) || cvss > 10.0 || cvss < 0.01) {
+    throw new Meteor.Error(400, 'Invalid cvss');
+  }
+  var vuln = models.vulnerability();
+  vuln.title = title;
+  vuln.cvss = cvss;
+  vuln.project_id = id;
+  vuln.last_modified_by = Meteor.user().emails[0].address;
+  vuln.hosts.push({'string_addr': host.string_addr, 'protocol': port.protocol, 'port': port.port});
   vuln.identified_by.push({'tool': 'Manual'});
   var plugin = models.plugin_id(title);
   plugin.tool = 'Manual';
