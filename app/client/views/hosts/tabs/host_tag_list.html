@@ -1,0 +1,45 @@
+<template name="hostTagList">
+  <div class="row-fluid">
+    <div class="span2">
+      {{> sideNav}}
+    </div>
+    <div class="span10">
+      {{> alerts}}
+      {{> hostGist}}
+      {{> hostNav}}
+      <div class="row-fluid">
+        <div class="span12">
+          <button class="btn btn-danger" id="remove-tags"><i class="fa fa-trash-o"></i></button>
+        </div>
+      </div>
+      <br />
+      <div class="row-fluid">
+        <div class="span6">
+          <table class="table table-bordered table-striped">
+            <thead>
+            <tr>
+              <th class="onepix"></th>
+              <th>Tag</th>
+            </tr>
+            </thead>
+            <tbody>
+            {{#each tags}}
+            <tr>
+              <td><input class="tag-checked" id="{{this}}" type="checkbox" /></td>
+              <td>{{this}}</td>
+            </tr>
+            {{/each}}
+            </tbody>
+          </table>
+        </div>
+        <div class="span3">
+          <form>
+            <p>Add a new Tag</p>
+            <input type="text" name="tag" class="input-block-level" placeholder="Tag" />
+            <button type="submit" class="btn btn-primary btn-block">Submit</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</template>

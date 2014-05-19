@@ -159,6 +159,13 @@ Meteor.Router.add({
            Session.set('hostId', hid);
     }
   },
+  '/project/:pid/hosts/:vid/tags': {
+    to: 'hostTagList',
+    and: function(pid, vid) {
+           Session.set('projectId', pid);
+           Session.set('hostId', vid);
+    }
+  },
 
   // service search
   '/project/:pid/services': {
@@ -246,6 +253,13 @@ Meteor.Router.add({
            Session.set('projectId', pid);
            Session.set('vulnerabilityId', vid);
            Session.set('noteTitle', null);
+    }
+  },
+  '/project/:pid/vulnerabilities/:vid/tags': {
+    to: 'vulnerabilityTagList',
+    and: function(pid, vid) {
+           Session.set('projectId', pid);
+           Session.set('vulnerabilityId', vid);
     }
   },
 

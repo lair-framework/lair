@@ -47,7 +47,8 @@ Template.hostList.hosts = function() {
       {"string_addr": {"$regex": search, "$options": "i"}},
       {"os.fingerprint": {"$regex": search, "$options": "i"}},
       {"hostnames": {$regex: search, "$options": "i"}},
-      {"last_modified_by": {$regex: search, "$options": "i"}}
+      {"last_modified_by": {$regex: search, "$options": "i"}},
+      {"tags": search}
     ];
   }
   var hosts = [];

@@ -22,6 +22,8 @@ Meteor.methods({
   'setHostStatus': setHostStatus,
   'addHostname': addHostname,
   'removeHostname': removeHostname,
+  'addHostTag': addHostTag,
+  'removeHostTag': removeHostTag,
   'addHostOs': addHostOs,
   'removeHostOs': removeHostOs,
   'setOsWeight': setOsWeight,
@@ -63,6 +65,8 @@ Meteor.methods({
   'disableVulnerabilityFlag': disableVulnerabilityFlag,
   'addCve': addCve,
   'removeCve': removeCve,
+  'addVulnerabilityTag': addVulnerabilityTag,
+  'removeVulnerabilityTag': removeVulnerabilityTag,
   // users
   'createLairUser': createLairUser,
   'removeLairUser': removeLairUser,
@@ -428,6 +432,48 @@ function removeHostname(id, hostId, hostname) {
   }
   return Hosts.update({"project_id": id, "_id": hostId},
                       {$pull: {"hostnames": hostname},
+                       $set: {"last_modified_by": Meteor.user().emails[0].address}});
+}
+
+function addHostTag(id, hostId, tag) {
+  if (typeof id === 'undefined' || typeof hostId === 'undefined' || typeof tag === 'undefined') {
+    throw new Meteor.Error(400, 'Missing required argument');
+  }
+  if (typeof id !== 'string' || !id.match(/^[a-zA-Z0-9]{17,24}$/)) {
+    throw new Meteor.Error(400, 'Invalid project id');
+  }
+  if (typeof hostId !== 'string' || !hostId.match(/^[a-zA-Z0-9]{17,24}$/)) {
+    throw new Meteor.Error(400, 'Invalid host id');
+  }
+  if (typeof tag !== 'string') {
+    throw new Meteor.Error(400, 'Invalid tag');
+  }
+  if (!authorize(id, this.userId)) {
+    throw new Meteor.Error(403, 'Access Denied');
+  }
+  return Hosts.update({"project_id": id, "_id": hostId},
+                      {$addToSet: {"tags": tag},
+                       $set: {"last_modified_by": Meteor.user().emails[0].address}});
+}
+
+function removeHostTag(id, hostId, tag) {
+  if (typeof id === 'undefined' || typeof hostId === 'undefined' || typeof tag === 'undefined') {
+    throw new Meteor.Error(400, 'Missing required argument');
+  }
+  if (typeof id !== 'string' || !id.match(/^[a-zA-Z0-9]{17,24}$/)) {
+    throw new Meteor.Error(400, 'Invalid project id');
+  }
+  if (typeof hostId !== 'string' || !hostId.match(/^[a-zA-Z0-9]{17,24}$/)) {
+    throw new Meteor.Error(400, 'Invalid host id');
+  }
+  if (typeof tag !== 'string') {
+    throw new Meteor.Error(400, 'Invalid tag');
+  }
+  if (!authorize(id, this.userId)) {
+    throw new Meteor.Error(403, 'Access Denied');
+  }
+  return Hosts.update({"project_id": id, "_id": hostId},
+                      {$pull: {"tags": tag},
                        $set: {"last_modified_by": Meteor.user().emails[0].address}});
 }
 
@@ -1280,6 +1326,48 @@ function removeCve(id, vulnId, cve) {
   }
   return Vulnerabilities.update({"project_id": id, "_id": vulnId},
                                 {$pull: {"cves": cve},
+                                 $set: {"last_modified_by": Meteor.user().emails[0].address}});
+}
+
+function addVulnerabilityTag(id, vulnId, tag) {
+  if (typeof id === 'undefined' || typeof vulnId === 'undefined' || typeof tag === 'undefined') {
+    throw new Meteor.Error(400, 'Missing required argument');
+  }
+  if (typeof id !== 'string' || !id.match(/^[a-zA-Z0-9]{17,24}$/)) {
+    throw new Meteor.Error(400, 'Invalid project id');
+  }
+  if (typeof vulnId !== 'string' || !vulnId.match(/^[a-zA-Z0-9]{17,24}$/)) {
+    throw new Meteor.Error(400, 'Invalid vulnerability id');
+  }
+  if (typeof tag !== 'string') {
+    throw new Meteor.Error(400, 'Invalid tag');
+  }
+  if (!authorize(id, this.userId)) {
+    throw new Meteor.Error(403, 'Access Denied');
+  }
+  return Vulnerabilities.update({"project_id": id, "_id": vulnId},
+                                {$addToSet: {"tags": tag},
+                                 $set: {"last_modified_by": Meteor.user().emails[0].address}});
+}
+ 
+function removeVulnerabilityTag(id, vulnId, tag) {
+  if (typeof id === 'undefined' || typeof vulnId === 'undefined' || typeof tag === 'undefined') {
+    throw new Meteor.Error(400, 'Missing required argument');
+  }
+  if (typeof id !== 'string' || !id.match(/^[a-zA-Z0-9]{17,24}$/)) {
+    throw new Meteor.Error(400, 'Invalid project id');
+  }
+  if (typeof vulnId !== 'string' || !vulnId.match(/^[a-zA-Z0-9]{17,24}$/)) {
+    throw new Meteor.Error(400, 'Invalid vulnerability id');
+  }
+  if (typeof tag !== 'string') {
+    throw new Meteor.Error(400, 'Invalid tag');
+  }
+  if (!authorize(id, this.userId)) {
+    throw new Meteor.Error(403, 'Access Denied');
+  }
+  return Vulnerabilities.update({"project_id": id, "_id": vulnId},
+                                {$pull: {"tags": tag},
                                  $set: {"last_modified_by": Meteor.user().emails[0].address}});
 }
 
