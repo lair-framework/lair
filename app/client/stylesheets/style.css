@@ -49,6 +49,10 @@ html, body{
     font-size: 20px;
 }
 
+.lair-green-text {
+    color: green;
+}
+
 
 .flag-filter {
     border-color: rgb(149, 149, 149) !important;

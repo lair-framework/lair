@@ -64,6 +64,8 @@ Meteor.methods({
   'removePortFromVulnerabilities': removePortFromVulnerabilities,
   'enableVulnerabilityFlag': enableVulnerabilityFlag,
   'disableVulnerabilityFlag': disableVulnerabilityFlag,
+  'enableVulnerabilityConfirmed': enableVulnerabilityConfirmed,
+  'disableVulnerabilityConfirmed': disableVulnerabilityConfirmed,
   'addCve': addCve,
   'removeCve': removeCve,
   'addVulnerabilityTag': addVulnerabilityTag,
@@ -1455,6 +1457,34 @@ function disableVulnerabilityFlag(id, vulnId) {
   }
   var email = Meteor.user().emails[0].address;
   return Vulnerabilities.update({"project_id": id, "_id": vulnId}, {$set: {"flag": false, "last_modified_by": email}});
+}
+
+function enableVulnerabilityConfirmed(id, vulnId) {
+  if (typeof id === 'undefined' || typeof vulnId === 'undefined') {
+    throw new Meteor.Error(400, 'Missing required argument');
+  }
+  if (typeof id !== 'string' || !id.match(/^[a-zA-Z0-9]{17,24}$/)) {
+    throw new Meteor.Error(400, 'Invalid project id');
+  }
+  if (typeof vulnId !== 'string' || !vulnId.match(/^[a-zA-Z0-9]{17,24}$/)) {
+    throw new Meteor.Error(400, 'Invalid vulnerability id');
+  }
+  var email = Meteor.user().emails[0].address;
+  return Vulnerabilities.update({"project_id": id, "_id": vulnId}, {$set: {"confirmed": true, "last_modified_by": email}});
+}
+
+function disableVulnerabilityConfirmed(id, vulnId) {
+  if (typeof id === 'undefined' || typeof vulnId === 'undefined') {
+    throw new Meteor.Error(400, 'Missing required argument');
+  }
+  if (typeof id !== 'string' || !id.match(/^[a-zA-Z0-9]{17,24}$/)) {
+    throw new Meteor.Error(400, 'Invalid project id');
+  }
+  if (typeof vulnId !== 'string' || !vulnId.match(/^[a-zA-Z0-9]{17,24}$/)) {
+    throw new Meteor.Error(400, 'Invalid vulnerability id');
+  }
+  var email = Meteor.user().emails[0].address;
+  return Vulnerabilities.update({"project_id": id, "_id": vulnId}, {$set: {"confirmed": false, "last_modified_by": email}});
 }
 
 function createLairUser(email, password, isAdmin) {
