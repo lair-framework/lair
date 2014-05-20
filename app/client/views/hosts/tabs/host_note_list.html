@@ -15,36 +15,50 @@
       </div>
       <br />
       <div class="row-fluid">
-        <div class="span6">
+        <div class="span7">
           <table class="table table-bordered table-striped">
             <thead>
             <tr>
               <th class="onepix"></th>
               <th>Title</th>
+              <th>Service</th>
               <th>Last Modified By</th>
             </tr>
             </thead>
             <tbody>
             {{#each notes}}
             <tr>
+              {{#if port}}
+              <td><input class="service-note-checked" id="{{title}}" data-port="{{id}}" type="checkbox" /></td>
+              <td class="hover-hand service-note">{{title}}</td>
+              <td class="hover-hand service-note">{{port}}/{{protocol}}</td>
+              <td class="hover-hand service-note">{{last_modified_by}}</td>
+              {{else}}
               <td><input class="note-checked" id="{{title}}" type="checkbox" /></td>
               <td class="hover-hand host-note">{{title}}</td>
+              <td class="hover-hand host-note">N/A</td>
               <td class="hover-hand host-note">{{last_modified_by}}</td>
+              {{/if}}
             </tr>
             {{/each}}
             </tbody>
           </table>
         </div>
-        <div class="span6">
+        <div class="span5">
           {{#if note}}
           <form>
             <p class="medium-font" style="padding-left: 5px">{{note.title}}</p>
+            {{#if note.port}}
+            <p class="medium-font" style="padding-left: 5px">{{note.port}}/{{note.protocol}}</p>
+            {{/if}}
             <textarea name="content" class="span12" rows="15">{{note.content}}</textarea>
             <button type="submit" class="btn btn-primary" id="save-note">Save</button>
           </form>
           {{else}}
           <form>
             <input type="text" name="title" placeholder="Title" class="input-block-level" />
+            <input type="text" name="port" placeholder="Port" class="input-block-level" />
+            <input type="text" name="protocol" placeholder="Protocol" class="input-block-level" />
             <textarea class="span12" rows="15" name="content" placeholder="Content"></textarea>
             <button type="submit" class="btn btn-primary">Save</button>
           </form>
