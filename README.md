@@ -40,12 +40,7 @@ You can install the drones to PATH with pip
         
 
 ##Contact##
-If you need assistance with installation, usage, or are interested in contributing, please contact either Dan Kottmann or Tom Steele at any of the below. IRC is the best way to get a quick response.
-
-Tom Steele
-- tom@huptwo34.com
-- [@_tomsteele](https://twitter.com/_tomsteele)
-- freenode: hydrawat
+If you need assistance with installation, usage, or are interested in contributing, please contact Dan Kottmann at any of the below.
 
 Dan Kottmann
 - [@djkottmann](https://twitter.com/djkottmann)
