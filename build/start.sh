@@ -130,7 +130,7 @@ else
   read -p "Enter password for administrative user: " -s -e -r
   MONGOADMINPASS=$REPLY
   echo "db = db.getSiblingDB('admin')" > admin.js
-  echo "db.addUser({user: \"$MONGOADMINUSER\", pwd: \"$MONGOADMINPASS\", roles: [\"userAdminAnyDatabase\"]})" >> admin.js
+  echo "db.createUser({user: \"$MONGOADMINUSER\", pwd: \"$MONGOADMINPASS\", roles: [\"userAdminAnyDatabase\"]})" >> admin.js
   ./deps/mongodb/bin/mongo --port 11015 admin admin.js 2>error.log
   rm admin.js
   if [ "$?" != 0 ]; then
@@ -150,7 +150,7 @@ else
     exit 1;
   fi
   echo "db = db.getSiblingDB('lair')" > lair.js
-  echo "db.addUser({ user: \"$LAIRMONGOUSER\", pwd: \"$LAIRMONGOPASS\", roles: [\"readWrite\", \"dbAdmin\"]})" >> lair.js
+  echo "db.createUser({ user: \"$LAIRMONGOUSER\", pwd: \"$LAIRMONGOPASS\", roles: [\"readWrite\", \"dbAdmin\"]})" >> lair.js
   ./deps/mongodb/bin/mongo --port 11015 admin -u $MONGOADMINUSER -p $MONGOADMINPASS lair.js 2>error.log
   rm lair.js
   if [ "$?" != 0 ]; then

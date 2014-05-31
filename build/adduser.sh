@@ -15,7 +15,7 @@ if [[ $NEWPASS =~ ^.*[@:/?=].*$ ]]; then
     exit 1;
 fi
 echo "db = db.getSiblingDB('lair')" > tmp.js
-echo "db.addUser({ user: \"$NEWUSER\", pwd: \"$NEWPASS\", roles: [\"readWrite\"]})" >> tmp.js
+echo "db.createUser({ user: \"$NEWUSER\", pwd: \"$NEWPASS\", roles: [\"readWrite\"]})" >> tmp.js
 ./deps/mongodb/bin/mongo --port 11015 admin -u $MONGOADMINUSER -p $MONGOADMINPASS tmp.js 1>/dev/null 2>error.log
 rm tmp.js
 if [ "$?" != 0 ]; then
