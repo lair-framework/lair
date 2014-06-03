@@ -75,7 +75,8 @@ Meteor.methods({
   'removeLairUser': removeLairUser,
   'changeLairUserPassword': changeLairUserPassword,
   // settings
-  'toggleClientSideUpdates': toggleClientSideUpdates
+  'toggleClientSideUpdates': toggleClientSideUpdates,
+  'togglePersistViewFilters': togglePersistViewFilters
 });
 
 //
@@ -1561,5 +1562,21 @@ function toggleClientSideUpdates() {
   }
   else {
     return Settings.update({"setting": "allowClientSideUpdates"}, {"$set": {"enabled": false}});
+  }
+}
+
+function togglePersistViewFilters() {
+  if (!Meteor.user().isAdmin) {
+    throw new Meteor.Error(403, 'Access Denied');
+  }
+  var setting = Settings.findOne({"setting": "persistViewFilters"});
+  if (typeof setting == 'undefined') {
+    return Settings.insert({"setting": "persistViewFilters", "enabled": true});
+  }
+  else if (setting.enabled === false) {
+    return Settings.update({"setting": "persistViewFilters"}, {"$set": {"enabled": true}});
+  }
+  else {
+    return Settings.update({"setting": "persistViewFilters"}, {"$set": {"enabled": false}});
   }
 }

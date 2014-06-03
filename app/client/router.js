@@ -23,9 +23,8 @@ Meteor.Router.add({
   '/project/:pid': {
      to: 'hostList',
      and: function(pid) {
-            Session.set('hostsViewLimit', 25);
             Session.set('projectId', pid);
-            unsetHostStatusButtons();
+            applyHostFilter();
      }
   },
 
@@ -33,9 +32,8 @@ Meteor.Router.add({
   '/project/:pid/hosts': {
     to:  'hostList',
     and: function(pid) {
-           Session.set('hostsViewLimit', 25);
            Session.set('projectId', pid);
-           unsetHostStatusButtons();
+           applyHostFilter();
     }
   },
   '/project/:pid/hosts/new': {
@@ -49,8 +47,7 @@ Meteor.Router.add({
     and: function(pid, hid) {
            Session.set('projectId', pid);
            Session.set('hostId', hid);
-           Session.set('hostServiceLimit', 25);
-           unsetPortStatusButtons();
+           applyPortFilter();
     }
   },
   '/project/:pid/hosts/:hid/services': {
@@ -58,8 +55,7 @@ Meteor.Router.add({
     and: function(pid, hid) {
            Session.set('projectId', pid);
            Session.set('hostId', hid);
-           Session.set('hostServiceLimit', 25);
-           unsetPortStatusButtons();
+           applyPortFilter();
     }
   },
   '/project/:pid/hosts/:hid/services/new': {
@@ -75,7 +71,7 @@ Meteor.Router.add({
     and: function(pid, sid) {
            Session.set('projectId', pid);
            Session.set('portId', sid);
-           unsetVulnerabilityStatusButtons();
+           applyVulnerabilityFilter();
     }
   },
   '/project/:pid/services/:sid/vulnerabilities': {
@@ -83,7 +79,7 @@ Meteor.Router.add({
     and: function(pid, sid) {
            Session.set('projectId', pid);
            Session.set('portId', sid);
-           unsetVulnerabilityStatusButtons();
+           applyVulnerabilityFilter();
     }
   },
   '/project/:pid/services/:sid/notes': {
@@ -113,7 +109,7 @@ Meteor.Router.add({
     and: function(pid, hid) {
            Session.set('projectId', pid);
            Session.set('hostId', hid);
-           unsetVulnerabilityStatusButtons();
+           applyVulnerabilityFilter();
     }
   },
   '/project/:pid/hosts/:hid/os': {
@@ -181,8 +177,7 @@ Meteor.Router.add({
     to: 'vulnerabilityList',
     and: function(pid) {
            Session.set('projectId', pid);
-           Session.set('vulnerabilityViewLimit', 25);
-           unsetVulnerabilityStatusButtons();
+           applyVulnerabilityFilter();
     }
   },
   '/project/:pid/vulnerabilities/new': {
@@ -338,6 +333,28 @@ Meteor.Router.filters({
 });
 Meteor.Router.filter('requireLogin');
 Meteor.Router.filter('clearErrors');
+
+function applyVulnerabilityFilter() {
+  var persist = Settings.findOne({"setting": "persistViewFilters", "enabled": true});
+  if(!persist) {
+      unsetVulnerabilityStatusButtons();
+      Session.set('vulnerabilityViewLimit', 25);
+  }
+}
+function applyHostFilter() {
+  var persist = Settings.findOne({"setting": "persistViewFilters", "enabled": true});
+  if(!persist) {
+      unsetHostStatusButtons();
+      Session.set('hostsViewLimit', 25);
+  }
+}
+function applyPortFilter() {
+  var persist = Settings.findOne({"setting": "persistViewFilters", "enabled": true});
+  if(!persist) {
+      unsetPortStatusButtons();
+      Session.set('hostServiceLimit', 25);
+  }
+}
 
 function unsetVulnerabilityStatusButtons() {
   Session.set('vulnerabilitySearch', null);

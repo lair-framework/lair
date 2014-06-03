@@ -89,7 +89,7 @@ Template.hostServiceList.events({
 
   'click .port-status-button': function(event) {
     var id = 'portListStatusButton' + event.target.id;
-    if (Session.equals(id, null)) {
+    if (Session.equals(id, null) || typeof Session.get(id) === 'undefined') {
       return Session.set(id, 'disabled');
     }
     return Session.set(id, null);

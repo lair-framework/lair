@@ -9,6 +9,12 @@
       {{else}}
         <li><a href="#confirmAllowClientSideUpdates" role="button" class="btn btn-primary btn-block disabled hover-hand" data-toggle="modal">Allow client-side updates</a></li>
       {{/if}}
+      <br/>
+      {{#if persistViewFilters}}
+        <li><button class="btn btn-primary btn-block hover-hand toggle-persist-view-filters">Remove view filter persistence</button></li>
+      {{else}}
+        <li><a href="#confirmPersistViewFilters" role="button" class="btn btn-primary btn-block disabled hover-hand" data-toggle="modal">Allow view filter persistence</a></li>
+      {{/if}}
       </ul>
     </div>
   </div>
@@ -21,6 +27,18 @@
     </div>
     <div class="modal-footer">
       <button class="btn btn-danger toggle-client-side-updates" data-dismiss="modal">Confirm</button>
+      <button class="btn" data-dismiss="modal">Cancel</button>
+    </div>
+  </div>
+  <div id="confirmPersistViewFilters" class="modal hide fade">
+    <div class="modal-header">
+      <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+    </div>
+    <div class="modal-body">
+        <p>Are you sure you want to enable this feature? By enabling this feature you will be be persisting view filters (i.e. status filters, count filters, etc.) across page loads. This can make it easier for you to overlook items of a certain status in the event that you forget this feature is enabled.</p>
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-danger toggle-persist-view-filters" data-dismiss="modal">Confirm</button>
       <button class="btn" data-dismiss="modal">Cancel</button>
     </div>
   </div>
