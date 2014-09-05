@@ -1,4 +1,4 @@
-// Copyright (c) 2013 Tom Steele, Dan Kottmann, FishNet Security
+// Copyright (c) 2014 Tom Steele, Dan Kottmann, FishNet Security
 // See the file license.txt for copying permission
 Template.hostList.projectId = function() {
   return Session.get('projectId');
@@ -100,7 +100,7 @@ Template.hostList.events({
   },
 
   'keyup #host-list-search': function(event, tpl)  {
-    Session.set('hostListSearch', escapeRegex(tpl.find('#host-list-search').value));
+    Session.set('hostListSearch', tpl.find('#host-list-search').value);
   },
 
   'click .host-status': function() {

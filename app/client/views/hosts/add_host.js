@@ -1,4 +1,4 @@
-// Copyright (c) 2013 Tom Steele, Dan Kottmann, FishNet Security
+// Copyright (c) 2014 Tom Steele, Dan Kottmann, FishNet Security
 // See the file license.txt for copying permission
 
 Template.addHost.events({
@@ -19,7 +19,7 @@ Template.addHost.events({
       if (fingerprint) {
         Meteor.call('addHostOs', projectId, res, 'Manual', fingerprint, 100);
       }
-      return Meteor.Router.to('/project/' + projectId + '/hosts/' + res);
+      return Router.go('/project/' + projectId + '/hosts/' + res);
     });
   }
 });

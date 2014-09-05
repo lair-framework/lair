@@ -1,4 +1,4 @@
-// Copyright (c) 2013 Tom Steele, Dan Kottmann, FishNet Security
+// Copyright (c) 2014 Tom Steele, Dan Kottmann, FishNet Security
 // See the file license.txt for copying permission
 
 Template.addCredential.events({
@@ -13,7 +13,7 @@ Template.addCredential.events({
       if (err) {
         return Alerts.insert({"class": "alert-error", "strong": "Error", "message": err.reason});
       }
-      return Meteor.Router.to('/project/' + projectId + '/services/' + portId + '/credentials');
+      return Router.go('/project/' + projectId + '/services/' + portId + '/credentials');
     });
   }
 });

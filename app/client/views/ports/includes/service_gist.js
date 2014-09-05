@@ -1,4 +1,4 @@
-// Copyright (c) 2013 Tom Steele, Dan Kottmann, FishNet Security
+// Copyright (c) 2014 Tom Steele, Dan Kottmann, FishNet Security
 // See the file license.txt for copying permission
 
 Template.serviceGist.projectId = function() {
@@ -47,7 +47,7 @@ Template.serviceGist.events({
     if (i < 0) {
       i = ports.length - 1;
     }
-    return Meteor.Router.to('/project/' + projectId + '/services/' + ports[i]._id);
+    return Router.go('/project/' + projectId + '/services/' + ports[i]._id);
   },
 
   'click #next-port': function() {
@@ -61,7 +61,7 @@ Template.serviceGist.events({
     if (i >= ports.length) {
       i = 0;
     }
-    return Meteor.Router.to('/project/' + projectId + '/services/' + ports[i]._id);
+    return Router.go('/project/' + projectId + '/services/' + ports[i]._id);
   },
 
   'click #remove-port': function() {
@@ -72,7 +72,7 @@ Template.serviceGist.events({
     Meteor.call('removePort', projectId, portId, function(err) {
       if (!err) {
         Meteor.call('removePortFromVulnerabilities', projectId, host.string_addr, port.port, port.protocol);
-        Meteor.Router.to('/project/' + projectId + '/hosts/' + host._id);
+        Router.go('/project/' + projectId + '/hosts/' + host._id);
       }
     });
   },

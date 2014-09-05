@@ -17,10 +17,10 @@
             {{else}}
               <button type="button" id="flag-filter-enable" class="btn flag-filter hover-hand"><i class="fa fa-flag-o"></i></button>
             {{/if}}
-          </div>
-          <a class="btn btn-success" href="{{addHostPath projectId}}">Add a host</a>
-          <span class="pull-right">
-            <input id="host-list-search" type="text" class="search-query" placeholder="Search" {{#if searchTerm}} value="{{searchTerm}}" {{/if}} />
+        </div>
+        <a class="btn btn-success" href="/project/{{projectId}}/hosts/new">Add a host</a>
+        <span class="pull-right">
+            <input id="host-list-search" type="text" class="search-query" placeholder="Search" value="{{searchTerm}}" />
           </span>
         </div>
       </div>
@@ -28,7 +28,7 @@
       <div class="row-fluid">
       {{#if loading}}
         {{> spinner}}
-      {{else}}
+        {{else}}
         <div class="span12">
           <table class="table table-bordered">
             <thead>
@@ -49,8 +49,8 @@
               {{else}}
                 <i class="fa fa-flag-o flag-disabled hover-hand"></i>
               {{/if}}
-              </td>
-              <td class="{{status}}"><a class="dontstyle" href="{{hostServiceListPath projectId _id}}">{{string_addr}}</a></td>
+          </td>
+          <td class="{{status}}"><a class="dontstyle" href="/project/{{projectId}}/hosts/{{_id}}">{{string_addr}}</a></td>
               <td class="hover-hand host-status {{status}}">{{hostnames.[0]}}</td>
               <td class="hover-hand host-status {{status}}">{{os.fingerprint}}</td>
               <td class="hover-hand host-status {{status}}">{{last_modified_by}}</td>
@@ -59,8 +59,8 @@
             </tbody>
           </table>
         </div>
+        {{/if}}
       </div>
-      {{/if}}
       <div class="row-fluid">
         <div class="span6">
           <p>Displaying {{hosts.length}} of {{total}} rows.</p>

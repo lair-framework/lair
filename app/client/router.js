@@ -1,338 +1,398 @@
-// Copyright (c) 2013 Tom Steele, Dan Kottmann, FishNet Security
+// Copyright (c) 2014 Tom Steele, Dan Kottmann, FishNet Security
 // See the file license.txt for copying permission
 
-Meteor.Router.add({
-  '/' : {
-    to: 'projects',
-    and: function() {
-           Session.set('projectId', null);
-    }
-  },
-  '/signin': 'signin',
-  '/signout': {
-    to: 'signin',
-    and: function() {
-      Meteor.logout();
-    }
-  },
-  '/changepassword': 'changePassword',
-  '/settings/users': 'users',
-  '/settings/users/new': 'addUser',
-  '/settings': 'settings',
-  '/project/new': 'addProject',
-  '/project/:pid': {
-     to: 'hostList',
-     and: function(pid) {
-            Session.set('projectId', pid);
-            applyHostFilter();
-     }
-  },
-
-  // host table and host views
-  '/project/:pid/hosts': {
-    to:  'hostList',
-    and: function(pid) {
-           Session.set('projectId', pid);
-           applyHostFilter();
-    }
-  },
-  '/project/:pid/hosts/new': {
-    to: 'addHost',
-    and: function(pid) {
-           Session.set('projectId', pid);
-    }
-  },
-  '/project/:pid/hosts/:hid': {
-    to: 'hostServiceList',
-    and: function(pid, hid) {
-           Session.set('projectId', pid);
-           Session.set('hostId', hid);
-           applyPortFilter();
-    }
-  },
-  '/project/:pid/hosts/:hid/services': {
-    to: 'hostServiceList',
-    and: function(pid, hid) {
-           Session.set('projectId', pid);
-           Session.set('hostId', hid);
-           applyPortFilter();
-    }
-  },
-  '/project/:pid/hosts/:hid/services/new': {
-    to: 'addPort',
-    and: function(pid, hid) {
-           Session.set('projectId', pid);
-           Session.set('hostId', hid);
-    }
-  },
-  // single service views
-  '/project/:pid/services/:sid': {
-    to: 'serviceVulnerabilityList',
-    and: function(pid, sid) {
-           Session.set('projectId', pid);
-           Session.set('portId', sid);
-           applyVulnerabilityFilter();
-    }
-  },
-  '/project/:pid/services/:sid/vulnerabilities': {
-    to: 'serviceVulnerabilityList',
-    and: function(pid, sid) {
-           Session.set('projectId', pid);
-           Session.set('portId', sid);
-           applyVulnerabilityFilter();
-    }
-  },
-  '/project/:pid/services/:sid/notes': {
-    to: 'serviceNoteList',
-    and: function(pid, sid) {
-      Session.set('projectId', pid);
-      Session.set('portId', sid);
-      Session.set('noteTitle', null);
-    }
-  },
-  '/project/:pid/services/:sid/credentials': {
-    to: 'serviceCredentialList',
-    and: function(pid, sid) {
-      Session.set('projectId', pid);
-      Session.set('portId', sid);
-    }
-  },
-  '/project/:pid/services/:sid/credentials/new': {
-    to: 'addCredential',
-    and: function(pid, sid) {
-      Session.set('projectId', pid);
-      Session.set('portId', sid);
-    }
-  },
-  '/project/:pid/hosts/:hid/vulnerabilities': {
-    to: 'hostVulnerabilityList',
-    and: function(pid, hid) {
-           Session.set('projectId', pid);
-           Session.set('hostId', hid);
-           applyVulnerabilityFilter();
-    }
-  },
-  '/project/:pid/hosts/:hid/os': {
-    to: 'hostOsList',
-    and: function(pid, hid) {
-           Session.set('projectId', pid);
-           Session.set('hostId', hid);
-    }
-  },
-  '/project/:pid/hosts/:hid/os/new': {
-    to: 'addHostOs',
-    and: function(pid, hid) {
-           Session.set('projectId', pid);
-           Session.set('hostId', hid);
-    }
-  },
-  '/project/:pid/hosts/:hid/notes': {
-    to: 'hostNoteList',
-    and: function(pid, hid) {
-           Session.set('projectId', pid);
-           Session.set('hostId', hid);
-           Session.set('noteTitle', null);
-    }
-  },
-  '/project/:pid/hosts/:hid/hostnames': {
-    to: 'hostHostnameList',
-    and: function(pid, hid) {
-           Session.set('projectId', pid);
-           Session.set('hostId', hid);
-    }
-  },
-  '/project/:pid/hosts/:hid/hostnames/new': {
-    to: 'addHostname',
-    and: function(pid, hid) {
-           Session.set('projectId', pid);
-           Session.set('hostId', hid);
-    }
-  },
-  '/project/:pid/hosts/:hid/credentials': {
-    to: 'hostCredentialList',
-    and: function(pid, hid) {
-           Session.set('projectId', pid);
-           Session.set('hostId', hid);
-    }
-  },
-  '/project/:pid/hosts/:vid/tags': {
-    to: 'hostTagList',
-    and: function(pid, vid) {
-           Session.set('projectId', pid);
-           Session.set('hostId', vid);
-    }
-  },
-
-  // service search
-  '/project/:pid/services': {
-    to: 'serviceSearch',
-    and: function(pid) {
-           Session.set('projectId', pid);
-           Session.set('servicesViewQuery', null);
-    }
-  },
-
-  // vulnerability list and vulnerability views
-  '/project/:pid/vulnerabilities': {
-    to: 'vulnerabilityList',
-    and: function(pid) {
-           Session.set('projectId', pid);
-           applyVulnerabilityFilter();
-    }
-  },
-  '/project/:pid/vulnerabilities/new': {
-    to: 'addVulnerability',
-    and: function(pid) {
-           Session.set('projectId', pid);
-    }
-  },
-  '/project/:pid/services/:sid/vulnerabilities/new': {
-    to: 'addServiceVulnerability',
-    and: function(pid, sid) {
-           Session.set('projectId', pid);
-           Session.set('portId', sid);
-    }
-  },
-  '/project/:pid/vulnerabilities/:vid': {
-    to: 'vulnerabilityDescription',
-    and: function(pid, vid) {
-           Session.set('projectId', pid);
-           Session.set('vulnerabilityId', vid);
-    }
-  },
-  '/project/:pid/vulnerabilities/:vid/description': {
-    to: 'vulnerabilityDescription',
-    and: function(pid, vid) {
-           Session.set('projectId', pid);
-           Session.set('vulnerabilityId', vid);
-    }
-  },
-  '/project/:pid/vulnerabilities/:vid/evidence': {
-    to: 'vulnerabilityEvidence',
-    and: function(pid, vid) {
-           Session.set('projectId', pid);
-           Session.set('vulnerabilityId', vid);
-    }
-  },
-  '/project/:pid/vulnerabilities/:vid/solution': {
-    to: 'vulnerabilitySolution',
-    and: function(pid, vid) {
-           Session.set('projectId', pid);
-           Session.set('vulnerabilityId', vid);
-    }
-  },
-  '/project/:pid/vulnerabilities/:vid/hosts': {
-    to: 'vulnerabilityHostList',
-    and: function(pid, vid) {
-           Session.set('projectId', pid);
-           Session.set('vulnerabilityId', vid);
-    }
-  },
-  '/project/:pid/vulnerabilities/:vid/hosts/new': {
-    to: 'addVulnerabilityHost',
-    and: function(pid, vid) {
-           Session.set('projectId', pid);
-           Session.set('vulnerabilityId', vid);
-    }
-  },
-  '/project/:pid/vulnerabilities/:vid/hosts/bulk': {
-    to: 'addVulnerabilityHostBulk',
-    and: function(pid, vid) {
-           Session.set('projectId', pid);
-           Session.set('vulnerabilityId', vid);
-    }
-  },
-  '/project/:pid/vulnerabilities/:vid/cves': {
-    to: 'vulnerabilityCveList',
-    and: function(pid, vid) {
-           Session.set('projectId', pid);
-           Session.set('vulnerabilityId', vid);
-    }
-  },
-  '/project/:pid/vulnerabilities/:vid/notes': {
-    to: 'vulnerabilityNoteList',
-    and: function(pid, vid) {
-           Session.set('projectId', pid);
-           Session.set('vulnerabilityId', vid);
-           Session.set('noteTitle', null);
-    }
-  },
-  '/project/:pid/vulnerabilities/:vid/tags': {
-    to: 'vulnerabilityTagList',
-    and: function(pid, vid) {
-           Session.set('projectId', pid);
-           Session.set('vulnerabilityId', vid);
-    }
-  },
-
-  // notes
-  '/project/:pid/notes': {
-    to: 'noteList',
-    and: function(pid) {
-           Session.set('projectId', pid);
-           Session.set('noteTitle', null);
-    }
-  },
-
-  // credentials
-  '/project/:pid/credentials': {
-    to: 'credentialList',
-    and: function(pid) {
-           Session.set('projectId', pid);
-    }
-  },
-  '/project/:pid/credentials/new': {
-    to: 'addCredentialFull',
-    and: function(pid) {
-           Session.set('projectId', pid);
-    }
-  },
-
-  // contributors
-  '/project/:pid/contributors': {
-    to: 'contributors',
-    and: function(pid) {
-           Session.set('projectId', pid);
-    }
-  },
-
-  // files
-  '/project/:pid/files': {
-    to: 'fileList',
-    and: function(pid) {
-           Session.set('projectId', pid);
-    }
-  },
-
-  // log
-  '/project/:pid/log': {
-    to: 'droneLog',
-    and: function(pid) {
-           Session.set('projectId', pid);
-    }
-  },
-  '*': 'notFound'
+Router.configure({
+    layoutTemplate: 'layout'
 });
 
-Meteor.Router.filters({
-  'requireLogin': function(page) {
-    if (Meteor.user()) {
-      return page;
+Router.map(function() {
+    this.route('projects',
+        {
+            path: '/'
+        }
+    );
+    this.route('signin', {path: '/signin'});
+    this.route('signin',
+        {
+            path: '/signout',
+            onBeforeAction: function() {
+                Session.set('projectId', null);
+                Meteor.logout();
+            }
+        }
+    );
+    this.route('changePassword', {path: '/changepassword'});
+    this.route('users', {path: '/settings/users'});
+    this.route('addUser', {path: '/settings/users/new'});
+    this.route('settings', {path: '/settings'});
+    this.route('addProject', {path: '/project/new'});
+    this.route('hostList',
+        {
+            path: '/project/:pid',
+            onBeforeAction: function() {
+                Session.set('projectId', this.params.pid);
+                applyHostFilter();
+            }
+        }
+    );
+    this.route('hostList',
+        {
+            template: 'hostList',
+            path: '/project/:pid/hosts',
+            onBeforeAction: function() {
+                Session.set('projectId', this.params.pid);
+                applyHostFilter();
+            }
+        }
+    );
+    this.route('addHost',
+        {
+            path: '/project/:pid/hosts/new',
+            onBeforeAction: function() {
+                Session.set('projectId', this.params.pid);
+            }
+        }
+    );
+    this.route('hostServiceList',
+        {
+            path: '/project/:pid/hosts/:hid',
+            onBeforeAction: function() {
+                Session.set('projectId', this.params.pid);
+                Session.set('hostId', this.params.hid);
+                applyPortFilter();
+            }
+        }
+    );
+    this.route('hostServiceList',
+        {
+            path: '/project/:pid/hosts/:hid/services',
+            onBeforeAction: function() {
+                Session.set('projectId', this.params.pid);
+                Session.set('hostId', this.params.hid);
+                applyPortFilter();
+            }
+        }
+    );
+    this.route('addPort',
+        {
+            path: '/project/:pid/hosts/:hid/services/new',
+            onBeforeAction: function() {
+                Session.set('projectId', this.params.pid);
+                Session.set('hostId', this.params.hid);
+            }
+        }
+    );
+    this.route('serviceVulnerabilityList',
+        {
+            path: '/project/:pid/services/:sid',
+            onBeforeAction: function() {
+                Session.set('projectId', this.params.pid);
+                Session.set('portId', this.params.sid);
+                applyVulnerabilityFilter();
+            }
+        }
+    );
+    this.route('serviceVulnerabilityList',
+        {
+            path: '/project/:pid/services/:sid/vulnerabilities',
+            onBeforeAction: function() {
+                Session.set('projectId', this.params.pid);
+                Session.set('portId', this.params.sid);
+                applyVulnerabilityFilter();
+            }
+        }
+    );
+    this.route('serviceNoteList',
+        {
+            path: '/project/:pid/services/:sid/notes',
+            onBeforeAction: function() {
+                Session.set('projectId', this.params.pid);
+                Session.set('portId', this.params.sid);
+                Session.set('noteTitle', null);
+            }
+        }
+    );
+    this.route('serviceCredentialList',
+        {
+            path: '/project/:pid/services/:sid/credentials',
+            onBeforeAction: function() {
+                Session.set('projectId', this.params.pid);
+                Session.set('portId', this.params.sid);
+            }
+        }
+    );
+    this.route('addCredential',
+        {
+            path: '/project/:pid/services/:sid/credentials/new',
+            onBeforeAction: function() {
+                Session.set('projectId', this.params.pid);
+                Session.set('portId', this.params.sid);
+            }
+        }
+    );
+    this.route('hostVulnerabilityList',
+        {
+            path: '/project/:pid/hosts/:hid/vulnerabilities',
+            onBeforeAction: function() {
+                Session.set('projectId', this.params.pid);
+                Session.set('hostId', this.params.hid);
+                applyVulnerabilityFilter();
+            }
+        }
+    );
+    this.route('hostOsList',
+        {
+            path: '/project/:pid/hosts/:hid/os',
+            onBeforeAction: function() {
+                Session.set('projectId', this.params.pid);
+                Session.set('hostId', this.params.hid);
+            }
+        }
+    );
+    this.route('addHostOs',
+        {
+            path: '/project/:pid/hosts/:hid/os/new',
+            onBeforeAction: function() {
+                Session.set('projectId', this.params.pid);
+                Session.set('hostId', this.params.hid);
+            }
+        }
+    );
+    this.route('hostNoteList',
+        {
+            path: '/project/:pid/hosts/:hid/notes',
+            onBeforeAction: function() {
+                Session.set('projectId', this.params.pid);
+                Session.set('hostId', this.params.hid);
+                Session.set('noteTitle', null);
+            }
+        }
+    );
+    this.route('hostHostnameList',
+        {
+            path: '/project/:pid/hosts/:hid/hostnames',
+            onBeforeAction: function() {
+                Session.set('projectId', this.params.pid);
+                Session.set('hostId', this.params.hid);
+            }
+        }
+    );
+    this.route('addHostname',
+        {
+            path: '/project/:pid/hosts/:hid/hostnames/new',
+            onBeforeAction: function() {
+                Session.set('projectId', this.params.pid);
+                Session.set('hostId', this.params.hid);
+            }
+        }
+    );
+    this.route('hostCredentialList',
+        {
+            path: '/project/:pid/hosts/:hid/credentials',
+            onBeforeAction: function() {
+                Session.set('projectId', this.params.pid);
+                Session.set('hostId', this.params.hid);
+            }
+        }
+    );
+    this.route('hostTagList',
+        {
+            path: '/project/:pid/hosts/:hid/tags',
+            onBeforeAction: function() {
+                Session.set('projectId', this.params.pid);
+                Session.set('hostId', this.params.hid);
+            }
+        }
+    );
+    this.route('serviceSearch',
+        {
+            path: '/project/:pid/services',
+            onBeforeAction: function() {
+                Session.set('projectId', this.params.pid);
+                Session.set('servicesViewQuery', null);
+            }
+        }
+    );
+    this.route('vulnerabilityList',
+        {
+            path: '/project/:pid/vulnerabilities',
+            onBeforeAction: function() {
+                Session.set('projectId', this.params.pid);
+                applyVulnerabilityFilter();
+            }
+        }
+    );
+    this.route('addVulnerability',
+        {
+            path: '/project/:pid/vulnerabilities/new',
+            onBeforeAction: function() {
+                Session.set('projectId', this.params.pid);
+            }
+        }
+    );
+    this.route('addServiceVulnerability',
+        {
+            path: '/project/:pid/services/:sid/vulnerabilities/new',
+            onBeforeAction: function() {
+                Session.set('projectId', this.params.pid);
+                Session.set('portId', this.params.sid);
+            }
+        }
+    );
+    this.route('vulnerabilityDescription',
+        {
+            path: '/project/:pid/vulnerabilities/:vid',
+            onBeforeAction: function() {
+                Session.set('projectId', this.params.pid);
+                Session.set('vulnerabilityId', this.params.vid);
+            }
+        }
+    );
+    this.route('vulnerabilityDescription',
+        {
+            path: '/project/:pid/vulnerabilities/:vid/description',
+            onBeforeAction: function() {
+                Session.set('projectId', this.params.pid);
+                Session.set('vulnerabilityId', this.params.vid);
+            }
+        }
+    );
+    this.route('vulnerabilityEvidence',
+        {
+            path: '/project/:pid/vulnerabilities/:vid/evidence',
+            onBeforeAction: function() {
+                Session.set('projectId', this.params.pid);
+                Session.set('vulnerabilityId', this.params.vid);
+            }
+        }
+    );
+    this.route('vulnerabilitySolution',
+        {
+            path: '/project/:pid/vulnerabilities/:vid/solution',
+            onBeforeAction: function() {
+                Session.set('projectId', this.params.pid);
+                Session.set('vulnerabilityId', this.params.vid);
+            }
+        }
+    );
+    this.route('vulnerabilityHostList',
+        {
+            path: '/project/:pid/vulnerabilities/:vid/hosts',
+            onBeforeAction: function() {
+                Session.set('projectId', this.params.pid);
+                Session.set('vulnerabilityId', this.params.vid);
+            }
+        }
+    );
+    this.route('addVulnerabilityHost',
+        {
+            path: '/project/:pid/vulnerabilities/:vid/hosts/new',
+            onBeforeAction: function() {
+                Session.set('projectId', this.params.pid);
+                Session.set('vulnerabilityId', this.params.vid);
+            }
+        }
+    );
+    this.route('addVulnerabilityHostBulk',
+        {
+            path: '/project/:pid/vulnerabilities/:vid/hosts/bulk',
+            onBeforeAction: function() {
+                Session.set('projectId', this.params.pid);
+                Session.set('vulnerabilityId', this.params.vid);
+            }
+        }
+    );
+    this.route('vulnerabilityCveList',
+        {
+            path: '/project/:pid/vulnerabilities/:vid/cves',
+            onBeforeAction: function() {
+                Session.set('projectId', this.params.pid);
+                Session.set('vulnerabilityId', this.params.vid);
+            }
+        }
+    );
+    this.route('vulnerabilityNoteList',
+        {
+            path: '/project/:pid/vulnerabilities/:vid/notes',
+            onBeforeAction: function() {
+                Session.set('projectId', this.params.pid);
+                Session.set('vulnerabilityId', this.params.vid);
+                Session.set('noteTitle', null);
+            }
+        }
+    );
+    this.route('vulnerabilityTagList',
+        {
+            path: '/project/:pid/vulnerabilities/:vid/tags',
+            onBeforeAction: function() {
+                Session.set('projectId', this.params.pid);
+                Session.set('vulnerabilityId', this.params.vid);
+            }
+        }
+    );
+    this.route('noteList',
+        {
+            path: '/project/:pid/notes',
+            onBeforeAction: function() {
+                Session.set('projectId', this.params.pid);
+                Session.set('noteTitle', null);
+            }
+        }
+    );
+    this.route('credentialList',
+        {
+            path: '/project/:pid/credentials',
+            onBeforeAction: function() {
+                Session.set('projectId', this.params.pid);
+            }
+        }
+    );
+    this.route('addCredentialFull',
+        {
+            path: '/project/:pid/credentials/new',
+            onBeforeAction: function() {
+                Session.set('projectId', this.params.pid);
+            }
+        }
+    );
+    this.route('contributors',
+        {
+            path: '/project/:pid/contributors',
+            onBeforeAction: function() {
+                Session.set('projectId', this.params.pid);
+            }
+        }
+    );
+    this.route('fileList',
+        {
+            path: '/project/:pid/files',
+            onBeforeAction: function() {
+                Session.set('projectId', this.params.pid);
+            }
+        }
+    );
+    this.route('droneLog',
+        {
+            path: '/project/:pid/log',
+            onBeforeAction: function() {
+                Session.set('projectId', this.params.pid);
+            }
+        }
+    );
+    this.route('notFound', {path: '*'});
+});
+
+// 1. login filter
+Router.onBeforeAction(function() {
+    if(!Meteor.loggingIn() && !Meteor.user()) {
+        this.redirect('signin');
     }
-    else if (Meteor.loggingIn()) {
-      return 'loading';
-    }
-    else {
-      return 'signin';
-    }
-  },
-  'clearErrors': function(page) {
+}, {except: 'signin'});
+
+// 2. clear alerts filter
+Router.onBeforeAction(function() {
     Alerts.remove({});
-    return page;
-  }
 });
-Meteor.Router.filter('requireLogin');
-Meteor.Router.filter('clearErrors');
 
 function applyVulnerabilityFilter() {
   var persist = Settings.findOne({"setting": "persistViewFilters", "enabled": true});

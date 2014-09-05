@@ -9,7 +9,7 @@
       {{> hostNav}}
       <div class="row-fluid">
         <div class="span12">
-          <a href="{{addHostOsPath projectId hostId}}" class="btn btn-success">Add a new fingerpint</a>
+            <a href="/project/{{projectId}}/hosts/{{hostId}}/os/new" class="btn btn-success">Add a new fingerpint</a>
           <button id="remove-fingerprints" class="btn btn-danger"><i class="fa fa-trash-o"></i></button>
         </div>
       </div>
@@ -30,7 +30,7 @@
             {{#each fingerprints}}
             <tr>
               <td><input class="os-checked" id="{{tool}}-{{fingerprint}}-{{weight}}" type="checkbox" /></td>
-              <td class="onepix"><button class="btn btn-primary increase-weight btn-mini"><i class="fa fa-plus"></i></button><button class="btn btn-primary btn-mini decrease-weight"><i class="fa fa-minus"></i></td>
+              <td class="onepix"><button class="btn btn-primary increase-weight btn-mini"><i class="fa fa-plus"></i></button><button class="btn btn-primary btn-mini decrease-weight"><i class="fa fa-minus"></i></button></td>
               <td>{{weight}}</td>
               <td>{{fingerprint}}</td>
               <td>{{tool}}</td>

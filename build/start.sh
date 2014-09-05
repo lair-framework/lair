@@ -27,11 +27,25 @@ elif [ "$UNAME" = "Linux" ]; then
       echo "Run 'sudo apt-get install libssl-dev'."
       exit 1
     fi
+
+    dpkg-query -W -f='${Status} ${Version}\n' g++ &>/dev/null
+    if [ "$?" != 0 ]; then
+      echo "Lair requires g++."
+      echo "Run 'sudo apt-get install g++'."
+      exit 1
+    fi
   elif [ -e '/etc/issue' ]; then
     yum list installed openssl-devel &>/dev/null
     if [ "$?" != 0 ]; then
       echo "Lair requires openssl-devel."
       echo "Run 'yum install openssl-devel'."
+      exit 1
+    fi
+
+    yum list installed gcc-c++ &>/dev/null
+    if [ "$?" != 0 ]; then
+      echo "Lair requires gcc-c++."
+      echo "Run 'yum install gcc-c++'."
       exit 1
     fi
   else
@@ -43,8 +57,8 @@ fi
 if [ ! -f deps/bin/stunnel ]; then
   echo "Stunnel not found. Going to compile and install to deps/bin/."
   cd deps/src/
-  tar -zxf stunnel-4.56.tar.gz
-  cd stunnel-4.56
+  tar -zxf stunnel-5.03.tar.gz
+  cd stunnel-5.03
   ./configure 1>/dev/null 2>../../../error.log
   if [ "$?" != 0 ]; then
     ./stop.sh &>/dev/null
@@ -61,7 +75,7 @@ if [ ! -f deps/bin/stunnel ]; then
   fi
   cp src/stunnel ../../bin/
   cd ../
-  rm -rf stunnel-4.56
+  rm -rf stunnel-5.03
   cd ../../
 fi
 
@@ -96,6 +110,18 @@ if [ "$?" != 0 ]; then
   echo "Error: stunnel failed with errors."
   echo "Please see error.log for details."
   exit 1;
+fi
+
+if [[ ! -a 'bundle/programs/server/node_modules' ]]; then
+  echo "Installing/building node modules."
+  cd bundle/programs/server
+  ../../../deps/node/bin/npm install ../../../deps/src/semver-v2.2.1.tar.gz
+  ../../../deps/node/bin/npm install ../../../deps/src/source-map-support-v0.2.4.tar.gz
+  ../../../deps/node/bin/npm install ../../../deps/src/underscore-v1.5.2.tar.gz
+  ../../../deps/node/bin/npm install ../../../deps/src/fibers-v1.0.1.tar.gz
+  ../../../deps/node/bin/npm install ../../../deps/src/bcrypt-v0.8.0.tar.gz
+  cd ../../..
+  echo
 fi
 
 echo "Starting MongoDB on 127.0.0.1:11015"

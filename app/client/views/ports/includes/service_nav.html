@@ -2,9 +2,9 @@
   <div class="row-fluid">
     <div class="span12">
       <ul class="nav nav-tabs">
-        <li class="{{activeRouteClass 'serviceVulnerabilityList'}}"><a href="{{serviceVulnerabilityListPath projectId portId}}">Vulnerabilities</a></li>
-        <li class="{{activeRouteClass 'serviceNoteList'}}"><a href="{{serviceNoteListPath projectId portId}}">Notes</a></li>
-        <li class="{{activeRouteClass 'serviceCredentialList'}}"><a href="{{serviceCredentialListPath projectId portId}}">Credentials</a></li>
+          <li class="{{activeRouteClass 'serviceVulnerabilityList'}}"><a href="/project/{{projectId}}/services/{{portId}}/vulnerabilities">Vulnerabilities</a></li>
+          <li class="{{activeRouteClass 'serviceNoteList'}}"><a href="/project/{{projectId}}/services/{{portId}}/notes">Notes</a></li>
+          <li class="{{activeRouteClass 'serviceCredentialList'}}"><a href="/project/{{projectId}}/services/{{portId}}/credentials">Credentials</a></li>
       </ul>
     </div>
   </div>

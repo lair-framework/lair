@@ -62,7 +62,7 @@
                   {{/if}}
                 </td>
                 <td class="{{status}} port-status">{{string_addr}}</td>
-                <td class="{{status}}"><a class="dontstyle" href="{{serviceVulnerabilityListPath projectId _id}}">{{port}}</a>
+                <td class="{{status}}"><a class="dontstyle" href="/project/{{projectId}}/services/{{_id}}/vulnerabilities">{{port}}</a>
                 </td>
                 <td class="{{status}} port-status">{{protocol}}</td>
                 <td class="{{status}}} port-status">{{last_modified_by}}</td>
@@ -71,12 +71,16 @@
             </tbody>
           </table>
           {{/if}}
-        </div>
+      </div>
+      {{> serviceSearchHostList}}
+      </div>
+    </div>
+  </div>
+  </template>
+
+  <template name="serviceSearchHostList">
         <div class="span6">
           <p style="padding-left: 7px">Hosts</p>
           <textarea id="host-textarea" class="copyonly full-height span12" readonly>{{hosts}}</textarea>
         </div>
-      </div>
-    </div>
-  </div>
-</template>
+  </template>

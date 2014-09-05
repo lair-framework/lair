@@ -1,15 +1,9 @@
-// Copyright (c) 2013 Tom Steele, Dan Kottmann, FishNet Security
+// Copyright (c) 2014 Tom Steele, Dan Kottmann, FishNet Security
 // See the file license.txt for copying permission
 
-Template.project.rendered = function() {
-  var pixelRatio = window.devicePixelRatio || 1;
-  Template.project.width = 404 / pixelRatio;
-  Template.project.height = 404 / pixelRatio;
-
+function drawChart(hostChartCtx, serviceChartCtx, vulnerabilityChartCtx) {
   if (!Session.equals('projectId', null) && Session.equals('loading', false)) {
-    var hostChartCtx = $("#hostChart").get(0).getContext("2d");
-    var serviceChartCtx = $("#serviceChart").get(0).getContext("2d");
-    var vulnerabilityChartCtx = $("#vulnerabilityChart").get(0).getContext("2d");
+
     if (!Session.equals('hostChartData', null)) {
       var hostChart = new Chart(hostChartCtx).Doughnut(Session.get('hostChartData'));
     }
@@ -20,7 +14,24 @@ Template.project.rendered = function() {
       var vulnerabilityChart = new Chart(vulnerabilityChartCtx).Doughnut(Session.get('vulnerabilityChartData'));
     }
   }
+
+}
+
+Template.projectDetail.rendered = function() {
+    var hostChartCtx = $("#hostChart").get(0).getContext("2d");
+    var serviceChartCtx = $("#serviceChart").get(0).getContext("2d");
+    var vulnerabilityChartCtx = $("#vulnerabilityChart").get(0).getContext("2d");
+    Deps.autorun(function() {
+        var pixelRatio = window.devicePixelRatio || 1;
+        Template.project.width = 404 / pixelRatio;
+        Template.project.height = 404 / pixelRatio;
+
+        if (!Session.equals('projectId', null) && Session.equals('loading', false)) {
+            drawChart(hostChartCtx, serviceChartCtx, vulnerabilityChartCtx);
+        }
+    });
 };
+
 
 var grey = '#959595';
 var blue = '#67c2ef';
@@ -28,7 +39,7 @@ var green = '#80cd3b';
 var orange = '#fa9a4b';
 var red = '#fa603d';
 
-Template.project.project = function() {
+Template.projectDetail.project = function() {
   var project = null;
   if (Session.equals('projectId', null)) {
     project = Projects.findOne();
@@ -72,11 +83,15 @@ Template.project.project = function() {
   return project;
 };
 
+Template.project.projectId = function() {
+    return Session.get('projectId');
+}
+
 Template.project.loading = function() {
   return Session.get('loading');
 };
 
-Template.project.events({
+Template.projectDetail.events({
   'click #export-local': function() {
     var projectId = Session.get('projectId');
     var data = prepareExport(projectId);

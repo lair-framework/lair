@@ -2,10 +2,13 @@
   <title>Lair</title>
 </head>
 <body>
+</body>
+
+<template name="layout">
   <div id="wrap">
     {{> header}}
     <div class="container-fluid">
-      {{renderPage}}
+      {{> yield}}
       {{#if currentUser}}
         {{> chat}}
       {{/if}}
@@ -13,4 +16,4 @@
     <div id="push"></div>
   </div>
   {{> footer}}
-</body>
+</template>

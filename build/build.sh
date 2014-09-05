@@ -51,18 +51,30 @@ cp README.md $LINUX64/
 cp README.md $OSX/
 
 tar -xzf bundle.tar.gz
-rm -rf bundle/programs/server/node_modules/fibers
+rm -rf bundle/programs/server/npm/npm-bcrypt
 cp -R bundle $LINUX32
 cp -R bundle $LINUX64
 cp -R bundle $OSX
-cp -R src/fibers $LINUX32/bundle/programs/server/node_modules/
-cp -R src/fibers $LINUX64/bundle/programs/server/node_modules/
-cp -R src/fibers $OSX/bundle/programs/server/node_modules/
 rm -rf bundle
 
-cp src/stunnel-4.56.tar.gz $OSX/deps/src/
-cp src/stunnel-4.56.tar.gz $LINUX32/deps/src/
-cp src/stunnel-4.56.tar.gz $LINUX64/deps/src/
+cp src/stunnel-5.03.tar.gz $OSX/deps/src/
+cp src/stunnel-5.03.tar.gz $LINUX32/deps/src/
+cp src/stunnel-5.03.tar.gz $LINUX64/deps/src/
+cp src/bcrypt-v0.8.0.tar.gz $OSX/deps/src/
+cp src/bcrypt-v0.8.0.tar.gz $LINUX32/deps/src/
+cp src/bcrypt-v0.8.0.tar.gz $LINUX64/deps/src/
+cp src/fibers-v1.0.1.tar.gz $OSX/deps/src/
+cp src/fibers-v1.0.1.tar.gz $LINUX32/deps/src/
+cp src/fibers-v1.0.1.tar.gz $LINUX64/deps/src/
+cp src/semver-v2.2.1.tar.gz $OSX/deps/src/
+cp src/semver-v2.2.1.tar.gz $LINUX32/deps/src/
+cp src/semver-v2.2.1.tar.gz $LINUX64/deps/src/
+cp src/source-map-support-v0.2.4.tar.gz $OSX/deps/src/
+cp src/source-map-support-v0.2.4.tar.gz $LINUX32/deps/src/
+cp src/source-map-support-v0.2.4.tar.gz $LINUX64/deps/src/
+cp src/underscore-v1.5.2.tar.gz $OSX/deps/src/
+cp src/underscore-v1.5.2.tar.gz $LINUX32/deps/src/
+cp src/underscore-v1.5.2.tar.gz $LINUX64/deps/src/
 
 tar -xzf linux32/mongodb-*gz
 mv mongodb-* $LINUX32/deps/mongodb

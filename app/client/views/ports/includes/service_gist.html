@@ -4,18 +4,18 @@
     <div class="span4">
       <ul class="unstyled">
         <li><strong>Port: </strong>{{port.port}}/{{protocol}}</li>
-        <li><strong>Service: </strong>{{service}}
+        <li><strong>Service: </strong>{{service}}</li>
         <li><strong>Product: </strong>{{product}}</li>
         <li><strong>Last Modified By: </strong>{{last_modified_by}}</li>
-        <li class="hover-hand port-status {{status}}">&nbsp</li>
+        <li class="hover-hand port-status {{status}}">&nbsp;</li>
       </ul>
     </div>
     <div class="span4">
       <ul class="unstyled">
-        <li><strong>Host: </strong><a href="{{hostServiceListPath projectId host_id}}">{{string_addr}}</a></li>
-        <li>&nbsp</li>
-        <li>&nbsp</li>
-        <li>&nbsp</li>
+          <li><strong>Host: </strong><a href="/project/{{projectId}}/hosts/{{host_id}}/services">{{string_addr}}</a></li>
+        <li>&nbsp;</li>
+        <li>&nbsp;</li>
+        <li>&nbsp;</li>
         <li>
         {{#if flag}}
           <i class="fa fa-flag flag-enabled hover-hand"></i>

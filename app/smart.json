@@ -1,7 +1,6 @@
 {
   "packages": {
     "font-awesome": {},
-    "router": {},
     "flatstrap": {},
     "moment": {},
     "spin": {},

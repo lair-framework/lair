@@ -1,4 +1,4 @@
-// Copyright (c) 2013 Tom Steele, Dan Kottmann, FishNet Security
+// Copyright (c) 2014 Tom Steele, Dan Kottmann, FishNet Security
 // See the file license.txt for copying permission
 
 var hostIds = [];
@@ -10,9 +10,10 @@ Template.serviceSearch.projectId = function() {
 };
 
 Template.serviceSearch.servicesWithHosts = function() {
-  if (Session.equals('servicesViewQuery', null)) {
+  if (Session.equals('servicesViewQuery', null) || Session.equals('match', null)) {
     return null;
   }
+  match = Session.get('match');
   match.forEach(function(match) {
     var host = Hosts.findOne({
       "_id": match.host_id
@@ -42,10 +43,12 @@ Template.serviceSearch.services = function() {
     }).fetch();
   }
   if (!match) {
+    Session.set('match', match);
     return {};
   }
   var services = [];
   hostIds = [];
+  Session.set('hostIds', []);
   match.forEach(function(match) {
     hostIds.push(match.host_id);
     services.push({
@@ -55,17 +58,23 @@ Template.serviceSearch.services = function() {
       "product": match.product
     });
   });
+  Session.set('match', match);
+  Session.set('hostIds', hostIds);
   return unique(services);
 };
 
-Template.serviceSearch.rendered = function() {
-  return $('#host-textarea').height($('#host-textarea')[0].scrollHeight);
+Template.serviceSearchHostList.rendered = function() {
+    Deps.autorun(function() {
+        if(!Session.equals('hostIds', null)) {
+            return $('#host-textarea').height($('#host-textarea')[0].scrollHeight);
+        }
+    });
 };
 
-Template.serviceSearch.hosts = function() {
+Template.serviceSearchHostList.hosts = function() {
   var hosts = Hosts.find({
     "_id": {
-      "$in": _.uniq(hostIds)
+      "$in": _.uniq(Session.get('hostIds'))
     }
   }, {
     "sort": {

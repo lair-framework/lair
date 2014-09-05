@@ -21,10 +21,10 @@
               <button type="button" id="flag-filter-enable" class="btn flag-filter hover-hand"><i class="fa fa-flag-o"></i></button>
             {{/if}}
           </div>
-          <a href="{{addPortPath projectId hostId}}" class="btn btn-success">Add a service</a>
+          <a href="/project/{{projectId}}/hosts/{{hostId}}/services/new" class="btn btn-success">Add a service</a>
           <button id="remove-ports" class="btn btn-danger"><i class="fa fa-trash-o"></i></button>
               <span class="pull-right">
-                <input type="text" id="port-search" class="search-query" placeholder="Search" {{#if searchTerm}}value="{{searchTerm}}"{{/if}}/>
+                <input type="text" id="port-search" class="search-query" placeholder="Search" value="{{searchTerm}}"/>
                </span>
         </div>
       </div>
@@ -54,7 +54,7 @@
                 <i class="fa fa-flag-o flag-disabled hover-hand"></i>
               {{/if}}
               </td>
-              <td class="{{status}}"><a class="dontstyle" href="{{serviceVulnerabilityListPath projectId _id}}">{{port}}</a></td>
+              <td class="{{status}}"><a class="dontstyle" href="/project/{{projectId}}/services/{{_id}}">{{port}}</a></td>
               <td class="{{status}} port-status">{{protocol}}</td>
               <td class="{{status}} port-status">{{service}}</td>
               <td class="{{status}} port-status">{{product}}</td>

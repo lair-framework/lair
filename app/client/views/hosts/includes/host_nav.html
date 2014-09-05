@@ -2,13 +2,13 @@
   <div class="row-fluid">
     <div class="span12">
       <ul class="nav nav-tabs">
-        <li class="{{activeRouteClass 'hostServiceList'}}"><a href="{{hostServiceListPath projectId hostId}}">Services</a></li>
-        <li class="{{activeRouteClass 'hostVulnerabilityList'}}"><a href="{{hostVulnerabilityListPath projectId hostId}}">Vulnerabilities</a></li>
-        <li class="{{activeRouteClass 'hostOsList'}}"><a href="{{hostOsListPath projectId hostId}}">Operating Systems</a></li>
-        <li class="{{activeRouteClass 'hostNoteList'}}"><a href="{{hostNoteListPath projectId hostId}}">Notes</a></li>
-        <li class="{{activeRouteClass 'hostHostnameList'}}"><a href="{{hostHostnameListPath projectId hostId}}">Hostnames</a></li>
-        <li class="{{activeRouteClass 'hostCredentialList'}}"><a href="{{hostCredentialListPath projectId hostId}}">Credentials</a></li>
-        <li class="{{activeRouteClass 'hostTagList'}}"><a href="{{hostTagListPath projectId hostId}}">Tags</a></li>
+        <li class="{{activeRouteClass 'hostServiceList'}}"><a href="/project/{{projectId}}/hosts/{{hostId}}/services">Services</a></li>
+        <li class="{{activeRouteClass 'hostVulnerabilityList'}}"><a href="/project/{{projectId}}/hosts/{{hostId}}/vulnerabilities">Vulnerabilities</a></li>
+        <li class="{{activeRouteClass 'hostOsList'}}"><a href="/project/{{projectId}}/hosts/{{hostId}}/os">Operating Systems</a></li>
+        <li class="{{activeRouteClass 'hostNoteList'}}"><a href="/project/{{projectId}}/hosts/{{hostId}}/notes">Notes</a></li>
+        <li class="{{activeRouteClass 'hostHostnameList'}}"><a href="/project/{{projectId}}/hosts/{{hostId}}/hostnames">Hostnames</a></li>
+        <li class="{{activeRouteClass 'hostCredentialList'}}"><a href="/project/{{projectId}}/hosts/{{hostId}}/credentials">Credentials</a></li>
+        <li class="{{activeRouteClass 'hostTagList'}}"><a href="/project/{{projectId}}/hosts/{{hostId}}/tags">Tags</a></li>
       </ul>
     </div>
   </div>

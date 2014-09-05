@@ -1,4 +1,4 @@
-// Copyright (c) 2013 Tom Steele, Dan Kottmann, FishNet Security
+// Copyright (c) 2014 Tom Steele, Dan Kottmann, FishNet Security
 // See the file license.txt for copying permission
 
 Template.addPort.events({
@@ -14,7 +14,7 @@ Template.addPort.events({
       if (err) {
         return Alerts.insert({"class": "alert-error", "strong": "Error", "message": err.reason});
       }
-      return Meteor.Router.to('/project/' + id + '/services/' + res);
+      return Router.go('/project/' + id + '/services/' + res);
     });
   }
 });

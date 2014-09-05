@@ -12,7 +12,7 @@
         <div class="nav-collapse collapse">
           <ul class="nav pull-right">
             <li class="dropdown">
-              <a href="#" class="dropdown-toggle" data-toggle="dropdown">{{currentUser.emails.0.address}}<b class="caret"></b></a>
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown">{{currentUser.emails.[0].address}}<b class="caret"></b></a>
               <ul class="dropdown-menu">
                 <li><a href="/changepassword">Change Password</a></li>
                 <li><a href="/signout">Sign Out</a></li>
@@ -26,10 +26,10 @@
           {{/if}}
           <ul class="nav pull-right">
           {{#if projectId}}
-            <li class="nav-like-link">PID: {{projectId}}</a> </li>
+            <li class="nav-like-link">PID: {{projectId}}&nbsp;</li>
           {{/if}}
           {{#if projectName}}
-            <li class="nav-like-link">Name: {{projectName}}</a></li>
+            <li class="nav-like-link">Name: {{projectName}}</li>
           {{/if}}
           </ul>
         </div>

@@ -96,7 +96,7 @@ Template.hostServiceList.events({
   },
 
   'keyup #port-search': function(event, tpl)  {
-    Session.set('portSearch', escapeRegex(tpl.find('#port-search').value));
+    Session.set('portSearch', tpl.find('#port-search').value);
   },
 
   'click .port-status': function() {

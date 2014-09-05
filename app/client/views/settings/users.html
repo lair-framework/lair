@@ -3,7 +3,7 @@
   {{> settingsNav}}
   <div class="row-fluid">
     <div class="span12">
-      <a href="{{addUserPath}}" class="btn btn-success">Add a new user</a>
+      <a href="{{pathFor 'addUser'}}" class="btn btn-success">Add a new user</a>
       <a href="#removeUserModal" role="button" class="btn btn-danger" data-toggle="modal"><i class="fa fa-trash-o"></i></a>
     </div>
   </div>
@@ -22,7 +22,7 @@
         {{#each users}}
         <tr>
           <td><input class="user-checked" id="{{_id}}" type="checkbox" /></td>
-          <td>{{emails.0.address}}</td>
+          <td>{{emails.[0].address}}</td>
           <td class="xsmall-cell">
             {{#if isAdmin}}
             <i class="fa fa-ok"></i>
