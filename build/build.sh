@@ -57,6 +57,16 @@ cp -R bundle $LINUX64
 cp -R bundle $OSX
 rm -rf bundle
 
+cp nginx_conf/nginx.conf $OSX/deps/etc/
+cp nginx_conf/nginx.conf $LINUX32/deps/etc/
+cp nginx_conf/nginx.conf $LINUX64/deps/etc/
+cp nginx_conf/mime.types $OSX/deps/etc/
+cp nginx_conf/mime.types $LINUX32/deps/etc/
+cp nginx_conf/mime.types $LINUX64/deps/etc/
+
+cp src/nginx-1.6.0.tar.gz $OSX/deps/src/
+cp src/nginx-1.6.0.tar.gz $LINUX32/deps/src/
+cp src/nginx-1.6.0.tar.gz $LINUX64/deps/src/
 cp src/stunnel-5.03.tar.gz $OSX/deps/src/
 cp src/stunnel-5.03.tar.gz $LINUX32/deps/src/
 cp src/stunnel-5.03.tar.gz $LINUX64/deps/src/
@@ -90,17 +100,6 @@ tar -xzf osx/mongodb-*gz
 mv mongodb-* $OSX/deps/mongodb
 tar -xzf osx/node-*gz
 mv node-* $OSX/deps/node
-
-git clone https://github.com/tomsteele/node-simple-proxy.git
-cd node-simple-proxy
-npm install
-cd ../
-
-cp -R node-simple-proxy $LINUX32/deps
-cp -R node-simple-proxy $LINUX64/deps
-cp -R node-simple-proxy $OSX/deps
-
-rm -rf node-simple-proxy
 
 cp linux32/stunnel.conf $LINUX32/deps/etc/
 cp linux64/stunnel.conf $LINUX64/deps/etc/

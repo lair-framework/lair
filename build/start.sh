@@ -79,6 +79,31 @@ if [ ! -f deps/bin/stunnel ]; then
   cd ../../
 fi
 
+if [ ! -f deps/bin/nginx ]; then
+  echo "nginx not found. Going to compile and install to deps/bin/."
+  cd deps/src/
+  tar -zxf nginx-1.6.0.tar.gz
+  cd nginx-1.6.0
+  ./configure --without-http_rewrite_module --with-http_ssl_module --with-cc-opt="-Wno-deprecated-declarations" 1>/dev/null 2>../../../error.log
+  if [ "$?" != 0 ]; then
+    ./stop.sh &>/dev/null
+    echo "Error compiling nginx."
+    echo "Please see error.log for more information."
+    exit 1
+  fi
+  make 1>/dev/null 2>../../../error.log
+  if [ "$?" != 0 ]; then
+    ./stop.sh &>/dev/null
+    echo "Error compiling nginx."
+    echo "Please see error.log for more information."
+    exit 1
+  fi
+  cp objs/nginx ../../bin/
+  cd ../
+  rm -rf nginx-1.6.0
+  cd ../../
+fi
+
 if [ -z $1 ]; then
   echo "Missing required argument."
   echo "$0 <ip>"
@@ -217,23 +242,15 @@ if [ "$?" != 0 ]; then
 fi
 cd ..
 
-echo "Starting Lair https to http proxy on $1:11013"
-cd deps/node-simple-proxy
-export KEY=../etc/lair-key.pem
-export CERT=../etc/lair.pem
-export PROXY_TO_HOST=127.0.0.1
-export PROXY_TO_PORT=11016
-export PROXY_PORT=11013
-export PROXY_HOST=$1
-nohup ../node/bin/node proxy.js 1>/dev/null 2>error.log &
+echo "Starting Lair https to http proxy on $1:11013 [nginx]"
+deps/bin/nginx -c deps/etc/nginx.conf -p ./
 if [ "$?" != 0 ]; then
   echo "Error: failed to start https proxy ."
-  echo "Please see error.log for details."
-  cd ../../
+  echo "Please see deps/var/log/error.log for details."
   ./stop.sh &>/dev/null
   exit 1;
 fi
-cd ../../
+
 echo
 echo
 echo "Access Lair at https://$1:11013/"
