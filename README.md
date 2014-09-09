@@ -2,11 +2,11 @@
 
 Precompiled application packages are available for Linux and OS X. Download one of the current application packages below:
 
-[lair-v1.0.4-darwin-x64.7z](https://github.com/fishnetsecurity/Lair/releases/download/v1.0.4/lair-v1.0.4-darwin-x64.7z)
+[lair-v1.0.5-darwin-x64.7z](https://github.com/fishnetsecurity/Lair/releases/download/v1.0.5/lair-v1.0.5-darwin-x64.7z)
 
-[lair-v1.0.4-linux-x64.7z](https://github.com/fishnetsecurity/Lair/releases/download/v1.0.4/lair-v1.0.4-linux-x64.7z)
+[lair-v1.0.5-linux-x64.7z](https://github.com/fishnetsecurity/Lair/releases/download/v1.0.5/lair-v1.0.5-linux-x64.7z)
 
-[lair-v1.0.4-linux-x86.7z](https://github.com/fishnetsecurity/Lair/releases/download/v1.0.4/lair-v1.0.4-linux-x86.7z)
+[lair-v1.0.5-linux-x86.7z](https://github.com/fishnetsecurity/Lair/releases/download/v1.0.5/lair-v1.0.5-linux-x86.7z)
 
 Next, download the latest drones python package [here](https://github.com/fishnetsecurity/Lair-Drones/releases/latest).
 
