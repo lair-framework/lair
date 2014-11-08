@@ -12,20 +12,12 @@ Deps.autorun(function() {
     count++;
     loaded();
   });
-  Meteor.subscribe('hosts', Session.get('projectId'), function() {
-    count++;
-    loaded();
-  });
-  Meteor.subscribe('ports', Session.get('projectId'), function() {
-    count++;
-    loaded();
-  });
-  Meteor.subscribe('vulnerabilities', Session.get('projectId'), function() {
+  Meteor.subscribe('counts', Session.get('projectId'), Session.get('hostQuery'), Session.get('vulnerabilityQuery'), function() {
     count++;
     loaded();
   });
   function loaded() {
-    if (count === 4) {
+    if (count === 2) {
       Session.set('loading', false);
     }
   }
@@ -38,3 +30,8 @@ Session.setDefault('chatMinimized', true);
 
 // loading
 Session.setDefault('loading', true);
+
+Session.setDefault('hostsViewSkip', 0);
+Session.setDefault('hostsViewLimit', 25);
+Session.setDefault('vulnerabilityViewSkip', 0);
+Session.setDefault('vulnerabilityViewLimit', 25);

@@ -12,8 +12,23 @@ Template.hostList.moreToShow = function() {
   }
 };
 
+Template.hostList.start = function() {
+  var n = Session.get('hostsViewSkip') + 1;
+  if (n > Template.hostList.total()) {
+    n = Template.hostList.total();
+  }
+  return n;
+};
+
+Template.hostList.end = function() {
+  var n = Session.get('hostsViewSkip') + Session.get('hostsViewLimit');
+  if (n > Template.hostList.total())
+    n = Template.hostList.total();
+  return n;
+};
+
 Template.hostList.total = function() {
-  return Hosts.find({"project_id": Session.get('projectId')}).count();
+  return Counts.findOne(Session.get('projectId')).hostCount;
 };
 
 Template.hostList.flagFilter = function() {
@@ -51,6 +66,7 @@ Template.hostList.hosts = function() {
       {"tags": search}
     ];
   }
+  Session.set('hostQuery', query);
   var hosts = [];
   Hosts.find(query, {"sort": {"long_addr": 1}, "limit": limit}).fetch().forEach(function(host){
     host.os = host.os.sort(sortFingerprint).sort(sortWeight)[0];
@@ -111,10 +127,36 @@ Template.hostList.events({
     return Meteor.call('setHostStatus', Session.get('projectId'), this._id, status);
   },
 
+  'click #next-page': function() {
+    var id = Session.get('projectId');
+    var previousSkip = Session.get('hostsViewSkip') || 0;
+    var newSkip = previousSkip + 25;
+    var count = Counts.findOne(Session.get('projectId')).hostCount;
+    if (newSkip >= count)
+        newSkip = previousSkip;
+    Session.set('hostsViewSkip', newSkip);
+    return Router.go('/project/' + id + '/hosts');
+  },
+
+  'click #prev-page': function() {
+    var id = Session.get('projectId');
+    var previousSkip = Session.get('hostsViewSkip') || 0;
+    var newSkip = previousSkip - 25;
+    if (newSkip < 0)
+        newSkip = 0;
+    Session.set('hostsViewSkip', newSkip);
+    return Router.go('/project/' + id + '/hosts');
+  },
+
   'click #load-more': function() {
     var previousLimit = Session.get('hostsViewLimit') || 25;
     var newLimit = previousLimit + 25;
-    Session.set('hostsViewLimit', newLimit);
+    //Session.set('hostsViewLimit', newLimit);
+    var id = Session.get('projectId');
+    var previousSkip = Session.get('hostsViewSkip') || 0;
+    var newSkip = previousSkip + 25;
+    Session.set('hostsViewSkip', newSkip);
+    return Router.go('/project/' + id + '/hosts');
   },
 
   'click #load-all': function() {

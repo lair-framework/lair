@@ -7,6 +7,7 @@ Meteor.methods({
   'addProject': addProject,
   'removeProject': removeProject,
   'exportProject': exportProject,
+  'downloadProject': downloadProject,
   'addContributor': addContributor,
   'removeContributor': removeContributor,
   'addProjectNote': addProjectNote,
@@ -138,6 +139,17 @@ function removeProject(id) {
   Hosts.remove({"project_id": id});
   Ports.remove({"project_id": id});
   return Vulnerabilities.remove({"project_id": id});
+}
+
+function downloadProject(id) {
+  this.unblock();
+  if (typeof id === 'undefined') {
+    throw new Meteor.Error(400, 'Missing required argument');
+  }
+  if (typeof id !== 'string' || !id.match(/^[a-zA-Z0-9]{17,24}$/)) {
+    throw new Meteor.Error(400, 'Invalid project id');
+  }
+  return prepareExport(id);
 }
 
 function exportProject(id, url, username, password) {

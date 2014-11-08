@@ -32,7 +32,7 @@ Template.hostGist.events({
     var hosts = Hosts.find({"project_id": id}, {"sort": {"long_addr": 1}}).fetch();
     var i = _.indexOf(_.pluck(hosts, '_id'), Session.get('hostId')) + 1;
     if (i >= hosts.length) {
-      i = 0;
+      return Router.go('/project/' + id + '/hosts/' + Session.get('hostId') + '/next');
     }
     return Router.go('/project/' + id + '/hosts/' + hosts[i]._id);
   },
@@ -42,7 +42,7 @@ Template.hostGist.events({
     var hosts = Hosts.find({"project_id": id}, {"sort": {"long_addr": 1}}).fetch();
     var i = _.indexOf(_.pluck(hosts, '_id'), Session.get('hostId')) - 1;
     if (i < 0) {
-      i = hosts.length - 1;
+      return Router.go('/project/' + id + '/hosts/' + Session.get('hostId') + '/prev');
     }
     return Router.go('/project/' + id + '/hosts/' + hosts[i]._id);
   },

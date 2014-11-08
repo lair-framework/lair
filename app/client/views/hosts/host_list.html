@@ -20,7 +20,15 @@
         </div>
         <a class="btn btn-success" href="/project/{{projectId}}/hosts/new">Add a host</a>
         <span class="pull-right">
+            <p class="pull-right">
             <input id="host-list-search" type="text" class="search-query" placeholder="Search" value="{{searchTerm}}" />
+            </p>
+            {{#if moreToShow}}
+            <p class="pull-right">
+                <button id="prev-page" class="btn" style="margin-right: 5px"><i class="fa fa-fast-backward"></i></button>
+                <button id="next-page" class="btn" style="margin-right: 5px"><i class="fa fa-fast-forward"></i></button>
+            </p>
+            {{/if}}
           </span>
         </div>
       </div>
@@ -63,14 +71,9 @@
       </div>
       <div class="row-fluid">
         <div class="span6">
-          <p>Displaying {{hosts.length}} of {{total}} rows.</p>
+          <p>Displaying records {{start}} to {{end}} of {{total}}</p>
         </div>
-        {{#if moreToShow}}
-        <div class="span6">
-          <p class="pull-right"><button id="load-more" class="btn" style="margin-right: 5px">Show More</button><button class="btn" id="load-all">Show All</button></p>
-        </div>
-        {{/if}}
       </div>
     </div>
   </div>
-</template>
+  </template>

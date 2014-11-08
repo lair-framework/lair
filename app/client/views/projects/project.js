@@ -1,14 +1,11 @@
 // Copyright (c) 2014 Tom Steele, Dan Kottmann, FishNet Security
 // See the file license.txt for copying permission
 
-function drawChart(hostChartCtx, serviceChartCtx, vulnerabilityChartCtx) {
+function drawChart(hostChartCtx, vulnerabilityChartCtx) {
   if (!Session.equals('projectId', null) && Session.equals('loading', false)) {
 
     if (!Session.equals('hostChartData', null)) {
       var hostChart = new Chart(hostChartCtx).Doughnut(Session.get('hostChartData'));
-    }
-    if (!Session.equals('serviceChartData', null)) {
-      var serviceChart = new Chart(serviceChartCtx).Doughnut(Session.get('serviceChartData'));
     }
     if (!Session.equals('vulnerabilityChartData', null)) {
       var vulnerabilityChart = new Chart(vulnerabilityChartCtx).Doughnut(Session.get('vulnerabilityChartData'));
@@ -19,7 +16,6 @@ function drawChart(hostChartCtx, serviceChartCtx, vulnerabilityChartCtx) {
 
 Template.projectDetail.rendered = function() {
     var hostChartCtx = $("#hostChart").get(0).getContext("2d");
-    var serviceChartCtx = $("#serviceChart").get(0).getContext("2d");
     var vulnerabilityChartCtx = $("#vulnerabilityChart").get(0).getContext("2d");
     Deps.autorun(function() {
         var pixelRatio = window.devicePixelRatio || 1;
@@ -27,7 +23,7 @@ Template.projectDetail.rendered = function() {
         Template.project.height = 404 / pixelRatio;
 
         if (!Session.equals('projectId', null) && Session.equals('loading', false)) {
-            drawChart(hostChartCtx, serviceChartCtx, vulnerabilityChartCtx);
+            drawChart(hostChartCtx, vulnerabilityChartCtx);
         }
     });
 };
@@ -53,29 +49,22 @@ Template.projectDetail.project = function() {
     return false;
   }
   var hostData = [];
-  var serviceData = [];
   var vulnerabilityData = [];
-  hostData.push({value: Hosts.find({"project_id": project._id, "status": 'lair-grey'}).count(), color: grey});
-  hostData.push({value: Hosts.find({"project_id": project._id, "status": 'lair-blue'}).count(), color: blue});
-  hostData.push({value: Hosts.find({"project_id": project._id, "status": 'lair-green'}).count(), color: green});
-  hostData.push({value: Hosts.find({"project_id": project._id, "status": 'lair-orange'}).count(), color: orange});
-  hostData.push({value: Hosts.find({"project_id": project._id, "status": 'lair-red'}).count(), color: red});
 
-  serviceData.push({value: Ports.find({"project_id": project._id, "status": 'lair-grey'}).count(), color: grey});
-  serviceData.push({value: Ports.find({"project_id": project._id, "status": 'lair-blue'}).count(), color: blue});
-  serviceData.push({value: Ports.find({"project_id": project._id, "status": 'lair-green'}).count(), color: green});
-  serviceData.push({value: Ports.find({"project_id": project._id, "status": 'lair-orange'}).count(), color: orange});
-  serviceData.push({value: Ports.find({"project_id": project._id, "status": 'lair-red'}).count(), color: red});
+  hostData.push({value: Counts.findOne(project._id).hostLairGrey, color: grey});
+  hostData.push({value: Counts.findOne(project._id).hostLairBlue, color: blue});
+  hostData.push({value: Counts.findOne(project._id).hostLairGreen, color: green});
+  hostData.push({value: Counts.findOne(project._id).hostLairOrange, color: orange});
+  hostData.push({value: Counts.findOne(project._id).hostLairRed, color: red});
 
-  vulnerabilityData.push({value: Vulnerabilities.find({"project_id": project._id, "status": 'lair-grey'}).count(), color: grey});
-  vulnerabilityData.push({value: Vulnerabilities.find({"project_id": project._id, "status": 'lair-blue'}).count(), color: blue});
-  vulnerabilityData.push({value: Vulnerabilities.find({"project_id": project._id, "status": 'lair-green'}).count(), color: green});
-  vulnerabilityData.push({value: Vulnerabilities.find({"project_id": project._id, "status": 'lair-orange'}).count(), color: orange});
-  vulnerabilityData.push({value: Vulnerabilities.find({"project_id": project._id, "status": 'lair-red'}).count(), color: red});
+  vulnerabilityData.push({value: Counts.findOne(project._id).vulnLairGrey, color: grey});
+  vulnerabilityData.push({value: Counts.findOne(project._id).vulnLairBlue, color: blue});
+  vulnerabilityData.push({value: Counts.findOne(project._id).vulnLairGreen, color: green});
+  vulnerabilityData.push({value: Counts.findOne(project._id).vulnLairOrange, color: orange});
+  vulnerabilityData.push({value: Counts.findOne(project._id).vulnLairRed, color: red});
 
   Session.set('projectId', project._id);
   Session.set('hostChartData', hostData);
-  Session.set('serviceChartData', serviceData);
   Session.set('vulnerabilityChartData', vulnerabilityData);
   project.isOwner = project.owner === Meteor.userId();
   project.contributors = Meteor.users.find({"_id": {$in: project.contributors}}).fetch();
@@ -94,9 +83,16 @@ Template.project.loading = function() {
 Template.projectDetail.events({
   'click #export-local': function() {
     var projectId = Session.get('projectId');
-    var data = prepareExport(projectId);
-    var blob = new Blob([JSON.stringify(data, null, 4)], {type: "text/plain;charset=utf-8"});
-    return saveAs(blob, projectId + ".json");
+    //var data = prepareExport(projectId);
+    Meteor.call('downloadProject', Session.get('projectId'), function(err, res){
+      if (err) {
+        return Alerts.insert({"class": "alert-error", "strong": "Error", "message": "Download Failed"});
+      }
+      var blob = new Blob([JSON.stringify(res, null, 4)], {type: "text/plain;charset=utf-8"});
+      saveAs(blob, projectId + ".json");
+      return Alerts.insert({"class": "alert-success", "strong": "Success", "message": "Download Complete"});
+    });
+
   },
 
   'click #export-project': function(event, tpl) {

@@ -28,19 +28,9 @@ Template.serviceSearch.services = function() {
   if (Session.equals('servicesViewQuery', null)) {
     match = Ports.find({
       "project_id": Session.get('projectId')
-    }, {
-      sort: {
-        "port": 1,
-        "product": 1
-      }
     }).fetch();
   } else {
-    match = Ports.find(Session.get('servicesViewQuery'), {
-      sort: {
-        "port": 1,
-        "product": 1
-      }
-    }).fetch();
+    match = Ports.find(Session.get('servicesViewQuery')).fetch();
   }
   if (!match) {
     Session.set('match', match);
@@ -75,10 +65,6 @@ Template.serviceSearchHostList.hosts = function() {
   var hosts = Hosts.find({
     "_id": {
       "$in": _.uniq(Session.get('hostIds'))
-    }
-  }, {
-    "sort": {
-      "long_addr": 1
     }
   }).fetch();
   return _.pluck(hosts, 'string_addr').join('\n');
@@ -159,7 +145,7 @@ Template.serviceSearch.events({
 
   'click .flag-disabled': function() {
     return Meteor.call('enablePortFlag', Session.get('projectId'), this._id);
-  },
+  }
 
 });
 
