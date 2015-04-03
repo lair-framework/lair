@@ -1,3 +1,14 @@
+##Contact##
+If you need assistance with installation, usage, or are interested in contributing, please contact Dan Kottmann at any of the below.
+
+Dan Kottmann
+- [@djkottmann](https://twitter.com/djkottmann)
+- djkottmann@gmail.com
+
+Tom Steele
+- [@_tomsteele](https://twitter.com/_tomsteele)
+- tom@stacktitan.com
+
 ##Installation##
 
 Precompiled application packages are available for Linux and OS X. Download one of the current application packages below:
@@ -70,10 +81,3 @@ You can install the drones to PATH with pip
 There are occasional issues and confilicts with Meteor and the Fibers module. If you run into a situation where you cannot start Meteor due to Fibers conflicts, refer to the following for potential fixes:
 * [Error: Cannot find module 'fibers'](http://stackoverflow.com/questions/15851923/cant-install-update-or-run-meteor-after-0-6-release)
 * [Error: fibers.node is missing](http://stackoverflow.com/questions/13327088/meteor-bundle-fails-because-fibers-node-is-missing)
-
-##Contact##
-If you need assistance with installation, usage, or are interested in contributing, please contact Dan Kottmann at any of the below.
-
-Dan Kottmann
-- [@djkottmann](https://twitter.com/djkottmann)
-- djkottmann@gmail.com
