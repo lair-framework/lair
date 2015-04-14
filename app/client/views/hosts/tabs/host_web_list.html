@@ -1,0 +1,74 @@
+<template name="hostWebList">
+  <div class="row-fluid">
+    <div class="span2">
+      {{> sideNav}}
+    </div>
+    <div class="span10">
+      {{> alerts}}
+      {{> hostGist}}
+      {{> hostNav}}
+      <div class="row-fluid">
+        <div class="span12">
+          <!-- <div class="btn-group">
+            {{#if flagFilter}}
+              <button type="button" id="flag-filter-disable" class="btn flag-filter hover-hand"><i class="fa fa-flag"></i></button>
+            {{else}}
+              <button type="button" id="flag-filter-enable" class="btn flag-filter hover-hand"><i class="fa fa-flag-o"></i></button>
+            {{/if}}
+          </div> -->
+          <button id="remove-path" class="btn btn-danger"><i class="fa fa-trash-o"></i></button>
+        </div>
+      </div>
+      <br />
+      <div class="row-fluid">
+        <div class="span8">
+          <table class="table table-bordered">
+            <thead>
+            <tr>
+              <th class="onepix"></th>
+              <th class="onepix"></th>
+              <th>Path</th>
+              <th class="onepix">Response Code</th>
+              <th class="onepix">Port</th>
+            </tr>
+            </thead>
+            <tbody>
+            {{#each paths}}
+            <tr>
+              <td><input class="path-checked" id="{{path_clean}}" type="checkbox" /></td>
+              <td>
+              {{#if flag}}
+                <i class="fa fa-flag flag-enabled hover-hand"></i>
+              {{else}}
+                <i class="fa fa-flag-o flag-disabled hover-hand"></i>
+              {{/if}}
+              </td>
+              <td class="{{status}}">{{path}}</td>
+              <td class="dontstyle">{{response_code}}</td>
+              <td><a class="dontstyle" href="/project/{{projectId}}/services/{{portId}}/vulnerabilities">{{port}}</a></td>
+            </tr>
+            {{/each}}
+            </tbody>
+          </table>
+        </div>
+        <div class="span4">
+          {{#if path}}
+          -
+          {{else}}
+          <form>
+            <input type="text" name="path" placeholder="Path" class="input-block-level" />
+            <input type="text" name="response_code" placeholder="Response Code" class="input-block-level" />
+            <input type="text" name="port" placeholder="Port" class="input-block-level" />
+            <button type="submit" class="btn btn-primary">Save</button>
+          </form>
+          {{/if}}
+        </div>
+      </div>
+      <div class="row-fluid">
+        <div class="span12">
+          <p>Displaying {{paths.length}} rows</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</template>

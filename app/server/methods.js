@@ -27,6 +27,10 @@ Meteor.methods({
   'removeHostTag': removeHostTag,
   'addHostOs': addHostOs,
   'removeHostOs': removeHostOs,
+  'addWebPath': addWebPath,
+  'removeWebPath': removeWebPath,
+  'enableWebPathFlag': enableWebPathFlag,
+  'disableWebPathFlag': disableWebPathFlag,
   'setOsWeight': setOsWeight,
   'addHostNote': addHostNote,
   'removeHostNote': removeHostNote,
@@ -491,6 +495,88 @@ function removeHostTag(id, hostId, tag) {
   return Hosts.update({"project_id": id, "_id": hostId},
                       {$pull: {"tags": tag},
                        $set: {"last_modified_by": Meteor.user().emails[0].address}});
+}
+
+function addWebPath(id, hostId, path, port, response) {
+  if (typeof id === 'undefined' || typeof hostId === 'undefined' || typeof path === 'undefined' || typeof response === 'undefined') {
+    throw new Meteor.Error(400, 'Missing required argument');
+  }
+  if (typeof id !== 'string' || !id.match(/^[a-zA-Z0-9]{17,24}$/)) {
+    throw new Meteor.Error(400, 'Invalid project id');
+  }
+  if (typeof hostId !== 'string' || !hostId.match(/^[a-zA-Z0-9]{17,24}$/)) {
+    throw new Meteor.Error(400, 'Invalid host id');
+  }
+  port = parseInt(port);
+  if (isNaN(port) || port > 655535 || port < 0) {
+    throw new Meteor.Error(400, 'Invalid port number');
+  }
+  if (typeof path !== 'string') {
+    throw new Meteor.Error(400, 'Invalid path');
+  }
+  if (typeof response !== 'string' || !response.match(/^[1|2|3|4|5]\d{2}$/)) {
+    throw new Meteor.Error(400, 'Invalid response code value');
+  }
+  var web = models.web();
+  web.path = path;
+  web.path_clean = path.replace(/[^a-zA-Z0-9]/g,'_');
+  web.port = port;
+  web.response_code = response;
+  return Hosts.update({"project_id": id, "_id": hostId},
+                      {$addToSet: {"web": web},
+                       $set: {"last_modified_by": Meteor.user().emails[0].address}});
+}
+
+function removeWebPath(id, hostId, path_clean) {
+  if (typeof id === 'undefined' || typeof hostId === 'undefined' || typeof path_clean === 'undefined') {
+    throw new Meteor.Error(400, 'Missing required argument');
+  }
+  if (typeof id !== 'string' || !id.match(/^[a-zA-Z0-9]{17,24}$/)) {
+    throw new Meteor.Error(400, 'Invalid project id');
+  }
+  if (typeof hostId !== 'string' || !hostId.match(/^[a-zA-Z0-9]{17,24}$/)) {
+    throw new Meteor.Error(400, 'Invalid host id');
+  }
+  if (typeof path_clean !== 'string') {
+    throw new Meteor.Error(400, 'Invalid path');
+  }
+  return Hosts.update({"project_id": id, "_id": hostId},
+                      {$pull: {"web": {"path_clean": path_clean}},
+                       $set: {"last_modified_by": Meteor.user().emails[0].address}});
+}
+
+function enableWebPathFlag(id, hostId, path_clean) {
+  if (typeof id === 'undefined' || typeof hostId === 'undefined' || typeof path_clean === 'undefined') {
+    throw new Meteor.Error(400, 'Missing required argument');
+  }
+  if (typeof id !== 'string' || !id.match(/^[a-zA-Z0-9]{17,24}$/)) {
+    throw new Meteor.Error(400, 'Invalid project id');
+  }
+  if (typeof hostId !== 'string' || !hostId.match(/^[a-zA-Z0-9]{17,24}$/)) {
+    throw new Meteor.Error(400, 'Invalid host id');
+  }
+  if (typeof path_clean !== 'string') {
+    throw new Meteor.Error(400, 'Invalid path');
+  }
+  return Hosts.update({"project_id": id, "_id": hostId, "web.path_clean": path_clean},
+                      {$set: {"web.$.flag": true, "last_modified_by": Meteor.user().emails[0].address}});
+}
+
+function disableWebPathFlag(id, hostId, path_clean) {
+  if (typeof id === 'undefined' || typeof hostId === 'undefined' || typeof path_clean === 'undefined') {
+    throw new Meteor.Error(400, 'Missing required argument');
+  }
+  if (typeof id !== 'string' || !id.match(/^[a-zA-Z0-9]{17,24}$/)) {
+    throw new Meteor.Error(400, 'Invalid project id');
+  }
+  if (typeof hostId !== 'string' || !hostId.match(/^[a-zA-Z0-9]{17,24}$/)) {
+    throw new Meteor.Error(400, 'Invalid host id');
+  }
+  if (typeof path_clean !== 'string') {
+    throw new Meteor.Error(400, 'Invalid path');
+  }
+  return Hosts.update({"project_id": id, "_id": hostId, "web.path_clean": path_clean},
+                      {$set: {"web.$.flag": false, "last_modified_by": Meteor.user().emails[0].address}});
 }
 
 function addHostOs(id, hostId, tool, fingerprint, weight) {

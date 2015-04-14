@@ -283,6 +283,20 @@ Router.map(function() {
         }
       }
   );
+  this.route('hostWebList',
+      {
+        path: '/project/:pid/hosts/:hid/web',
+        onBeforeAction: function() {
+          Session.set('projectId', this.params.pid);
+          Session.set('hostId', this.params.hid);
+        },
+        waitOn: function() {
+          return [
+            Meteor.subscribe('host', this.params.pid, this.params.hid)
+          ];
+        }
+      }
+  );
   this.route('hostOsList',
       {
         path: '/project/:pid/hosts/:hid/os',

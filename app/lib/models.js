@@ -39,12 +39,23 @@ models = {
       'string_addr': '',
       'mac_addr': '',
       'hostnames': [],
+      'web': [],
       'os': [],
       'notes': [],
       'tags': [],
       'alive': true,
       'status': STATUS_GREY,
       'last_modified_by': '',
+      'flag': false
+    };
+  },
+
+  web: function() {
+    return {
+      'path': '',
+      'path_clean': '',
+      'port': '',
+      'response_code': '',
       'flag': false
     };
   },
