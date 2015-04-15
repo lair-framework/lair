@@ -49,6 +49,19 @@ models = {
     };
   },
 
+  web: function() {
+    return {
+      'project_id': '',
+      'host_id': '',
+      'path': '',
+      'path_clean': '',
+      'port': '',
+      'response_code': '',
+      'last_modified_by': '',
+      'flag': false
+    };
+  },
+
   os: function() {
     return {
       'tool': '',
