@@ -517,6 +517,12 @@ function addWebDirectory(id, hostId, path, port, response) {
   if (typeof response !== 'string' || !response.match(/^[1|2|3|4|5]\d{2}$/)) {
     throw new Meteor.Error(400, 'Invalid response code value');
   }
+
+  existing = WebDirectories.find({'project_id': id, 'host_id': hostId, 'path_clean': path.replace(/[^a-zA-Z0-9]/g,'_'), 'port': port, 'response_code': response}).fetch();
+  if (existing.length !== 0) {
+    throw new Meteor.Error('400', 'Path exists already, ignoring');
+  }
+
   var web = models.web();
   web.project_id = id;
   web.host_id = hostId;

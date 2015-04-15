@@ -22,14 +22,6 @@ Template.hostWebDirectoryList.flagFilter = function() {
   return Session.get('webDirectoryFlagFilter');
 };
 
-Template.hostWebDirectoryList.rendered = function() {
-    console.log('');
-    // if(!this._rendered) {
-    //   this._rendered = true;
-    //   console.log('Template onLoad');
-    // }
-}
-
 Template.hostWebDirectoryList.paths = function() {
   var projectId = Session.get('projectId');
   var hostId = Session.get('hostId');
