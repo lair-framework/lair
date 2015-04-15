@@ -32,6 +32,7 @@ Projects.allow({
 Hosts.allow(opts);
 Ports.allow(opts);
 Vulnerabilities.allow(opts);
+WebDirectories.allow(opts);
 
 function authorize(id, uid) {
   var p = Projects.findOne({"_id": id, $or: [{"owner": uid}, {"contributors": uid}]});

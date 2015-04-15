@@ -39,7 +39,6 @@ models = {
       'string_addr': '',
       'mac_addr': '',
       'hostnames': [],
-      'web': [],
       'os': [],
       'notes': [],
       'tags': [],
@@ -52,10 +51,13 @@ models = {
 
   web: function() {
     return {
+      'project_id': '',
+      'host_id': '',
       'path': '',
       'path_clean': '',
       'port': '',
       'response_code': '',
+      'last_modified_by': '',
       'flag': false
     };
   },

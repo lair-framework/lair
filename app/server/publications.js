@@ -477,6 +477,13 @@ Meteor.publish("vulnerabilities", function(id, skip, lim, q) {
     return false;
 });
 
+Meteor.publish("web_directories", function(projectId, hostId) {
+    if (project && (project.owner == this.userId || _.indexOf(project.contributors, this.userId) > -1)) {
+        return WebDirectories.find({'project_id': projectId, 'host_id': hostId});
+    }
+    return false;
+});
+
 // publish meteor users so you can add contributors
 // check if logged in first to avoid user account enumeration
 Meteor.publish("directory", function () {

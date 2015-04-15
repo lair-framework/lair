@@ -27,10 +27,10 @@ Meteor.methods({
   'removeHostTag': removeHostTag,
   'addHostOs': addHostOs,
   'removeHostOs': removeHostOs,
-  'addWebPath': addWebPath,
-  'removeWebPath': removeWebPath,
-  'enableWebPathFlag': enableWebPathFlag,
-  'disableWebPathFlag': disableWebPathFlag,
+  'addWebDirectory': addWebDirectory,
+  'removeWebDirectory': removeWebDirectory,
+  'enableWebDirectoryFlag': enableWebDirectoryFlag,
+  'disableWebDirectoryFlag': disableWebDirectoryFlag,
   'setOsWeight': setOsWeight,
   'addHostNote': addHostNote,
   'removeHostNote': removeHostNote,
@@ -497,7 +497,7 @@ function removeHostTag(id, hostId, tag) {
                        $set: {"last_modified_by": Meteor.user().emails[0].address}});
 }
 
-function addWebPath(id, hostId, path, port, response) {
+function addWebDirectory(id, hostId, path, port, response) {
   if (typeof id === 'undefined' || typeof hostId === 'undefined' || typeof path === 'undefined' || typeof response === 'undefined') {
     throw new Meteor.Error(400, 'Missing required argument');
   }
@@ -518,16 +518,17 @@ function addWebPath(id, hostId, path, port, response) {
     throw new Meteor.Error(400, 'Invalid response code value');
   }
   var web = models.web();
+  web.project_id = id;
+  web.host_id = hostId;
   web.path = path;
   web.path_clean = path.replace(/[^a-zA-Z0-9]/g,'_');
   web.port = port;
   web.response_code = response;
-  return Hosts.update({"project_id": id, "_id": hostId},
-                      {$addToSet: {"web": web},
-                       $set: {"last_modified_by": Meteor.user().emails[0].address}});
+  web.last_modified_by = Meteor.user().emails[0].address;
+  return WebDirectories.insert(web);
 }
 
-function removeWebPath(id, hostId, path_clean) {
+function removeWebDirectory(id, hostId, path_clean) {
   if (typeof id === 'undefined' || typeof hostId === 'undefined' || typeof path_clean === 'undefined') {
     throw new Meteor.Error(400, 'Missing required argument');
   }
@@ -540,12 +541,10 @@ function removeWebPath(id, hostId, path_clean) {
   if (typeof path_clean !== 'string') {
     throw new Meteor.Error(400, 'Invalid path');
   }
-  return Hosts.update({"project_id": id, "_id": hostId},
-                      {$pull: {"web": {"path_clean": path_clean}},
-                       $set: {"last_modified_by": Meteor.user().emails[0].address}});
+  return WebDirectories.remove({"project_id": id, "host_id": hostId, "path_clean": path_clean});
 }
 
-function enableWebPathFlag(id, hostId, path_clean) {
+function enableWebDirectoryFlag(id, hostId, path_clean) {
   if (typeof id === 'undefined' || typeof hostId === 'undefined' || typeof path_clean === 'undefined') {
     throw new Meteor.Error(400, 'Missing required argument');
   }
@@ -558,11 +557,11 @@ function enableWebPathFlag(id, hostId, path_clean) {
   if (typeof path_clean !== 'string') {
     throw new Meteor.Error(400, 'Invalid path');
   }
-  return Hosts.update({"project_id": id, "_id": hostId, "web.path_clean": path_clean},
-                      {$set: {"web.$.flag": true, "last_modified_by": Meteor.user().emails[0].address}});
+  return WebDirectories.update({"project_id": id, "host_id": hostId, "path_clean": path_clean},
+                               {$set: {"flag": true, "last_modified_by": Meteor.user().emails[0].address}});
 }
 
-function disableWebPathFlag(id, hostId, path_clean) {
+function disableWebDirectoryFlag(id, hostId, path_clean) {
   if (typeof id === 'undefined' || typeof hostId === 'undefined' || typeof path_clean === 'undefined') {
     throw new Meteor.Error(400, 'Missing required argument');
   }
@@ -575,8 +574,8 @@ function disableWebPathFlag(id, hostId, path_clean) {
   if (typeof path_clean !== 'string') {
     throw new Meteor.Error(400, 'Invalid path');
   }
-  return Hosts.update({"project_id": id, "_id": hostId, "web.path_clean": path_clean},
-                      {$set: {"web.$.flag": false, "last_modified_by": Meteor.user().emails[0].address}});
+  return WebDirectories.update({"project_id": id, "host_id": hostId, "path_clean": path_clean},
+                               {$set: {"flag": false, "last_modified_by": Meteor.user().emails[0].address}});
 }
 
 function addHostOs(id, hostId, tool, fingerprint, weight) {

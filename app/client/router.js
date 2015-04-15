@@ -283,16 +283,18 @@ Router.map(function() {
         }
       }
   );
-  this.route('hostWebList',
+  this.route('hostWebDirectoryList',
       {
-        path: '/project/:pid/hosts/:hid/web',
+        path: '/project/:pid/hosts/:hid/web-directories',
         onBeforeAction: function() {
           Session.set('projectId', this.params.pid);
           Session.set('hostId', this.params.hid);
+          applyWebDirectoryFilter();
         },
         waitOn: function() {
           return [
-            Meteor.subscribe('host', this.params.pid, this.params.hid)
+            Meteor.subscribe('host', this.params.pid, this.params.hid),
+            Meteor.subscribe('web_directories', this.params.pid, this.params.hid)
           ];
         }
       }
@@ -797,6 +799,13 @@ function applyPortFilter() {
     Session.set('hostServiceLimit', 25);
   }
 }
+function applyWebDirectoryFilter() {
+  var persist = Settings.findOne({"setting": "persistViewFilters", "enabled": true});
+  if(!persist) {
+    unsetWebDirectoryStatusButtons();
+    Session.set('hostWebDirectoryLimit', 25);
+  }
+}
 
 function unsetVulnerabilityStatusButtons() {
   Session.set('vulnerabilitySearch', null);
@@ -824,4 +833,9 @@ function unsetPortStatusButtons() {
   Session.set('portListStatusButtonorange', null);
   Session.set('portListStatusButtonred', null);
   Session.set('portListFlagFilter', null);
+}
+
+function unsetWebDirectoryStatusButtons() {
+  Session.set('webDirectorySearch', null);
+  Session.set('webDirectoryFlagFilter', null);
 }
