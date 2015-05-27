@@ -1,0 +1,15 @@
+<template name="addIssueHost">
+  <div class="row">
+    <div class="two columns">
+      {{> sideNav}}
+    </div>
+    <div class="four columns">
+      <form>
+        <input class="u-full-width" type="text" name="ip" placeholder="IP Address">
+        <input class="u-full-width" type="number" name="port" min="0" max="65535" step="any" placeholder="Port">
+        <input class="u-full-width" type="text" name="protocol" placeholder="Protocol">
+        <button class="button button-primary">Submit</button>
+      </form>
+    </div>
+  </div>
+</template>

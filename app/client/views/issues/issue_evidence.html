@@ -1,0 +1,24 @@
+<template name="issueEvidence">
+<div class="row">
+  <div class="two columns">
+    {{> sideNav}}
+  </div>
+  <div class="ten columns">
+    <div class="row">
+      {{> issueGist}}
+    </div>
+    <hr />
+    <div class="row">
+      {{> issueNav}}
+    </div>
+    <div class="row">
+      <div class="twelve columns">
+        <form>
+        <textarea class="u-full-width" name="evidence">{{issue.evidence}}</textarea>
+        <button class="button button-primary">Save</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+</template>

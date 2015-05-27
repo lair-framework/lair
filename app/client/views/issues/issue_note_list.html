@@ -1,0 +1,66 @@
+<template name="issueNoteList">
+<div class="row">
+  <div class="two columns">
+    {{> sideNav}}
+  </div>
+  <div class="ten columns">
+    <div class="row">
+      {{> issueGist}}
+    </div>
+    <hr />
+    <div class="row">
+      {{> issueNav}}
+    </div>
+    <div class="row">
+      <div class="seven columns">
+      {{#if issue.notes}}
+        <div class="row">
+          <div class="twelve columns">
+            <button id="remove-notes" class="button lair-red"><i class="fa fa-trash fa-lg"></i></button>
+            <button id="new-note" class="u-pull-right button button-primary">New Note</button>
+          </div>
+        </div>
+      {{/if}}
+        <div class="row">
+          <div class="twelve columns">
+            <ul class="list-unstyled list-alternate">
+            {{#each issue.notes}}
+              <li>
+                <input class="note-checked" id="{{title}}" type="checkbox" />
+                <span class="issue-note"><a href="#">{{title}}</a></span>
+                <span class="u-pull-right">{{lastModifiedBy}}</span>
+              </li>
+            {{/each}}
+            </ul>
+          </div>
+        </div>
+      </div>
+      <div class="five columns">
+      {{#if note}}
+        <ul class="list-unstyled">
+          <li>{{note.title}}</li>
+        </ul>
+        <form>
+          <textarea name="content" class="u-full-width" row="15">{{note.content}}</textarea>
+          <button class="button button-primary">Save</button>
+        </form>
+      {{else}}
+        <form>
+          <div class="row">
+            <div class="twelve columns">
+              <input type="text" class="u-full-width" name="title" placeholder="Title">
+            </div>
+          </div>
+          <div class="row">
+            <div class="twelve columns">
+              <textarea class="u-full-width" rows="15" name="content" placeholder="Content"></textarea>
+            </div>
+          </div>
+          <button class="button button-primary">Save</button>
+        </form>
+      {{/if}}
+      </div>
+    </div>
+  </div>
+</div>
+</template>

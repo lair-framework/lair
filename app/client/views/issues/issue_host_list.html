@@ -1,0 +1,40 @@
+<template name="issueHostList">
+<div class="row">
+  <div class="two columns">
+    {{> sideNav}}
+  </div>
+  <div class="ten columns">
+    <div class="row">
+      {{> issueGist}}
+    </div>
+    <hr />
+    <div class="row">
+      {{> issueNav}}
+    </div>
+    <div class="row">
+      <div class="twelve columns">
+        <ul class="list-unstyled">
+          <li>
+            <button class="button lair-red" id="remove-hosts"><i class="fa fa-trash fa-lg"></i></button>
+            <a href="/projects/{{projectId}}/issues/{{issue._id}}/hosts/bulk" class="issue-hosts-button u-pull-right button button-primary">Bulk Host Upload</a>
+            <a href="/projects/{{projectId}}/issues/{{issue._id}}/hosts/new" class="issue-hosts-button u-pull-right button button-primary">Add Host</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+    <div class="row">
+      <div class="twelve columns">
+        <ul class="list-unstyled list-alternate list-issue-hosts">
+        {{#each issue.hosts}}
+          <li>
+            <span class="host-checkbox"><input type="checkbox"></span>
+            <span class="host-ip"><a href="/projects/{{../projectId}}/hosts/{{hostId}}/services">{{ipv4}}</a></span>
+            <span class="host-port"><a href="/projects/{{../projectId}}/hosts/{{hostId}}/services/{{serviceId}}/issues">({{port}}/{{protocol}})</a></span>
+          </li>
+        {{/each}}
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+</template>

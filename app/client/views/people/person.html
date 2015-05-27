@@ -1,0 +1,13 @@
+<template name="person">
+<div class="row">
+  <div class="two columns">
+    {{> sideNav}}
+  </div>
+  <div class="ten columns">
+  {{#with person}}
+  {{principalName}}
+  {{description}}
+  {{/with}}
+  </div>
+</div>
+</template>

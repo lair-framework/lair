@@ -1,0 +1,44 @@
+<template name="issueGist">
+  <div class="eight columns">
+    <ul class="list-unstyled gist">
+      <li><strong>Title:&nbsp;</strong>{{issue.title}}</li>
+      <li><strong>CVSS:&nbsp;</strong>{{issue.cvss}}</li>
+      <li><strong>Updated by:&nbsp;</strong>{{issue.lastModifiedBy}}</li>
+      <li>
+        {{#if issue.isFlagged}}
+          <i class="u-pull-left fa fa-flag flag-enabled clickable"></i>
+        {{else}}
+          <i class="u-pull-left fa fa-flag-o flag-disabled clickable"></i>
+        {{/if}}
+        {{#if issue.isConfirmed}}
+          <i class="u-pull-left issue-gist-confirm clickable fa fa-check-circle-o lair-green-text confirm-enabled"></i>
+        {{else}}
+          <i class="u-pull-left issue-gist-confirm clickable fa fa-circle-o confirm-disabled"></i>
+        {{/if}}
+        <span class="u-pull-left status-span status-box clickable issue-status {{issue.status}}">&nbsp;</span>
+      </li>
+    </ul>
+  </div>
+  <div class="four columns gist">
+    <form id="issue-gist-set-title">
+      <div class="row">
+        <div class="eight columns">
+          <input type="text" name="issue-title" class="u-full-width" placeholder="Title">
+        </div>
+        <div class="two columns">
+          <button class="button button-primary">Set Title</button>
+        </div>
+      </div>
+    </form>
+    <form id="issue-gist-set-cvss">
+      <div class="row">
+        <div class="eight columns">
+          <input type="number" class="u-full-width" name="issue-cvss" min="0.0" max="10.0" step="0.1" placeholder="CVSS">
+        </div>
+        <div class="two columns">
+          <button class="button button-primary">Set CVSS</button>
+        </div>
+      </div>
+    </form>
+  </div>
+</template>

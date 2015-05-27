@@ -1,0 +1,43 @@
+<template name="peopleList">
+  <div class="row">
+    <div class="two columns">
+      {{> sideNav}}
+    </div>
+    <div class="ten columns">
+      <div class="row">
+        <div class="twelve columns">
+          <span class="u-pull-right">
+            <a href="/projects/{{projectId}}/people/new" class="button button-primary">New Person</a>
+            <input type="text" id="people-search" placeholder="Search..">
+          </span>
+        </div>
+      </div>
+      <div class="row">
+        <div class="twelve columns">
+          <table class="u-full-width">
+            <thead>
+              <tr>
+                <th>Principal Name</th>
+                <th>Groups</th>
+                <th>Credential Count</th>
+              </tr>
+            </thead>
+            <tbody>
+            {{#each people}}
+            <tr>
+              <td><a href="/projects/{{projectId}}/people/{{_id}}">{{principalName}}</a></td>
+              <td>
+                {{#each groups}}
+                {{this}}<br />
+                {{/each}}
+              </td>
+              <td>1</td>
+            </tr>
+            {{/each}}
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</template>
