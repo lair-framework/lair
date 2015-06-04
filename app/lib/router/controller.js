@@ -1,5 +1,13 @@
 /* globals Meteor RouteController Session Subs ProjectController */
 ProjectController = RouteController.extend({ // eslint-disable-line
+  onBeforeAction: function () {
+    if (!(Meteor.loggingIn() || Meteor.user())) {
+      this.redirect('signin')
+      this.next()
+      return
+    }
+    this.next()
+  },
   onRun: function () {
     if (this.params.id) {
       Session.set('projectId', this.params.id)
@@ -18,5 +26,16 @@ ProjectController = RouteController.extend({ // eslint-disable-line
       Subs.subscribe('people', this.params.id),
       Subs.subscribe('settings')
     ]
+  }
+})
+
+SettingsController = RouteController.extend({
+  onBeforeAction: function () {
+    if (!(Meteor.loggingIn() || Meteor.user())) {
+      this.redirect('signin')
+      this.next()
+      return
+    }
+    this.next()
   }
 })
