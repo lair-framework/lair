@@ -6,6 +6,11 @@ Matchers = { // eslint-disable-line
     return x.length > 0
   }),
 
+  isEmail: Match.Where(function (x) {
+    check(x, String)
+    return x.match(/[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?/)
+  }),
+
   isObjectId: Match.Where(function (x) {
     check(x, String)
     return x.match(/^[a-zA-Z0-9]{17,24}$/)
