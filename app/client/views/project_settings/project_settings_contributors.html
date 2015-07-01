@@ -1,0 +1,44 @@
+<template name="projectSettingsContributors">
+  <div class="row">
+    <div class="two columns">
+      {{> sideNav}}
+    </div>
+    <div class="ten columns">
+      <div class="row">
+        {{> projectSettingsNav}}
+      </div>
+      <div class="row">
+        <div class="six columns">
+          <button id="move-users" class="button button-primary">Move to contributors</button>
+        </div>
+        <div class="six columns">
+          <button id="move-contributors" class="button button-primary">Remove contributors</button>
+        </div>
+      </div>
+      <div clas="row">
+        <div class="six columns">
+          <ul class="list-unstyled list-users">
+            {{#each users}}
+            <li>
+            <div class="row">
+              <span class="u-pull-left"><input class="user-checked" id="{{_id}}" type="checkbox"></span><span class="pull-left">{{email}}</span>
+            </div>
+            </li>
+            {{/each}}
+          </ul>
+        </div>
+        <div class="six columns">
+          <ul class="list-unstyled list-users">
+            {{#each contributors}}
+            <li>
+            <div class="row">
+              <span class="u-pull-left"><input class="contributor-checked" id="{{_id}}" type="checkbox"></span><span class="pull-left">{{email}}</span>
+            </div>
+            </li>
+            {{/each}}
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</template>

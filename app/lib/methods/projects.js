@@ -1,9 +1,14 @@
-/* globals Meteor check Models Projects _ moment Matchers AuthorizeChange */
+/* globals Meteor HTTP AuthorizeOwner check Models Projects _ moment Matchers AuthorizeChange Hosts Issues Services People WebDirectories*/
 Meteor.methods({
   createProject: createProject,
   addNote: addNote,
   removeNote: removeNote,
-  setNoteContent: setNoteContent
+  setNoteContent: setNoteContent,
+  downloadProject: downloadProject,
+  exportProject: exportProject,
+  removeProject: removeProject,
+  addContributor: addContributor,
+  removeContributor: removeContributor
 })
 
 function createProject (name, industry, description) {
@@ -85,4 +90,96 @@ function setNoteContent (id, title, content) {
       lastModifiedBy: Meteor.user().emails[0].address
     }
   })
+}
+
+function prepareExport (id) {
+  var project = Projects.findOne({_id: id})
+  if (typeof project === 'undefined') {
+    return {}
+  }
+  var hosts = Hosts.find({projectId: id}).fetch() || []
+  var issues = Issues.find({projectId: id}).fetch() || []
+  hosts.forEach(function (host) {
+    host.services = Services.find({hostId: host._id}).fetch()
+    host.webDirectories = WebDirectories.find({hostId: host._id}).fetch()
+  })
+  var people = People.find({projectId: id}).fetch()
+  project.hosts = hosts
+  project.people = people
+  project.issues = issues
+  return project
+}
+
+function downloadProject (id) {
+  if (!AuthorizeChange(id, this.userId)) {
+    throw new Meteor.Error(403, 'Access Denied')
+  }
+  this.unblock()
+  check(id, Matchers.isObjectId)
+  return prepareExport(id)
+}
+
+function exportProject (id, url, username, password) {
+  this.unblock()
+  check(id, Matchers.isObjectId)
+  if (!AuthorizeChange(id, this.userId)) {
+    throw new Meteor.Error(403, 'Access Denied')
+  }
+  var project = prepareExport(id)
+  var result = null
+  try {
+    if (username && password) {
+      project.username = username
+      project.password = password
+      result = HTTP.post(url, {data: project})
+    } else if (!username && password) {
+      project.password = password
+      result = HTTP.post(url, {data: project})
+    } else if (username && !password) {
+      project.username = username
+      result = HTTP.post(url, {data: project})
+    } else {
+      result = HTTP.post(url, {data: project})
+    }
+    if (result.statusCode !== 200) {
+      throw new Meteor.Error(500, 'Non 200 status code returned from server: ' + result.statusCode)
+    }
+    return result.statusCode
+  } catch (e) {
+    throw new Meteor.Error(500, 'There was a network error making the request')
+  }
+}
+
+function removeProject (id) {
+  check(id, Matchers.isObjectId)
+  if (!AuthorizeOwner(id, this.userId)) {
+    throw new Meteor.Error(403, 'Access Denied')
+  }
+  Projects.remove({_id: id, owner: this.userId})
+  Hosts.remove({projectId: id})
+  Services.remove({projectId: id})
+  Issues.remove({projectId: id})
+  People.remove({projectId: id})
+  WebDirectories.remove({projectId: id})
+  return
+}
+
+function addContributor (id, uid) {
+  check(id, Matchers.isObjectId)
+  check(uid, Matchers.isObjectId)
+  if (!Meteor.users.findOne(uid)) {
+    throw new Meteor.Error(400, 'Could not locate Meteor userId')
+  }
+  return Projects.update({_id: id, $or: [{owner: this.userId}, {contributors: this.userId}]},
+                         {$addToSet: {contributors: uid}})
+}
+
+function removeContributor (id, uid) {
+  check(id, Matchers.isObjectId)
+  check(uid, Matchers.isObjectId)
+  if (!Meteor.users.findOne(uid)) {
+    throw new Meteor.Error(400, 'Could not locate Meteor userId')
+  }
+  return Projects.update({_id: id, $or: [{owner: this.userId}, {contributors: this.userId}]},
+                         {$pull: {contributors: uid}})
 }

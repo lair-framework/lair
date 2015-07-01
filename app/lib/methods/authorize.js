@@ -9,3 +9,10 @@ AuthorizeChange = function (id, uid) { // eslint-disable-line
     }]
   })
 }
+
+AuthorizeOwner = function (id, uid) { // eslint-disable-line
+  return Projects.findOne({
+    _id: id,
+    owner: uid
+  })
+}

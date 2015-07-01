@@ -1,0 +1,8 @@
+<template name="projectSettingsNav">
+  <div class="twelve columns">
+    <ul class="nav nav-tabs">
+      <li class="{{isActive 'projectSettings' }}"><a href="/projects/{{projectId}}/settings">GENERAL</a></li>
+      <li class="{{isActive 'projectSettingsContributors' }}"><a href="/projects/{{projectId}}/settings/contributors">CONTRIBUTORS</a></li>
+    </ul>
+  </div>
+</template>

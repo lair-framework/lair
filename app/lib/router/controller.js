@@ -1,4 +1,4 @@
-/* globals Meteor RouteController Session Subs ProjectController */
+/* globals Meteor RouteController Session Subs ProjectController SettingsController */
 ProjectController = RouteController.extend({ // eslint-disable-line
   onBeforeAction: function () {
     if (!(Meteor.loggingIn() || Meteor.user())) {
@@ -24,12 +24,13 @@ ProjectController = RouteController.extend({ // eslint-disable-line
       Subs.subscribe('ports', this.params.id),
       Subs.subscribe('issues', this.params.id),
       Subs.subscribe('people', this.params.id),
+      Subs.subscribe('directory'),
       Subs.subscribe('settings')
     ]
   }
 })
 
-SettingsController = RouteController.extend({
+SettingsController = RouteController.extend({// eslint-disable-line
   onBeforeAction: function () {
     if (!(Meteor.loggingIn() || Meteor.user())) {
       this.redirect('signin')
