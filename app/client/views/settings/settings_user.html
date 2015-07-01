@@ -1,0 +1,29 @@
+<template name="settingsUser">
+  <div class="row">
+    <div class="twelve columns">
+      <h4>{{user.emails.[0].address}}</h4>
+    </div>
+  </div>
+  <hr />
+  <div class="row">
+    <div class="four columns">
+      <h4>Change Password</h4>
+      <form>
+        <input class="u-full-width" type="password" name="password" placeholder="New Password">
+        <input class="u-full-width" type="password" name="confirm-password" placeholder="Confirm password">
+        <button class="button-primary">Submit</button>
+      </form>
+    </div>
+  </div>
+  <hr />
+  <div class="row">
+    <div class="four columns">
+      <h4>Privileges</h4>
+      {{#if user.isAdmin}}
+        <button id="toggle-user-admin" class="button button-primary">Demote to user</button>
+      {{else}}
+        <button id="toggle-user-admin" class="button">Promote user to admin</button>
+      {{/if}}
+    </div>
+  </div>
+</template>

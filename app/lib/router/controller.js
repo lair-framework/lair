@@ -37,6 +37,17 @@ SettingsController = RouteController.extend({// eslint-disable-line
       this.next()
       return
     }
+    if (!Meteor.user().isAdmin) {
+      this.redirect('/')
+      this.next()
+      return
+    }
     this.next()
+  },
+  waitOn: function () {
+    return [
+      Subs.subscribe('directory'),
+      Subs.subscribe('settings')
+    ]
   }
 })

@@ -1,0 +1,27 @@
+<template name="settingsUsers">
+  <div class="row">
+    {{> settingsNav}}
+  </div>
+  <div class="row">
+    <div class="four columns">
+      <p>Removing users also permanently deletes the users projects and all associated data. This can't be undone.</p>
+      <ul class="list-unstyled list-inline">
+        <li class="u-pull-right"><a href="/settings/users/new" class="button button-primary">New User</a></li>
+        <li><button id="remove-users" class="button lair-red"><i class="fa fa-trash fa-lg"></i></button></li>
+      </ul>
+    </div>
+  </div>
+  <div clas="row">
+    <div class="four columns">
+      <ul class="list-unstyled list-users">
+        {{#each users}}
+        <li>
+        <div class="row">
+          <span class="u-pull-left"><input class="user-checked" id="{{_id}}" type="checkbox"></span><span class="pull-left"><a href="/settings/users/{{_id}}">{{email}}</a></span>
+        </div>
+        </li>
+        {{/each}}
+      </ul>
+    </div>
+  </div>
+</template>

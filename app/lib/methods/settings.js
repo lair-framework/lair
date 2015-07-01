@@ -1,9 +1,12 @@
-/* globals Meteor Accounts check Matchers Projects Hosts Services Issues WebDirectories */
+/* globals Meteor Accounts check Matchers Projects Hosts Services Issues WebDirectories Settings*/
 
 Meteor.methods({
   createLairUser: createLairUser,
   removeLairUser: removeLairUser,
-  changeLairUserPassword: changeLairUserPassword
+  changeLairUserPassword: changeLairUserPassword,
+  toggleLairUserIsAdmin: toggleLairUserIsAdmin,
+  toggleClientSideUpdates: toggleClientSideUpdates,
+  togglePersistViewFilters: togglePersistViewFilters
 })
 
 function createLairUser (email, password, isAdmin) {
@@ -51,6 +54,34 @@ function removeLairUser (id) {
   return Meteor.users.remove(id)
 }
 
+function toggleLairUserIsAdmin (id) {
+  if (!Meteor.user().isAdmin) {
+    throw new Meteor.Error(403, 'Access Denied')
+  }
+  check(id, Matchers.isObjectId)
+  var user = Meteor.users.findOne({
+    _id: id
+  })
+  if (!user) {
+    throw new Meteor.Error(404, 'User not found')
+  }
+  if (user.isAdmin) {
+    return Meteor.users.update({
+      _id: id
+    }, {
+      $set: {
+        isAdmin: false
+      }
+    })
+  }
+  return Meteor.users.update({
+    _id: id
+  }, {
+    $set: {
+      isAdmin: true
+    }
+  })
+}
 function changeLairUserPassword (id, password) {
   if (!Meteor.user().isAdmin && id !== this.userId) {
     throw new Meteor.Error(403, 'Access Denied')
@@ -58,4 +89,32 @@ function changeLairUserPassword (id, password) {
   check(id, Matchers.isObjectId)
   check(password, Matchers.isNonEmptyString)
   return Accounts.setPassword(id, password)
+}
+
+function toggleClientSideUpdates () {
+  if (!Meteor.user().isAdmin) {
+    throw new Meteor.Error(403, 'Access Denied')
+  }
+  var setting = Settings.findOne({setting: 'allowClientSideUpdates'})
+  if (typeof setting === 'undefined') {
+    return Settings.insert({setting: 'allowClientSideUpdates', enabled: true})
+  } else if (setting.enabled === false) {
+    return Settings.update({setting: 'allowClientSideUpdates'}, {$set: {enabled: true}})
+  } else {
+    return Settings.update({'setting': 'allowClientSideUpdates'}, {$set: {enabled: false}})
+  }
+}
+
+function togglePersistViewFilters () {
+  if (!Meteor.user().isAdmin) {
+    throw new Meteor.Error(403, 'Access Denied')
+  }
+  var setting = Settings.findOne({setting: 'persistViewFilters'})
+  if (typeof setting === 'undefined') {
+    return Settings.insert({setting: 'persistViewFilters', enabled: true})
+  } else if (setting.enabled === false) {
+    return Settings.update({setting: 'persistViewFilters'}, {$set: {enabled: true}})
+  } else {
+    return Settings.update({setting: 'persistViewFilters'}, {$set: {enabled: false}})
+  }
 }

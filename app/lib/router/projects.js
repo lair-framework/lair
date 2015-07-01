@@ -11,6 +11,7 @@ Router.route('/projects', {
   name: 'projectList',
   waitOn: function () {
     return [
+      Meteor.subscribe('directory'),
       Meteor.subscribe('projectListing')
     ]
   },
