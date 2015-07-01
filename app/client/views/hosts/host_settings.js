@@ -25,6 +25,5 @@ Template.hostSettings.events({
       }
       Router.go('/projects/' + self.projectId + '/hosts')
     })
-
   }
 })

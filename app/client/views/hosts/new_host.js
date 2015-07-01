@@ -22,7 +22,7 @@ Template.newHost.events({
       if (fingerprint) {
         Meteor.call('setOs', projectId, res, 'Manual', fingerprint, 100)
       }
-      return Router.go('/project/' + projectId + '/hosts/' + res)
+      return Router.go('/projects/' + projectId + '/hosts/' + res)
     })
   }
 })
