@@ -1,4 +1,4 @@
-/* globals Router Meteor */
+/* globals Router */
 
 Router.route('/me', {
   name: 'me',
