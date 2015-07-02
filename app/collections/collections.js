@@ -7,5 +7,6 @@ People = new Meteor.Collection('people')
 Versions = new Meteor.Collection('versions')
 Settings = new Meteor.Collection('settings')
 WebDirectories = new Meteor.Collection('web_directories')
+Credentials = new Meteor.Collection('credentials')
 Alerts = new Meteor.Collection(null)
 /* eslint-enable */
