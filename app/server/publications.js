@@ -76,7 +76,7 @@ Meteor.publish('credentials', function (id) {
   return Credentials.find({
     projectId: id
   })
-}
+})
 
 Meteor.publish('directory', function () {
   if (!this.userId) {
