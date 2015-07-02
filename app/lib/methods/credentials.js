@@ -1,0 +1,38 @@
+/* globals Meteor Credentials check _ Models Matchers AuthorizeChange */
+Meteor.methods({
+  createCredential: createCredential,
+  removeCredential: removeCredential
+})
+
+function createCredential (id, username, password, hash, host, service) {
+  check(id, Matchers.isObjectId)
+  check(username, String)
+  check(password, String)
+  check(hash, String)
+  check(host, String)
+  check(service, String)
+  if (!AuthorizeChange(id, this.userId)) {
+    throw new Meteor.Error(403, 'Access Denied')
+  }
+  var credential = _.extend(Models.credential(), {
+    projectId: id,
+    username: username,
+    password: password,
+    hash: hash,
+    host: host,
+    service: service
+  })
+  return Credentials.insert(credential)
+}
+
+function removeCredential (id, cid) {
+  check(id, Matchers.isObjectId)
+  check(cid, Matchers.isObjectId)
+  if (!AuthorizeChange(id, this.userId)) {
+    throw new Meteor.Error(403, 'Access Denied')
+  }
+  return Credentials.remove({
+    projectId: id,
+    _id: cid
+  })
+}
