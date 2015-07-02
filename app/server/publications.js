@@ -1,4 +1,4 @@
-/* globals Meteor Projects Hosts Services Issues Settings People */
+/* globals Meteor Projects Hosts Services Issues Settings People Credentials */
 // TODO: Authorize function.
 Meteor.publish('projectListing', function () {
   return Projects.find({
@@ -68,6 +68,15 @@ Meteor.publish('issues', function (id) {
     projectId: id
   })
 })
+
+Meteor.publish('credentials', function (id) {
+  if (!this.userId) {
+    return []
+  }
+  return Credentials.find({
+    projectId: id
+  })
+}
 
 Meteor.publish('directory', function () {
   if (!this.userId) {
