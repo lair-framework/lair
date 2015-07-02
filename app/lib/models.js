@@ -98,5 +98,15 @@ Models = { // eslint-disable-line
       content: '',
       lastModifiedBy: ''
     }
+  },
+
+  credential: function () {
+    return {
+      username: '',
+      password: '',
+      hash: '',
+      host: '',
+      service: ''
+    }
   }
 }
