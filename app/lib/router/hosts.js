@@ -1,4 +1,4 @@
-/* globals Projects Router Hosts Session Settings Services _ */
+/* globals Projects Router Hosts Session Settings Services _ Credentials */
 
 Router.route('/projects/:id/hosts', {
   name: 'hostList',
@@ -345,6 +345,42 @@ Router.route('/projects/:id/hosts/:hid/hostnames', {
       hostId: this.params.hid,
       host: host,
       links: linkList
+    }
+  }
+})
+
+Router.route('/projects/:id/hosts/:hid/credentials', {
+  name: 'hostCredentialList',
+  controller: 'ProjectController',
+  data: function () {
+    if (Projects.find({
+      _id: this.params.id
+    }).count() < 1) {
+      return null
+    }
+    if (Hosts.find({
+        _id: this.params.hid
+      }).count() < 1) {
+      return null
+    }
+    var host = Hosts.findOne({
+      _id: this.params.hid
+    })
+    var self = this
+    return {
+      projectId: self.params.id,
+      host: host,
+      credentials: Credentials.find({
+
+          $or: [{
+            host: {
+              $in: host.hostnames
+            }
+          }, {
+            host: host.ipv4
+          }]
+
+      }).fetch()
     }
   }
 })
