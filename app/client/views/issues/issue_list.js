@@ -1,4 +1,4 @@
-/* globals Template Meteor StatusMap Session */
+/* globals Template Meteor StatusMap Session $ */
 Template.issueList.events({
   'click .flag-enabled': function () {
     Meteor.call('disableIssueFlag', this.projectId, this._id)
@@ -53,5 +53,18 @@ Template.issueList.events({
 
   'click #load-all': function () {
     Session.set('issuesViewLimit', 10000)
+  },
+
+  'click #remove-issues': function () {
+    var inputs = $('.issue-checked')
+    var issueIds = []
+    inputs.each(function () {
+      if ($(this).is(':checked')) {
+        issueIds.push($(this).attr('id'))
+      }
+    })
+    for (var i = 0; i < issueIds.length; i++) {
+      Meteor.call('removeIssue', this.projectId, issueIds[i])
+    }
   }
 })

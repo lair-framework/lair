@@ -1,23 +1,29 @@
-/* globals Template Meteor Alerts */
+/* globals Template Meteor Alerts Router */
 
-Template.issueSolution.events({
+Template.issueSettings.events({
   'submit form': function (event, tpl) {
     event.preventDefault()
-    var solution = tpl.find('[name=solution]').value
-    Meteor.call('setIssueSolution', this.projectId, this.issue._id, solution, function (err) {
+    var title = tpl.find('[name=title-delete]').value
+    tpl.find('[name=title-delete]').value = ''
+    if (title !== this.issue.title) {
+      Alerts.insert({
+        class: 'alert-warning',
+        strong: 'Error',
+        message: 'Title does not match'
+      })
+      return
+    }
+    var self = this
+    Meteor.call('removeIssue', self.projectId, self.issue._id, function (err) {
       if (err) {
         Alerts.insert({
-          class: 'alert-error',
+          class: 'alert-warning',
           strong: 'Error',
           message: err.reason
         })
         return
       }
-      Alerts.insert({
-        class: 'alert-success',
-        strong: 'Success',
-        message: 'Solution saved'
-      })
+      Router.go('/projects/' + self.projectId + '/issues')
     })
   }
 })

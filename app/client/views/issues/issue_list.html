@@ -17,6 +17,7 @@
             {{else}}
               <li><button id="flag-filter-enable" class="button"><i class="fa fa-flag-o fa-lg"></i></button></li>
             {{/if}}
+            <li><button id="remove-issues" class="button lair-red"><i class="fa fa-trash fa-lg"></i></button></li>
           </ul>
         </div>
         <div class="six columns">
@@ -31,7 +32,7 @@
           <ul class="list-unstyled list-issues">
           {{#each issues}}
           <li>
-            <span class="issue-checkbox"><input type="checkbox"></span>
+            <span class="issue-checkbox"><input type="checkbox" id="{{_id}}" class="issue-checked"></span>
             <span class="issue-{{rating}} rating">{{cvss}}</span>
             <span class="issue-flag">
               {{#if isFlagged}}
