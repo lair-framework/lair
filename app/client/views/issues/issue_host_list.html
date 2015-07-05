@@ -27,7 +27,7 @@
         <ul class="list-unstyled list-alternate list-issue-hosts">
         {{#each issue.hosts}}
           <li>
-            <span class="host-checkbox"><input type="checkbox"></span>
+            <span class="host-checkbox"><input type="checkbox" class="host-checked" id="{{ipv4}}-{{port}}-{{protocol}}"></span>
             <span class="host-ip"><a href="/projects/{{../projectId}}/hosts/{{hostId}}/services">{{ipv4}}</a></span>
             <span class="host-port"><a href="/projects/{{../projectId}}/hosts/{{hostId}}/services/{{serviceId}}/issues">({{port}}/{{protocol}})</a></span>
           </li>
