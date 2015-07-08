@@ -12,7 +12,7 @@ Template.newCredential.events({
     Meteor.call('createCredential', projectId, username, password, hash, host, service, function (err) {
       if (err) {
         Alerts.insert({
-          class: 'alert-warning',
+          class: 'alert-error',
           strong: 'Error',
           message: err.reason
         })

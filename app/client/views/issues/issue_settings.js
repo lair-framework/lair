@@ -7,7 +7,7 @@ Template.issueSettings.events({
     tpl.find('[name=title-delete]').value = ''
     if (title !== this.issue.title) {
       Alerts.insert({
-        class: 'alert-warning',
+        class: 'alert-error',
         strong: 'Error',
         message: 'Title does not match'
       })
@@ -17,7 +17,7 @@ Template.issueSettings.events({
     Meteor.call('removeIssue', self.projectId, self.issue._id, function (err) {
       if (err) {
         Alerts.insert({
-          class: 'alert-warning',
+          class: 'alert-error',
           strong: 'Error',
           message: err.reason
         })

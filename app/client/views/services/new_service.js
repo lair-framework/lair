@@ -11,7 +11,7 @@ Template.newService.events({
     Meteor.call('createService', this.projectId, this.hostId, port, protocol, service, product, function (err, res) {
       if (err) {
         Alerts.insert({
-          class: 'alert-warning',
+          class: 'alert-error',
           strong: 'Error',
           message: err.reason
         })

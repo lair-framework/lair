@@ -10,7 +10,7 @@ Template.addIssueHost.events({
     Meteor.call('addHostToIssue', self.projectId, self.issueId, ip, port, protocol, function (err) {
       if (err) {
         Alerts.insert({
-          class: 'alert-warning',
+          class: 'alert-error',
           strong: 'Error',
           message: err.reason
         })

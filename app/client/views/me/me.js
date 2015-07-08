@@ -13,7 +13,7 @@ Template.me.events({
 
     if (newPassword !== confirmPassword) {
       return Alerts.insert({
-        class: 'alert-warning',
+        class: 'alert-error',
         strong: 'Error',
         message: 'Passwords did not match'
       })
@@ -21,7 +21,7 @@ Template.me.events({
     Accounts.changePassword(oldPassword, newPassword, function (err) {
       if (err) {
         return Alerts.insert({
-          class: 'alert-warning',
+          class: 'alert-error',
           strong: 'Error',
           message: err.reason
         })

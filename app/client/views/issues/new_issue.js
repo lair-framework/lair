@@ -12,7 +12,7 @@ Template.newIssue.events({
     Meteor.call('createIssue', projectId, title, cvss, description, evidence, solution, function (err, res) {
       if (err) {
         Alerts.insert({
-          class: 'alert-warning',
+          class: 'alert-error',
           strong: 'Error',
           message: err.reason
         })

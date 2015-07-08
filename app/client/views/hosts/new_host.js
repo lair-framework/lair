@@ -11,7 +11,7 @@ Template.newHost.events({
     Meteor.call('createHost', projectId, ip, mac, function (err, res) {
       if (err) {
         return Alerts.insert({
-          class: 'alert-warning',
+          class: 'alert-error',
           strong: 'Error',
           message: err.reason
         })

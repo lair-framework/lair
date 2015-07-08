@@ -2,5 +2,8 @@
   {{#if currentUser}}
   {{> header}}
   {{/if}}
-  <div class="container main">{{> yield}}</div>
+  {{> alerts}}
+  <div class="container main">
+    {{> yield}}
+  </div>
 </template>

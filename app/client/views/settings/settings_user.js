@@ -12,7 +12,7 @@ Template.settingsUser.events({
     tpl.find('[name=confirm-password]').value = ''
     if (newPassword !== confirmPassword) {
       Alerts.insert({
-        class: 'alert-warning',
+        class: 'alert-error',
         strong: 'Error',
         message: 'Passwords did not match'
       })
@@ -21,7 +21,7 @@ Template.settingsUser.events({
     Meteor.call('changeLairUserPassword', this.user._id, newPassword, function (err) {
       if (err) {
         Alerts.insert({
-          class: 'alert-warning',
+          class: 'alert-error',
           strong: 'Error',
           message: err.reason
         })

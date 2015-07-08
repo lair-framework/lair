@@ -1,4 +1,4 @@
-/* globals Template key Hosts Router _ StatusMap Meteor Issues*/
+/* globals Template key Hosts Router _ StatusMap Meteor Issues Alerts*/
 
 Template.body.rendered = function () {
   var hostpathre = /\/projects\/([a-zA-Z0-9]{17,24})\/hosts\/([a-zA-Z0-9]{17,24})/
@@ -156,6 +156,10 @@ Template.body.rendered = function () {
       return
     }
   })
+
+  setInterval(function () {
+    Alerts.remove({})
+  }, 5000)
 }
 
 function getHostPathGroups (path, re) {

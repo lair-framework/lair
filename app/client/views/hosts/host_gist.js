@@ -8,7 +8,7 @@ Template.hostGist.events({
     Meteor.call('addHostTag', this.projectId, this.host._id, tag, function (err) {
       if (err) {
         Alerts.insert({
-          class: 'alert-warning',
+          class: 'alert-error',
           strong: 'Error',
           message: err.reason
         })
@@ -23,7 +23,7 @@ Template.hostGist.events({
     Meteor.call('setHostStatusMessage', this.projectId, this.host._id, status, function (err) {
       if (err) {
         Alerts.insert({
-          class: 'alert-warning',
+          class: 'alert-error',
           strong: 'Error',
           message: err.reason
         })
