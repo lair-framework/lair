@@ -1,4 +1,4 @@
-/* global Router */
+/* global Router Projects Services Hosts Issues*/
 
 Router.route('/projects/:id/hosts/:hid/services/new', {
   name: 'newService',
@@ -10,3 +10,59 @@ Router.route('/projects/:id/hosts/:hid/services/new', {
     }
   }
 })
+
+Router.route('/projects/:id/hosts/:hid/services/:sid', {
+  controller: 'ProjectController',
+  onBeforeAction: function () {
+    this.redirect('/projects/' + this.params.id + '/hosts/' + this.params.hid + '/services/' + this.params.sid + '/issues')
+    this.next()
+  }
+})
+
+Router.route('/projects/:id/hosts/:hid/services/:sid/issues', {
+  name: 'serviceIssueList',
+  controller: 'ProjectController',
+  data: function () {
+    if (Projects.find({
+        _id: this.params.id
+      }).count() < 1) {
+      return null
+    }
+    var service = Services.findOne({
+      _id: this.params.sid
+    })
+    if (!service) {
+      return null
+    }
+    var host = Hosts.findOne({
+      _id: this.params.hid
+    })
+    if (!host) {
+      return null
+    }
+    var issues = Issues.find({
+      'hosts.ipv4': host.ipv4,
+      'hosts.port': service.port,
+      'hosts.protocol': service.protocol
+    }).fetch()
+    return {
+      projectId: this.params.id,
+      host: host,
+      service: service,
+      issues: issues
+    }
+  }
+})
+
+Router.route('/projects/:id/hosts/:hid/services/:sid/notes', {
+  controller: 'ProjectController'
+})
+
+Router.route('/projects/:id/hosts/:hid/services/:sid/credentials', {
+  controller: 'ProjectController'
+})
+
+Router.route('/projects/:id/hosts/:hid/services/:sid/settings', {
+  controller: 'ProjectController'
+})
+
