@@ -1,0 +1,46 @@
+<template name="serviceGist">
+  <div class="four columns">
+    <ul class="list-unstyled gist">
+      <li><strong>Port:&nbsp;</strong>{{service.port}}/{{service.protocol}}</li>
+      <li><strong>Service:&nbsp;</strong>{{service.service}}</li>
+      <li><strong>Product:&nbsp;</strong>{{service.product}}</li>
+      <li><strong>Updated by:&nbsp;</strong>{{service.lastModifiedBy}}</li>
+      <li>
+        {{#if service.isFlagged}}
+          <i class="u-pull-left fa fa-flag flag-enabled clickable"></i>
+        {{else}}
+          <i class="u-pull-left fa fa-flag-o flag-disabled clickable"></i>
+        {{/if}}
+        <span class="u-pull-left status-span status-box clickable service-status {{service.status}}">&nbsp;</span>
+      </li>
+    </ul>
+  </div>
+  <div class="four columns">
+    <ul class="list-unstyled gist">
+      <li><strong>Host:&nbsp;</strong><a href="/projects/{{projectId}}/hosts/{{host._id}}">{{host.ipv4}}</a></li>
+    </ul>
+  </div>
+  <div class="four columns gist">
+    <form id="service-gist-set-service">
+      <div class="row">
+        <div class="six columns">
+          <input type="text" name="service" class="u-full-width" placeholder="Service">
+        </div>
+        <div class="two columns">
+          <button class="button button-primary">Set Service</button>
+        </div>
+      </div>
+    </form>
+    <form id="service-gist-set-product">
+      <div class="row">
+        <div class="six columns">
+          <input type="text" name="product" class="u-full-width" placeholder="Product">
+        </div>
+        <div class="two columns">
+          <button class="button button-primary">Set Product</button>
+        </div>
+      </div>
+
+    </form>
+  </div>
+</template>

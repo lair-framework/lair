@@ -1,0 +1,53 @@
+<template name="serviceIssueList">
+  <div class="row">
+    <div class="two columns">
+      {{> sideNav}}
+    </div>
+    <div class="ten columns">
+      <div class="row">
+        {{> serviceGist}}
+      </div>
+      <hr />
+      <div class="row">
+        {{> serviceNav}}
+      </div>
+      <div class="row">
+        <div class="twelve columns">
+          <ul class="list-unstyled list-inline">
+            <li><button id="remove-issues" class="button lair-red"><i class="fa fa-trash fa-lg"></i></button></li>
+          </ul>
+        </div>
+      </div>
+      <div class="row">
+        <div class="twelve columns">
+          <ul class="list-unstyled list-issues">
+          {{#each issues}}
+          <li>
+            <span class="issue-checkbox"><input type="checkbox" id="{{_id}}" class="issue-checked"></span>
+            <span class="issue-{{rating}} rating">{{cvss}}</span>
+            <span class="issue-flag">
+              {{#if isFlagged}}
+                <i class="clickable flag-enabled fa fa-flag"></i>
+              {{else}}
+                <i class="clickable flag-disabled fa fa-flag-o"></i>
+              {{/if}}
+            </span>
+            <span class="issue-confirmed">
+              {{#if isConfirmed}}
+                <i class="clickable fa fa-check-circle-o lair-green-text confirm-enabled"></i>
+              {{else}}
+                <i class="clickable fa fa-circle-o confirm-disabled"></i>
+              {{/if}}
+            </span>
+            <span class="clickable issue-status {{status}}">&nbsp;</span>
+            <span class="title"><a href="/projects/{{projectId}}/issues/{{_id}}">{{title}}</a></span>
+            <span class="last-modified-by">{{lastModifiedBy}}</span>
+          </li>
+          {{/each}}
+          </ul>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</template>

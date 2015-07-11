@@ -1,0 +1,11 @@
+<template name="serviceNav">
+  <div class="twelve columns">
+    <ul class="nav nav-tabs">
+      <li class="{{isActive 'serviceIssueList' }}"><a href="/projects/{{projectId}}/hosts/{{host._id}}/services/{{service._id}}/issues">ISSUES</a></li>
+      <li class="{{isActive 'serviceNoteList' }}"><a href="/projects/{{projectId}}/hosts/{{host._id}}/services/{{service._id}}/notes">NOTES</a></li>
+      <li class="{{isActive 'serviceCredentialList'}}"><a href="/projects/{{projectId}}/hosts/{{host._id}}/services/{{service._id}}/credentials">CREDENTIALS</a></li>
+      <li class="{{isActive 'serviceSettings' }}"><a href="/projects/{{projectId}}/hosts/{{host._id}}/services/{{service._id}}/settings">SETTINGS</a></li>
+    </ul>
+  </div>
+
+</template>
