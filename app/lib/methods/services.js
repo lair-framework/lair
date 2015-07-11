@@ -7,7 +7,9 @@ Meteor.methods({
   setServiceStatus: setServiceStatus,
   addServiceNote: addServiceNote,
   removeServiceNote: removeServiceNote,
-  setServiceNoteContent: setServiceNoteContent
+  setServiceNoteContent: setServiceNoteContent,
+  setServiceService: setServiceService,
+  setServiceProduct: setServiceProduct
 })
 
 function createService (id, hostId, port, protocol, service, product) {
@@ -171,6 +173,44 @@ function setServiceNoteContent (id, serviceId, title, content) {
     $set: {
       'notes.$.content': content,
       'notes.$.lastModifiedBy': Meteor.user().emails[0].address,
+      lastModifiedBy: Meteor.user().emails[0].address
+    }
+  })
+}
+
+function setServiceService (id, serviceId, service) {
+  check(id, Matchers.isObjectId)
+  check(serviceId, Matchers.isObjectId)
+  check(service, Matchers.isNonEmptyString)
+  if (!AuthorizeChange(id, this.userId)) {
+    throw new Meteor.Error(403, 'Access Denied')
+  }
+
+  return Services.update({
+    projectId: id,
+    _id: serviceId
+  }, {
+    $set: {
+      service: service,
+      lastModifiedBy: Meteor.user().emails[0].address
+    }
+  })
+}
+
+function setServiceProduct (id, serviceId, product) {
+  check(id, Matchers.isObjectId)
+  check(serviceId, Matchers.isObjectId)
+  check(product, Matchers.isNonEmptyString)
+  if (!AuthorizeChange(id, this.userId)) {
+    throw new Meteor.Error(403, 'Access Denied')
+  }
+
+  return Services.update({
+    projectId: id,
+    _id: serviceId
+  }, {
+    $set: {
+      product: product,
       lastModifiedBy: Meteor.user().emails[0].address
     }
   })
