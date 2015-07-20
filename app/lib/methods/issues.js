@@ -153,6 +153,18 @@ function removeIssue (id, issueId) {
   })
 }
 
+// function removeHostIpIssue (id, issueId,ipv4) {
+//   check(id, Matchers.isObjectId)
+//   check(issueId, Matchers.isObjectId)
+//   if (!AuthorizeChange(id, this.userId)) {
+//     throw new Meteor.Error(403, 'Access Denied')
+//   }
+//   return Issues.update({
+//     projectId: id,
+//     _id: issueId
+//   },{$pull:{hosts:ipv4}})
+// }
+
 function setIssueTitle (id, issueId, title) {
   check(id, Matchers.isObjectId)
   check(issueId, Matchers.isObjectId)
@@ -365,6 +377,7 @@ function removeHostFromIssue (id, issueId, ip, port, protocol) {
   check(ip, Matchers.isIPv4)
   check(port, Matchers.isPort)
   check(protocol, Matchers.isNonEmptyString)
+  console.log(id,issueId,ip,port,protocol)
   if (!AuthorizeChange(id, this.userId)) {
     throw new Meteor.Error(403, 'Access Denied')
   }
@@ -377,6 +390,7 @@ function removeHostFromIssue (id, issueId, ip, port, protocol) {
         ipv4: ip,
         port: port,
         protocol: protocol
+        
       }
     },
     $set: {

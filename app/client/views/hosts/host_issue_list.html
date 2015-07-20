@@ -11,6 +11,67 @@
       <div class="row">
         {{> hostNav}}
       </div>
+      <div class="row">
+        <div class="six columns">
+          <ul class="list-unstyled list-inline">
+            <li><button id="grey" class="button borderless issue-status-button lair-grey {{issueStatusButtonActive 'grey'}}">&nbsp;</button></li>
+            <li><button id="blue" class="button borderless issue-status-button lair-blue {{issueStatusButtonActive 'blue'}}">&nbsp;</button></li>
+            <li><button id="green" class="button issue-status-button lair-green {{issueStatusButtonActive 'green'}}">&nbsp;</button></li>
+            <li><button id="orange" class="button issue-status-button lair-orange {{issueStatusButtonActive 'orange'}}">&nbsp;</button></li>
+            <li><button id="red" class="button issue-status-button lair-red {{issueStatusButtonActive 'red'}}">&nbsp;</button></li>
+            {{#if flagFilter}}
+              <li><button id="flag-filter-disable" class="button"><i class="fa fa-flag fa-lg"></i></button></li>
+            {{else}}
+              <li><button id="flag-filter-enable" class="button"><i class="fa fa-flag-o fa-lg"></i></button></li>
+            {{/if}}
+            <li><button id="remove-issues" class="button lair-red"><i class="fa fa-trash fa-lg"></i></button></li>
+          </ul>
+        </div>
+        <div class="six columns">
+          <ul class="u-pull-right list-unstyled list-inline">
+            <li><input type="text" id="issue-list-search" placeholder="Search..." name="search"></li>
+          </ul>
+        </div>
+      </div>
+      <div class="row">
+        <div class="twelve columns">
+          <ul class="list-unstyled list-issues">
+            {{#each issues}}
+          <li>
+            <span class="issue-checkbox"><input type="checkbox" id="{{_id}}" class="issue-checked"></span>
+            <span class="issue-{{rating}} rating">{{cvss}}</span>
+            <span class="issue-flag">
+              {{#if isFlagged}}
+                <i class="clickable flag-enabled fa fa-flag"></i>
+              {{else}}
+                <i class="clickable flag-disabled fa fa-flag-o"></i>
+              {{/if}}
+            </span>
+            <span class="issue-confirmed">
+              {{#if isConfirmed}}
+                <i class="clickable fa fa-check-circle-o lair-green-text confirm-enabled"></i>
+              {{else}}
+                <i class="clickable fa fa-circle-o confirm-disabled"></i>
+              {{/if}}
+            </span>
+            <span class="clickable issue-status {{status}}">&nbsp;</span>
+            <span class="title"><a href="/projects/{{projectId}}/issues/{{_id}}">{{title}}</a></span>
+            <span class="last-modified-by">{{lastModifiedBy}}</span>
+          </li>
+          {{/each}}
+          </ul>
+        </div>
+      </div>
+      <div class="row">
+        <div class="six columns">
+          <p>Showing {{issues.length}} of {{total}} issues</p>
+        </div>
+        {{#if moreToShow}}
+          <div class="six columns">
+            <p class="pull-right"><button id="load-more" class="button">Show More</button><button id="load-all" class="button">Show All</button></p>
+          </div>
+        {{/if}}
+      </div>
     </div>
   </div>
 </template>

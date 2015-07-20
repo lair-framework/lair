@@ -282,9 +282,50 @@ Router.route('/projects/:id/hosts/:hid/notes', {
   }
 })
 
+// Router.route('/projects/:id/hosts/:hid/issues', {
+//   name: 'hostIssueList',
+//   controller: 'ProjectController',
+//   data: function () {
+//     if (Projects.find({
+//         _id: this.params.id
+//       }).count() < 1) {
+//       return null
+//     }
+//     if (Hosts.find({
+//         _id: this.params.hid
+//       }).count() < 1) {
+//       return null
+//     }
+//     return {
+//       projectId: this.params.id,
+//       host: Hosts.findOne({
+//         _id: this.params.hid
+//       })
+//     }
+//   }
+// })
+
 Router.route('/projects/:id/hosts/:hid/issues', {
   name: 'hostIssueList',
   controller: 'ProjectController',
+   onRun: function () {
+    if (Settings.findOne({
+      settings: 'persistViewFilters',
+      enabled: true
+    })) {
+      this.next()
+      return
+    }
+    Session.set('hostIssueViewLimit', 25)
+    Session.set('hostIssueListSearch', null)
+    Session.set('hostIssueListStatusButtongrey', null)
+    Session.set('hostIssueListStatusButtonblue', null)
+    Session.set('hostIssueListStatusButtongreen', null)
+    Session.set('hostIssueListStatusButtonorange', null)
+    Session.set('hostIssueListStatusButtonred', null)
+    Session.set('hostIssueListFlagFilter', null)
+    this.next()
+  },
   data: function () {
     if (Projects.find({
         _id: this.params.id
@@ -296,14 +337,85 @@ Router.route('/projects/:id/hosts/:hid/issues', {
       }).count() < 1) {
       return null
     }
+    var total = Issues.find({
+      projectId: this.params.id
+    }).count()
+    var self = this
+    // console.log(Hosts.findOne({
+    //     _id: this.params.hid
+    //   }))
     return {
       projectId: this.params.id,
+      hostId: this.params.hid,
       host: Hosts.findOne({
         _id: this.params.hid
-      })
+      }),
+      total: total,
+      moreToShow: function () {
+        return total > Session.get('hostIssueViewLimit')
+      },
+      flagFilter: Session.get('hostIssueListFlagFilter'),
+      issueStatusButtonActive: function (color) {
+        if (Session.equals('hostIssueListStatusButton' + color, 'disabled')) {
+          return 'disabled'
+        }
+      },
+      issues: function () {
+        var ipv4 = Hosts.findOne({
+        _id: self.params.hid
+      }).ipv4
+        // console.log(ipv4)
+        var limit = Session.get('hostIssueViewLimit') || 25
+        var query = {
+          projectId: self.params.id,
+          hosts:{
+            $elemMatch:{ipv4:ipv4}
+          },
+          status: {
+            $in: []
+          }
+        }
+        if (Session.equals('hostIssueListFlagFilter', 'enabled')) {
+          query.isFlagged = true
+        }
+        if (!Session.equals('hostIssueListStatusButtongrey', 'disabled')) {
+          query.status.$in.push('lair-grey')
+        }
+        if (!Session.equals('hostIssueListStatusButtonblue', 'disabled')) {
+          query.status.$in.push('lair-blue')
+        }
+        if (!Session.equals('hostIssueListStatusButtongreen', 'disabled')) {
+          query.status.$in.push('lair-green')
+        }
+        if (!Session.equals('hostIssueListStatusButtonorange', 'disabled')) {
+          query.status.$in.push('lair-orange')
+        }
+        if (!Session.equals('hostIssueListStatusButtonred', 'disabled')) {
+          query.status.$in.push('lair-red')
+        }
+        var search = Session.get('hostIssueListSearch')
+        if (search) {
+          query.$or = [
+            {statusMessage: {$regex: search, $options: 'i'}},
+            {cvss: parseInt(search, 10)},
+            {protocol: {$regex: search, $options: 'i'}},
+            {port: {$regex: search, $options: 'i'}},
+            {title: {$regex: search, $options: 'i'}},
+            {lastModifiedBy: {$regex: search, $options: 'i'}}
+          ]
+        }
+        // console.log(query)
+        return Issues.find(query, {
+          sort: {
+            cvss: -1
+          },
+          limit: limit
+        }).fetch()
+      }
     }
   }
 })
+
 
 Router.route('/projects/:id/hosts/:hid/hostnames', {
   name: 'hostHostnameList',
@@ -407,3 +519,5 @@ Router.route('/projects/:id/hosts/:hid/settings', {
     }
   }
 })
+
+
