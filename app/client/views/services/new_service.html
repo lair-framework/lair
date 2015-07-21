@@ -1,25 +1,17 @@
 <template name="newService">
-  <div class="row">
-    <div class="five columns">
-      <form>
-        <div class="row">
-          <div class="six columns">
-            <input class="u-full-width" type="number" name="port" min="0" max="65535" step="any" placeholder="Port"/>
-          </div>
-          <div class="six columns">
-            <input class="u-full-width" type="text" name="protocol" placeholder="Protocol default(tcp)"/>
-          </div>
-        </div>
-        <div class="row">
-          <div class="six columns">
-            <input class="u-full-width" type="text" name="service" placeholder="Service" />
-          </div>
-          <div class="six columns">
-            <input class="u-full-width" type="text" name="product" placeholder="Product" />
-          </div>
-        </div>
-        <button class="button button-primary">Submit</button>
-      </form>
+<div class="main">
+  <div class="container content">
+    <div class="row">
+      <div class="five columns">
+        <form>
+          <input class="u-full-width" type="number" name="port" min="0" max="65535" step="any" placeholder="Port"/>
+          <input class="u-full-width" type="text" name="protocol" placeholder="Protocol default(tcp)"/>
+          <input class="u-full-width" type="text" name="service" placeholder="Service" />
+          <input class="u-full-width" type="text" name="product" placeholder="Product" />
+          <button class="button button-primary">Submit</button>
+        </form>
+      </div>
     </div>
   </div>
+</div>
 </template>
