@@ -1,16 +1,9 @@
 <template name="issueCVEList">
-<div class="row">
-  <div class="two columns">
-    {{> sideNav}}
+<div class="main">
+  <div class="content-navd">
+    {{> issueNav}}
   </div>
-  <div class="ten columns">
-    <div class="row">
-      {{> issueGist}}
-    </div>
-    <hr />
-    <div class="row">
-      {{> issueNav}}
-    </div>
+  <div class="container issue-content">
     <div class="row">
       <div class="five columns">
         <button class="button lair-red" id="remove-cves"><i class="fa fa-trash fa-lg"></i></button>
@@ -41,5 +34,8 @@
       </div>
     </div>
   </div>
+</div>
+<div class="issue-gist">
+  {{> issueGist}}
 </div>
 </template>

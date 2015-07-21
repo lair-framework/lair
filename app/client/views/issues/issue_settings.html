@@ -1,18 +1,11 @@
 <template name="issueSettings">
-<div class="row">
-  <div class="two columns">
-    {{> sideNav}}
+<div class="main">
+  <div class="content-navd">
+    {{> issueNav}}
   </div>
-  <div class="ten columns">
+  <div class="container issue-content">
     <div class="row">
-      {{> issueGist}}
-    </div>
-    <hr />
-    <div class="row">
-      {{> issueNav}}
-    </div>
-    <div class="row">
-      <div class="three columns">
+      <div class="four columns">
         <form>
           <input type="text" name="title-delete" class="u-full-width" placeholder="Title to confirm to delete">
           <button class="button lair-red">Delete</button>
@@ -20,5 +13,8 @@
       </div>
     </div>
   </div>
+</div>
+<div class="issue-gist">
+  {{> issueGist}}
 </div>
 </template>

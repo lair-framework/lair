@@ -1,6 +1,7 @@
 <template name="issueNav">
-  <div class="twelve columns">
-    <ul class="nav nav-tabs">
+<div class="subnav">
+  <div class="container">
+    <ul>
       <li class="{{isActive 'issueDescription' }}"><a href="/projects/{{projectId}}/issues/{{issue._id}}/description">DESCRIPTION</a></li>
       <li class="{{isActive 'issueEvidence' }}"><a href="/projects/{{projectId}}/issues/{{issue._id}}/evidence">EVIDENCE</a></li>
       <li class="{{isActive 'issueSolution' }}"><a href="/projects/{{projectId}}/issues/{{issue._id}}/solution">SOLUTION</a></li>
@@ -11,4 +12,5 @@
       <li class="{{isActive 'issueSettings' }}"><a href="/projects/{{projectId}}/issues/{{issue._id}}/settings">SETTINGS</a></li>
     </ul>
   </div>
+</div>
 </template>
