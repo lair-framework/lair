@@ -52,20 +52,18 @@
             <span class="last-modified-by">{{lastModifiedBy}}</span>
           </li>
           {{/each}}
-          </ul>
-        </div>
+        </ul>
       </div>
     </div>
     <div class="row">
       <div class="six columns">
         <p>Showing {{issues.length}} of {{total}} issues</p>
-        </div>
-        {{#if moreToShow}}
-          <div class="six columns">
-            <p class="pull-right"><button id="load-more" class="button">Show More</button><button id="load-all" class="button">Show All</button></p>
-          </div>
-        {{/if}}
       </div>
+      {{#if moreToShow}}
+      <div class="six columns">
+        <p class="pull-right"><button id="load-more" class="button">Show More</button><button id="load-all" class="button">Show All</button></p>
+      </div>
+      {{/if}}
     </div>
   </div>
 </div>
