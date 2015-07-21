@@ -1,4 +1,4 @@
-/* globals Projects Router Hosts Session Settings Services _ Credentials */
+/* globals Projects Router Hosts Session Settings Services _ Credentials Issues */
 
 Router.route('/projects/:id/hosts', {
   name: 'hostList',
@@ -282,29 +282,6 @@ Router.route('/projects/:id/hosts/:hid/notes', {
   }
 })
 
-// Router.route('/projects/:id/hosts/:hid/issues', {
-//   name: 'hostIssueList',
-//   controller: 'ProjectController',
-//   data: function () {
-//     if (Projects.find({
-//         _id: this.params.id
-//       }).count() < 1) {
-//       return null
-//     }
-//     if (Hosts.find({
-//         _id: this.params.hid
-//       }).count() < 1) {
-//       return null
-//     }
-//     return {
-//       projectId: this.params.id,
-//       host: Hosts.findOne({
-//         _id: this.params.hid
-//       })
-//     }
-//   }
-// })
-
 Router.route('/projects/:id/hosts/:hid/issues', {
   name: 'hostIssueList',
   controller: 'ProjectController',
@@ -341,9 +318,6 @@ Router.route('/projects/:id/hosts/:hid/issues', {
       projectId: this.params.id
     }).count()
     var self = this
-    // console.log(Hosts.findOne({
-    //     _id: this.params.hid
-    //   }))
     return {
       projectId: this.params.id,
       hostId: this.params.hid,
@@ -362,14 +336,13 @@ Router.route('/projects/:id/hosts/:hid/issues', {
       },
       issues: function () {
         var ipv4 = Hosts.findOne({
-        _id: self.params.hid
-      }).ipv4
-        // console.log(ipv4)
+          _id: self.params.hid
+        }).ipv4
         var limit = Session.get('hostIssueViewLimit') || 25
         var query = {
           projectId: self.params.id,
-          hosts:{
-            $elemMatch:{ipv4:ipv4}
+          hosts: {
+            $elemMatch: {ipv4: ipv4}
           },
           status: {
             $in: []
@@ -404,7 +377,6 @@ Router.route('/projects/:id/hosts/:hid/issues', {
             {lastModifiedBy: {$regex: search, $options: 'i'}}
           ]
         }
-        // console.log(query)
         return Issues.find(query, {
           sort: {
             cvss: -1
@@ -415,7 +387,6 @@ Router.route('/projects/:id/hosts/:hid/issues', {
     }
   }
 })
-
 
 Router.route('/projects/:id/hosts/:hid/hostnames', {
   name: 'hostHostnameList',
@@ -519,5 +490,3 @@ Router.route('/projects/:id/hosts/:hid/settings', {
     }
   }
 })
-
-
