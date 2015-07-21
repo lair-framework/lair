@@ -1,49 +1,45 @@
 <template name="hostHostnameList">
-  <div class="row">
-    <div class="two columns">
-      {{> sideNav}}
-    </div>
-    <div class="ten columns">
-      <div class="row">
-        {{> hostGist}}
+<div class="main">
+  <div class="content-navd">
+    {{> hostNav}}
+  </div>
+  <div class="container host-content">
+    <div class="row">
+      <div class="five columns">
+        <button id="remove-hostnames" class="button lair-red"><i class="fa fa-trash fa-lg"></i></button>
       </div>
-      <hr />
-      <div class="row">
-        {{> hostNav}}
-      </div>
-      <div class="row">
-        <div class="five columns">
-          <button id="remove-hostnames" class="button lair-red"><i class="fa fa-trash fa-2x"></i></button>
-        </div>
-        <div class="seven columns">
-          <form>
-            <div class="row">
-              <div class="eight columns">
-                <input type="text"  class="u-full-width" name="hostname" placeholder="Hostname">
-              </div>
-              <div class="two columns">
-                <button class="button button-primary">Add Hostname</button>
-              </div>
+      <div class="seven columns">
+        <form>
+          <div class="row">
+            <div class="eight columns">
+              <input type="text"  class="u-full-width" name="hostname" placeholder="Hostname">
             </div>
-          </form>
-        </div>
+            <div class="two columns">
+              <button class="button button-primary">Add Hostname</button>
+            </div>
+          </div>
+        </form>
       </div>
-      <div class="row">
-        <div class="five columns">
-          <ul class="list-unstyled list-alternate">
-          {{#each host.hostnames}}
+    </div>
+    <div class="row">
+      <div class="five columns">
+        <ul class="list-unstyled list-alternate">
+        {{#each host.hostnames}}
           <li><input class="hostname-checked" id="{{this}}" type="checkbox"><span class="hostname">{{this}}</span></li>
-          {{/each}}
-          </ul>
-        </div>
-        <div class="seven columns">
-          <ul class="list-unstyled">
-          {{#each links}}
-            <li><a href="{{this}}">{{this}}</a></li>
-          {{/each}}
-          </ul>
-        </div>
+        {{/each}}
+        </ul>
+      </div>
+      <div class="seven columns">
+        <ul class="list-unstyled">
+        {{#each links}}
+          <li><a href="{{this}}">{{this}}</a></li>
+        {{/each}}
+        </ul>
       </div>
     </div>
   </div>
+</div>
+<div class="host-gist">
+  {{> hostGist}}
+</div>
 </template>

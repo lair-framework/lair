@@ -1,6 +1,6 @@
 /* globals Template Router */
 
-Template.sideNav.helpers({
+Template.projectSideNav.helpers({
   isActive: function (name) {
     if (Router.current().route.getName() === name) {
       return 'active'

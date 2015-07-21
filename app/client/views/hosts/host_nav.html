@@ -1,13 +1,15 @@
 <template name="hostNav">
-  <div class="twelve columns">
-    <ul class="nav nav-tabs">
-      <li class="{{isActive 'hostServiceList' }}"><a href="/projects/{{projectId}}/hosts/{{host._id}}/services">SERVICES</a></li>
-      <li class="{{isActive 'hostIssueList' }}"><a href="/projects/{{projectId}}/hosts/{{host._id}}/issues">ISSUES</a></li>
-      <li class="{{isActive 'hostNoteList' }}"><a href="/projects/{{projectId}}/hosts/{{host._id}}/notes">NOTES</a></li>
-      <li class="{{isActive 'hostHostnameList' }}"><a href="/projects/{{projectId}}/hosts/{{host._id}}/hostnames">HOSTNAMES</a></li>
-      <li class="{{isActive 'hostCredentialList'}}"><a href="/projects/{{projectId}}/hosts/{{host._id}}/credentials">CREDENTIALS</a></li>
-      <li class="{{isActive 'hostWebDirectoryList' }}"><a href="/projects/{{projectId}}/hosts/{{host._id}}/directories">WEB DIRECTORIES</a></li>
-      <li class="{{isActive 'hostSettings' }}"><a href="/projects/{{projectId}}/hosts/{{host._id}}/settings">SETTINGS</a></li>
-    </ul>
+  <div class="subnav">
+    <div class="container">
+      <ul>
+        <li class="{{isActive 'hostServiceList' }}"><a href="/projects/{{projectId}}/hosts/{{host._id}}/services">SERVICES</a></li>
+        <li class="{{isActive 'hostIssueList' }}"><a href="/projects/{{projectId}}/hosts/{{host._id}}/issues">ISSUES</a></li>
+        <li class="{{isActive 'hostNoteList' }}"><a href="/projects/{{projectId}}/hosts/{{host._id}}/notes">NOTES</a></li>
+        <li class="{{isActive 'hostHostnameList' }}"><a href="/projects/{{projectId}}/hosts/{{host._id}}/hostnames">HOSTNAMES</a></li>
+        <li class="{{isActive 'hostCredentialList'}}"><a href="/projects/{{projectId}}/hosts/{{host._id}}/credentials">CREDENTIALS</a></li>
+        <li class="{{isActive 'hostWebDirectoryList' }}"><a href="/projects/{{projectId}}/hosts/{{host._id}}/directories">WEB DIRECTORIES</a></li>
+        <li class="{{isActive 'hostSettings' }}"><a href="/projects/{{projectId}}/hosts/{{host._id}}/settings">SETTINGS</a></li>
+      </ul>
+    </div>
   </div>
 </template>

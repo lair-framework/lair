@@ -1,59 +1,63 @@
 <template name="hostGist">
-  <div class="four columns">
-    <ul class="list-unstyled gist">
-      <li><strong>IP Address:&nbsp;</strong>{{host.ipv4}}</li>
-      <li><strong>MAC:&nbsp;</strong>{{host.mac}}</li>
-      <li><strong>Updated by:&nbsp;</strong>{{host.lastModifiedBy}}</li>
-      <li>
-        {{#if host.isFlagged}}
-          <i class="u-pull-left fa fa-flag flag-enabled clickable"></i>
-        {{else}}
-          <i class="u-pull-left fa fa-flag-o flag-disabled clickable"></i>
-        {{/if}}
-        <span class="u-pull-left status-span status-box clickable host-status {{host.status}}">&nbsp;</span>
-        {{#each host.tags}}
-        <span class="u-pull-left tag">{{this}}&nbsp;<i class="clickable remove-tag fa fa-times"></i></span>
-        {{/each}}
-      </li>
-   </ul>
+<div class="container">
+  <div class="row">
+    <div class="four columns">
+      <ul class="list-unstyled gist">
+        <li>IP Address:&nbsp;{{host.ipv4}}</li>
+        <li>MAC:&nbsp;{{host.mac}}</li>
+        <li>Updated by:&nbsp;{{host.lastModifiedBy}}</li>
+        <li>
+          {{#if host.isFlagged}}
+            <i class="u-pull-left fa fa-flag flag-enabled clickable"></i>
+          {{else}}
+            <i class="u-pull-left fa fa-flag-o flag-disabled clickable"></i>
+          {{/if}}
+          <span class="u-pull-left status-span status-box clickable host-status {{host.status}}">&nbsp;</span>
+          {{#each host.tags}}
+          <span class="u-pull-left tag">{{this}}&nbsp;<i class="clickable remove-tag fa fa-times"></i></span>
+          {{/each}}
+        </li>
+     </ul>
+    </div>
+    <div class="four columns">
+      <ul class="list-unstyled gist">
+        <li>Hostname:&nbsp;{{host.hostnames.[0]}}</li>
+        <li>OS:&nbsp;{{host.os.fingerprint}}</li>
+        <li>Status:&nbsp;{{host.statusMessage}}</li>
+      </ul>
+    </div>
+    <div class="four columns gist">
+      <form id="host-gist-set-status">
+        <div class="row">
+          <div class="six columns">
+            <input type="text" name="status-message" class="u-full-width" placeholder="Status">
+          </div>
+          <div class="two columns">
+            <button class="button button-primary">Set Status</button>
+          </div>
+        </div>
+      </form>
+      <form id="host-gist-set-os">
+        <div class="row">
+          <div class="six columns">
+            <input type="text" name="os-fingerprint" class="u-full-width" placeholder="OS Fingerprint">
+          </div>
+          <div class="two columns">
+            <button class="button button-primary">Set OS</button>
+          </div>
+        </div>
+      </form>
+      <form id="host-gist-add-tag">
+        <div class="row">
+          <div class="six columns">
+            <input type="text" class="u-full-width" name="tag" placeholder="Tag">
+          </div>
+          <div class="two columns">
+            <button class="button button-primary">Add Tag</button>
+          </div>
+        </div>
+      </form>
+    </div>
   </div>
-  <div class="four columns">
-    <ul class="list-unstyled gist">
-      <li><strong>Hostname:&nbsp;</strong>{{host.hostnames.[0]}}</li>
-      <li><strong>OS:&nbsp;</strong>{{host.os.fingerprint}}</li>
-      <li><strong>Status:&nbsp;</strong>{{host.statusMessage}}</li>
-    </ul>
-  </div>
-  <div class="four columns gist">
-    <form id="host-gist-set-status">
-      <div class="row">
-        <div class="six columns">
-          <input type="text" name="status-message" class="u-full-width" placeholder="Status">
-        </div>
-        <div class="two columns">
-          <button class="button button-primary">Set Status</button>
-        </div>
-      </div>
-    </form>
-    <form id="host-gist-set-os">
-      <div class="row">
-        <div class="six columns">
-          <input type="text" name="os-fingerprint" class="u-full-width" placeholder="OS Fingerprint">
-        </div>
-        <div class="two columns">
-          <button class="button button-primary">Set OS</button>
-        </div>
-      </div>
-    </form>
-    <form id="host-gist-add-tag">
-      <div class="row">
-        <div class="six columns">
-          <input type="text" class="u-full-width" name="tag" placeholder="Tag">
-        </div>
-        <div class="two columns">
-          <button class="button button-primary">Add Tag</button>
-        </div>
-      </div>
-    </form>
-  </div>
+</div>
 </template>

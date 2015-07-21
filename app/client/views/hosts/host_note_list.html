@@ -1,48 +1,35 @@
 <template name="hostNoteList">
-  <div class="row">
-    <div class="two columns">
-      {{> sideNav}}
-    </div>
-    <div class="ten columns">
-      <div class="row">
-        {{> hostGist}}
-      </div>
-      <hr />
-      <div class="row">
-        {{> hostNav}}
-      </div>
-      <div class="row">
-        <div class="seven columns">
-          {{#if notes}}
-          <div class="row">
-            <div class="twelve columns">
-              <button id="remove-notes" class="button lair-red"><i class="fa fa-trash fa-lg"></i></button>
-              <button id="new-note" class="u-pull-right button button-primary">New Note</button>
-            </div>
-          </div>
-          {{/if}}
-          <div class="row">
-            <div class="twelve columns">
-              <ul class="list-unstyled list-alternate">
-              {{#each notes}}
-                <li>
-                {{#if serviceId}}
-                  <input class="service-note-checked" id="{{title}}" data-service-id="{{serviceId}}" type="checkbox" />
-                  <span class="u-pull-right">{{lastModifiedBy}}</span>
-                  <span class="service-note"><a href="#">{{title}}</a></span><span class="note-port u-pull-right">{{port}}/{{protocol}}</span>
-                {{else}}
-                  <input class="note-checked" id="{{title}}" type="checkbox" />
-                  <span class="host-note"><a href="#">{{title}}</a></span>
-                  <span class="u-pull-right">{{lastModifiedBy}}</span>
-                {{/if}}
-                </li>
-              {{/each}}
-              </ul>
-            </div>
-          </div>
+<div class="main">
+  <div class="content-navd">
+    {{> hostNav}}
+  </div>
+  <div class="container host-content">
+    <div class="row">
+      <div class="seven columns">
+      {{#if notes}}
+        <div>
+          <button id="remove-notes" class="button lair-red"><i class="fa fa-trash fa-lg"></i></button>
+          <button id="new-note" class="u-pull-right button button-primary">New Note</button>
         </div>
-        <div class="five columns">
-          {{#if note}}
+      {{/if}}
+        <ul class="list-unstyled list-alternate">
+        {{#each notes}}
+          <li>
+          {{#if serviceId}}
+            <input class="service-note-checked" id="{{title}}" data-service-id="{{serviceId}}" type="checkbox" />
+            <span class="u-pull-right">{{lastModifiedBy}}</span>
+            <span class="service-note"><a href="#">{{title}}</a></span><span class="note-port u-pull-right">{{port}}/{{protocol}}</span>
+          {{else}}
+             <input class="note-checked" id="{{title}}" type="checkbox" />
+             <span class="host-note"><a href="#">{{title}}</a></span>
+             <span class="u-pull-right">{{lastModifiedBy}}</span>
+           {{/if}}
+           </li>
+         {{/each}}
+         </ul>
+      </div>
+      <div class="five columns">
+        {{#if note}}
           <ul class="list-unstyled">
             <li>{{note.title}}</li>
             {{#if note.port}}
@@ -50,10 +37,10 @@
             {{/if}}
           </ul>
           <form>
-            <textarea name="content" class="u-full-width" row="15">{{note.content}}</textarea>
+            <textarea name="content" class="u-full-width" rows="10">{{note.content}}</textarea>
             <button class="button button-primary">Save</button>
           </form>
-          {{else}}
+        {{else}}
           <form>
             <div class="row">
               <div class="twelve columns">
@@ -70,14 +57,17 @@
             </div>
             <div class="row">
               <div class="twelve columns">
-                <textarea class="u-full-width" rows="15" name="content" placeholder="Content"></textarea>
+                <textarea class="u-full-width" rows="10" name="content" placeholder="Content"></textarea>
               </div>
             </div>
             <button class="button button-primary">Save</button>
           </form>
-          {{/if}}
-        </div>
+        {{/if}}
       </div>
     </div>
   </div>
+</div>
+<div class="host-gist">
+  {{> hostGist}}
+</div>
 </template>

@@ -9,14 +9,31 @@ low = #3498db
 skblue = #33c3f0
 greyishblue = #ededed
 
+textarea
+  height auto
+
+.host-gist
+  background white
+  z-index 10
+  position fixed
+  padding-top 15px
+  border-top 1px solid #e1e1e1
+  left 250px
+  bottom 0
+  right 0
+  box-shadow  0px -1px 1px 0px rgba(50, 50, 50, 0.1)
+
+.host-content
+  padding-bottom 180px
+
 .strong
   font-weight bold
 
 #alerts
-  z-index -1
+  z-index 100
   position fixed
   bottom 0
-  right 0
+  left 0
   a
     text-decoration none
     color grey
@@ -71,19 +88,33 @@ a
 .u-pull-left
   float left
 
+.content-navd
+  padding-top 50px
+.content
+  padding-top 60px
+
 .container
   min-width: 95%
-
 .main
-  padding-top 30px
+  z-index 10
+  position relative
+  margin-left 250px
+  width auto
+  -webkit-backface-visibility: hidden;
+  -webkit-perspective: 1000;
 
 .navbar
+  position fixed
+  z-index 100
   font-size: 20px
   min-width 100%
-  height 40px
+  height 50px
   background #2c3e50
-  line-height 40px
+  line-height 50px
   color #ffffff
+  .navbar-content
+    margin-left 35px
+    margin-right 35px
   ul
     list-style-type none
     li
@@ -94,15 +125,59 @@ a
     text-decoration none
     color inherit
 
-.sidenav-info
-  li
-    color: #95a5a6
-.sidenav
-  li
+.subnav
+  margin-bottom 20px
+  border-bottom 1px solid #e1e1e1
+  box-shadow  0px 1px 1px 0px rgba(50, 50, 50, 0.1)
+  ul
+    list-style-type none
     margin 0
-    padding 5px
-  a
-    text-decoration none
+    li:not(:first-child)
+      padding-left 10px
+    li
+      margin 0
+      display inline
+      a
+        margin 0
+        border-right 1px solid #e1e1e1
+        padding-top 20px
+        padding-right 10px
+        padding-bottom 18px
+        line-height 50px
+        color inherit
+
+.sidenav
+  z-index 5
+  background #ededed
+  border-right 1px solid #E1E1E1
+  position fixed
+  top 50px
+  bottom 0
+  right 0
+  left 0
+  width 250px
+  margin-left 0
+  ul
+    list-style-type none
+  li
+    margin-bottom 0
+    a
+      display: block;
+      padding-left: 35px;
+      line-height: 50px;
+      color #676464
+      text-decoration: none;
+      border-bottom 1px solid #E1E1E1
+      box-shadow: 0 1px 1px rgba(255, 255, 255, 0.1);
+   .item
+      display: block;
+      padding-left: 35px;
+      line-height: 50px;
+      color #676464
+      text-decoration: none;
+      border-bottom 1px solid #E1E1E1
+      box-shadow: 0 1px 1px rgba(255, 255, 255, 0.1);
+
 
 .list-unstyled
   list-style-type none
@@ -239,21 +314,12 @@ a
   opacity: 0.4
 
 .list-inline
+  margin-bottom 0
   li
     display inline
 
 .active
   font-weight bold
-
-.nav-tabs
-  list-style none
-  padding-bottom 10px
-  & > li
-    margin-right 10px
-    padding 5px
-    display inline
-    & > a
-      text-decoration none
 
 .list-users
   li
