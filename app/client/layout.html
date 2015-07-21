@@ -4,6 +4,9 @@
     {{#if projectId}}
       {{> projectSideNav}}
     {{/if}}
+    {{#if isInfo}}
+      {{> infoSideNav}}
+    {{/if}}
   {{/if}}
   {{> alerts}}
   {{> yield}}
