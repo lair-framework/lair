@@ -55,14 +55,90 @@ Router.route('/projects/:id/hosts/:hid/services/:sid/issues', {
 })
 
 Router.route('/projects/:id/hosts/:hid/services/:sid/notes', {
-  controller: 'ProjectController'
+  name: 'serviceNoteList',
+  controller: 'ProjectController',
+  data: function () {
+    if (Projects.find({
+        _id: this.params.id
+      }).count() < 1) {
+      return null
+    }
+    var service = Services.findOne({
+      _id: this.params.sid
+    })
+    if (!service) {
+      return null
+    }
+    var host = Hosts.findOne({
+      _id: this.params.hid
+    })
+    if (!host) {
+      return null
+    }
+    return {
+      projectId: this.params.id,
+      host: host,
+      service: service
+    }
+  }
 })
 
 Router.route('/projects/:id/hosts/:hid/services/:sid/credentials', {
-  controller: 'ProjectController'
+  name: 'serviceCredentialList',
+  controller: 'ProjectController',
+  data: function () {
+    if (Projects.find({
+        _id: this.params.id
+      }).count() < 1) {
+      return null
+    }
+    var service = Services.findOne({
+      _id: this.params.sid
+    })
+    if (!service) {
+      return null
+    }
+    var host = Hosts.findOne({
+      _id: this.params.hid
+    })
+    if (!host) {
+      return null
+    }
+    return {
+      projectId: this.params.id,
+      host: host,
+      service: service
+    }
+  }
+
 })
 
 Router.route('/projects/:id/hosts/:hid/services/:sid/settings', {
-  controller: 'ProjectController'
-})
+  name: 'serviceSettings',
+  controller: 'ProjectController',
+  data: function () {
+    if (Projects.find({
+        _id: this.params.id
+      }).count() < 1) {
+      return null
+    }
+    var service = Services.findOne({
+      _id: this.params.sid
+    })
+    if (!service) {
+      return null
+    }
+    var host = Hosts.findOne({
+      _id: this.params.hid
+    })
+    if (!host) {
+      return null
+    }
+    return {
+      projectId: this.params.id,
+      host: host,
+      service: service
+    }
+  }
 
+})

@@ -1,27 +1,20 @@
 <template name="serviceIssueList">
-  <div class="row">
-    <div class="two columns">
-      {{> sideNav}}
+<div class="main">
+  <div class="content-navd">
+    {{> serviceNav}}
+  </div>
+  <div class="container service-content">
+    <div class="row">
+      <div class="twelve columns">
+        <ul class="list-unstyled list-inline">
+          <li><button id="remove-issues" class="button lair-red"><i class="fa fa-trash fa-lg"></i></button></li>
+        </ul>
+      </div>
     </div>
-    <div class="ten columns">
-      <div class="row">
-        {{> serviceGist}}
-      </div>
-      <hr />
-      <div class="row">
-        {{> serviceNav}}
-      </div>
-      <div class="row">
-        <div class="twelve columns">
-          <ul class="list-unstyled list-inline">
-            <li><button id="remove-issues" class="button lair-red"><i class="fa fa-trash fa-lg"></i></button></li>
-          </ul>
-        </div>
-      </div>
-      <div class="row">
-        <div class="twelve columns">
-          <ul class="list-unstyled list-issues">
-          {{#each issues}}
+    <div class="row">
+      <div class="twelve columns">
+        <ul class="list-unstyled list-issues">
+        {{#each issues}}
           <li>
             <span class="issue-checkbox"><input type="checkbox" id="{{_id}}" class="issue-checked"></span>
             <span class="issue-{{rating}} rating">{{cvss}}</span>
@@ -44,10 +37,12 @@
             <span class="last-modified-by">{{lastModifiedBy}}</span>
           </li>
           {{/each}}
-          </ul>
-        </div>
-
+        </ul>
       </div>
     </div>
   </div>
+</div>
+<div class="service-gist">
+  {{> serviceGist}}
+</div>
 </template>
