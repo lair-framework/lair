@@ -4,11 +4,12 @@ Meteor.methods({
   removeAuthInterface: removeAuthInterface
 })
 
-function createAuthInterface (id, kind, url, description) {
+function createAuthInterface (id, kind, url, description, isMulti) {
   check(id, Matchers.isObjectId)
   check(kind, String)
   check(url, String)
   check(description, String)
+  check(isMulti, Boolean)
   if (!AuthorizeChange(id, this.userId)) {
     throw new Meteor.Error(403, 'Access Denied')
   }
@@ -16,7 +17,8 @@ function createAuthInterface (id, kind, url, description) {
     projectId: id,
     kind: kind,
     url: url,
-    description: description
+    description: description,
+    isMultifactor: isMulti
   })
   return AuthInterfaces.insert(authInterface)
 }

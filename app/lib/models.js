@@ -35,6 +35,7 @@ Models = { // eslint-disable-line
   authInterface: function () {
     return {
       projectId: '',
+      isMultifactor: true,
       kind: '',
       url: '',
       description: ''

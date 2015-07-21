@@ -4,15 +4,17 @@
     <div class="row">
       <div class="twelve columns">
         <button id="remove-interfaces" class="button lair-red"><i class="fa fa-trash fa-lg"></i></button>
+        <span class="u-pull-right"><a class="button button-primary" href="/projects/{{projectId}}/authinterfaces/new">New Interface</a></span>
       </div>
     </div>
     <div class="row">
-      <div class="eight columns">
+      <div class="twelve columns">
         <table class="u-full-width">
           <thead>
             <tr>
               <th style="width: 1px"></th>
               <th>Kind</th>
+              <th>Multi-factor</th>
               <th>URL</th>
               <th>Description</th>
             </tr>
@@ -22,20 +24,13 @@
             <tr>
               <td style="width: 1px"><input class="interface-checked" id="{{_id}}" type="checkbox"></td>
               <td>{{kind}}</td>
+              <td>{{#if isMultifactor}}<i class="fa fa-check"></i>{{/if}}</td>
               <td>{{url}}</td>
               <td>{{description}}</td>
             </tr>
           {{/each}}
           </tbody>
         </table>
-      </div>
-      <div class="four columns">
-        <form>
-          <input type="text" class="u-full-width" name="kind" placeholder="Kind">
-          <input type="text" class="u-full-width" name="url" placeholder="URL">
-          <input type="text" class="u-full-width" name="description" placeholder="Description">
-          <button class="button button-primary">Add Interface</button>
-        </form>
       </div>
     </div>
   </div>
