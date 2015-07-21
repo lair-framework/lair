@@ -1,6 +1,6 @@
 /* globals Template Router */
 
-Template.settingsNav.helpers({
+Template.settingsSideNav.helpers({
   isActive: function (name) {
     if (Router.current().route.getName() === name) {
       return 'active'

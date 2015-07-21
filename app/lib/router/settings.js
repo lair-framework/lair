@@ -10,7 +10,8 @@ Router.route('/settings', {
       }),
       persistViewFilters: Settings.findOne({
         setting: 'persistViewFilters'
-      })
+      }),
+      isSettings: true
     }
   }
 })
@@ -26,14 +27,20 @@ Router.route('/settings/users', {
       }
     })
     return {
-      users: users
+      users: users,
+      isSettings: true
     }
   }
 })
 
 Router.route('/settings/users/new', {
   name: 'settingsNewUser',
-  controller: 'SettingsController'
+  controller: 'SettingsController',
+  data: function () {
+    return {
+      isSettings: true
+    }
+  }
 })
 
 Router.route('/settings/users/:id', {
@@ -48,7 +55,8 @@ Router.route('/settings/users/:id', {
       return null
     }
     return {
-      user: user
+      user: user,
+      isSettings: true
     }
   }
 })

@@ -1,28 +1,29 @@
 <template name="settings">
-  <div class="row">
-    {{> settingsNav}}
-  </div>
-  <div class="row">
-    <div class="four columns">
-      <h4>Client Updates</h4>
-      <p>By enabling this feature you will be allowing users to run insert, remove, and updates on projects without any validation beyond confirming ownership. This has security implications and should be used with caution.</p>
-      {{#if allowClientSideUpdates.enabled}}
-        <button id="toggle-client-side-updates" class="button button-primary">Deny client-side updates</button>
-      {{else}}
-        <button id="toggle-client-side-updates" class="button">Allow client-side updates</button>
-      {{/if}}
+<div class="main">
+  <div class="container content">
+    <div class="row">
+      <div class="six columns">
+        <h5>Client Updates</h5>
+        <p>By enabling this feature you will be allowing users to run insert, remove, and updates on projects without any validation beyond confirming ownership. This has security implications and should be used with caution.</p>
+        {{#if allowClientSideUpdates.enabled}}
+          <button id="toggle-client-side-updates" class="button button-primary">Deny client-side updates</button>
+        {{else}}
+          <button id="toggle-client-side-updates" class="button">Allow client-side updates</button>
+        {{/if}}
+      </div>
+    </div>
+    <hr />
+    <div class="row">
+      <div class="six columns">
+        <h5>Persist Filters</h5>
+        <p>By enabling this feature you will be be persisting view filters (i.e. status filters, count filters, etc.) across page loads. This can make it easier for you to overlook items of a certain status in the event that you forget this feature is enabled.</p>
+        {{#if persistViewFilters.enabled}}
+          <button id="toggle-persist-view-filters" class="button button-primary">Disable filter persistence</button>
+        {{else}}
+          <button id="toggle-persist-view-filters" class="button">Enable filter persistence</button>
+        {{/if}}
+      </div>
     </div>
   </div>
-  <hr />
-  <div class="row">
-    <div class="four columns">
-      <h4>Persist Filters</h4>
-      <p>By enabling this feature you will be be persisting view filters (i.e. status filters, count filters, etc.) across page loads. This can make it easier for you to overlook items of a certain status in the event that you forget this feature is enabled.</p>
-      {{#if persistViewFilters.enabled}}
-        <button id="toggle-persist-view-filters" class="button button-primary">Disable filter persistence</button>
-      {{else}}
-        <button id="toggle-persist-view-filters" class="button">Enable filter persistence</button>
-      {{/if}}
-    </div>
-  </div>
+</div>
 </template>
