@@ -1,0 +1,43 @@
+<template name="authInterfaces">
+<div class="main">
+  <div class="container content">
+    <div class="row">
+      <div class="twelve columns">
+        <button id="remove-interfaces" class="button lair-red"><i class="fa fa-trash fa-lg"></i></button>
+      </div>
+    </div>
+    <div class="row">
+      <div class="eight columns">
+        <table class="u-full-width">
+          <thead>
+            <tr>
+              <th style="width: 1px"></th>
+              <th>Kind</th>
+              <th>URL</th>
+              <th>Description</th>
+            </tr>
+          </thead>
+          <tbody>
+          {{#each authInterfaces}}
+            <tr>
+              <td style="width: 1px"><input class="interface-checked" id="{{_id}}" type="checkbox"></td>
+              <td>{{kind}}</td>
+              <td>{{url}}</td>
+              <td>{{description}}</td>
+            </tr>
+          {{/each}}
+          </tbody>
+        </table>
+      </div>
+      <div class="four columns">
+        <form>
+          <input type="text" class="u-full-width" name="kind" placeholder="Kind">
+          <input type="text" class="u-full-width" name="url" placeholder="URL">
+          <input type="text" class="u-full-width" name="description" placeholder="Description">
+          <button class="button button-primary">Add Interface</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+</template>

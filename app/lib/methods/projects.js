@@ -1,4 +1,4 @@
-/* globals Meteor HTTP AuthorizeOwner check Models Projects _ moment Matchers AuthorizeChange Hosts Issues Services People WebDirectories*/
+/* globals Meteor HTTP AuthorizeOwner check Models Projects _ moment Matchers AuthorizeChange Hosts Issues Services People WebDirectories AuthInterfaces Netblocks */
 Meteor.methods({
   createProject: createProject,
   addNote: addNote,
@@ -161,6 +161,8 @@ function removeProject (id) {
   Issues.remove({projectId: id})
   People.remove({projectId: id})
   WebDirectories.remove({projectId: id})
+  AuthInterfaces.remove({projectId: id})
+  Netblocks.remove({projectId: id})
   return
 }
 

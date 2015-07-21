@@ -32,6 +32,21 @@ Models = { // eslint-disable-line
     }
   },
 
+  authInterface: function () {
+    return {
+      projectId: '',
+      kind: '',
+      url: '',
+      description: ''
+    }
+  },
+
+  netblock: function () {
+    return {
+      projectId: ''
+    }
+  },
+
   os: function () {
     return {
       tool: '',

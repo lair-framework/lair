@@ -25,6 +25,7 @@ ProjectController = RouteController.extend({ // eslint-disable-line
       Subs.subscribe('issues', this.params.id),
       Subs.subscribe('people', this.params.id),
       Subs.subscribe('credentials', this.params.id),
+      Subs.subscribe('authInterfaces', this.params.id),
       Subs.subscribe('directory'),
       Subs.subscribe('settings')
     ]

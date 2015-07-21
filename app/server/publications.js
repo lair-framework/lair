@@ -1,4 +1,5 @@
-/* globals Meteor Projects Hosts Services Issues Settings People Credentials */
+/* globals Meteor Projects Hosts Services Issues Settings People Credentials AuthInterfaces */
+
 // TODO: Authorize function.
 Meteor.publish('projectListing', function () {
   return Projects.find({
@@ -38,6 +39,15 @@ Meteor.publish('people', function (id) {
     return []
   }
   return People.find({
+    projectId: id
+  })
+})
+
+Meteor.publish('authInterfaces', function (id) {
+  if (!this.userId) {
+    return []
+  }
+  return AuthInterfaces.find({
     projectId: id
   })
 })
