@@ -1,13 +1,14 @@
 <template name="person">
-<div class="row">
-  <div class="two columns">
-    {{> sideNav}}
-  </div>
-  <div class="ten columns">
-  {{#with person}}
-  {{principalName}}
-  {{description}}
-  {{/with}}
+<div class="main">
+  <div class="container content">
+    <div class="row">
+      <div class="twelve columns">
+      {{#with person}}
+      {{principalName}}
+      {{description}}
+      {{/with}}
+      </div>
+    </div>
   </div>
 </div>
 </template>
