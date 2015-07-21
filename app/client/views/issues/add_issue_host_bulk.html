@@ -1,14 +1,15 @@
 <template name="addIssueHostBulk">
-  <div class="row">
-    <div class="two columns">
-      {{> sideNav}}
-    </div>
-    <div class="six columns">
-      <p>Place CSV of hosts here in the format of IP,Port,Protocol (ie. 192.168.1.1,80,tcp).</p>
-      <form>
-        <textarea class="u-full-width" name="csv"></textarea>
-        <button class="button button-primary">Submit</button>
-      </form>
+<div class="main">
+  <div class="container content">
+    <div class="row">
+      <div class="six columns">
+        <p>Place CSV of hosts here in the format of IP,Port,Protocol (ie. 192.168.1.1,80,tcp).</p>
+        <form>
+          <textarea class="u-full-width" name="csv"></textarea>
+          <button class="button button-primary">Submit</button>
+        </form>
+      </div>
     </div>
   </div>
+</div>
 </template>
