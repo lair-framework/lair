@@ -1,21 +1,22 @@
 <template name="log">
-  <div class="row">
-    <div class="two columns">
-      {{> sideNav}}
-    </div>
-    <div class="five columns log-box">
-      <ul>
-        {{#each projects.commands}}
-        <li>{{tool}}: {{command}}</li>
-        {{/each}}
-      </ul>
-    </div>
-    <div class="five columns log-box">
-      <ul>
+<div class="main">
+  <div class="container content">
+    <div class="row">
+      <div class="five columns log-box">
+        <ul>
+          {{#each projects.commands}}
+           <li>{{tool}}: {{command}}</li>
+          {{/each}}
+        </ul>
+      </div>
+      <div class="five u-pull-right columns log-box">
+        <ul>
         {{#each project.logs}}
-        <li>{{this}}</li>
+          <li>{{this}}</li>
         {{/each}}
-      </ul>
+        </ul>
+      </div>
     </div>
   </div>
+</div>
 </template>
