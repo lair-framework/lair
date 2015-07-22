@@ -9,8 +9,23 @@ low = #3498db
 skblue = #33c3f0
 greyishblue = #ededed
 
+form
+  margin-bottom 0
 textarea
   height auto
+  max-width 100%
+
+.full-height
+  min-height 100%
+.copyonly
+  padding 0
+  margin 0
+  box-shadow:none;
+  border none!important
+  resize none!important
+  cursor default!important
+  background-color #ffffff!important
+
 
 .issue-gist
   background white
@@ -81,8 +96,8 @@ textarea
 a
   text-decoration none
 
-.note-port
-  margin-right 10px
+.right-mark
+  margin-left 10px
 
 .log-box
   word-break break-all
@@ -229,9 +244,11 @@ a
 .hostname
   margin-left 10px
 .list-alternate
+  input
+    margin 0
   li
     margin 0
-    padding 5px 5px 0 5px
+    padding 10px
     border 1px solid #ddd
   li:nth-child(odd)
     background-color greyishblue
@@ -261,11 +278,14 @@ a
 .host-list-ip
   width 120px
 
+.service-row
+  padding 10px 10px 10px 10px
 .list-services
+  input
+    margin 0
   li
     border 1px solid #ddd
     margin 0
-    padding 5px 5px 0 5px
   li:nth-child(odd)
     background-color greyishblue
   a

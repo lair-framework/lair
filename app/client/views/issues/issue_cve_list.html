@@ -5,16 +5,16 @@
   </div>
   <div class="container issue-content">
     <div class="row">
-      <div class="five columns">
+      <div class="seven columns">
         <button class="button lair-red" id="remove-cves"><i class="fa fa-trash fa-lg"></i></button>
       </div>
-      <div class="seven columns">
+      <div class="five columns">
         <form>
           <div class="row">
-            <div class="three columns">
+            <div class="eight columns">
               <input type="text" class="u-full-width" name="cve" placeholder="2008-4250">
             </div>
-            <div class="two columns">
+            <div class="four columns">
               <button class="button button-primary">Add CVE</button>
             </div>
           </div>
@@ -27,7 +27,7 @@
         {{#each issue.cves}}
           <li>
             <input type="checkbox" class="cve-checked" id="{{this}}">
-            <span class="issue-cve">{{this}}</span>
+            <span class="issue-cve right-mark">{{this}}</span>
           </li>
         {{/each}}
         </ul>

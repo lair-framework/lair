@@ -5,9 +5,8 @@
 <div class="main">
   <div class="content-navd">
     {{> hostNav}}
+  </div>
   <div class="container host-content">
-    <div class="row">
-    </div>
     <div class="row">
       <div class="twelve columns">
         <ul class="list-unstyled list-inline">
@@ -32,7 +31,7 @@
         <ul class="list-unstyled list-services">
           {{#each services}}
             <li>
-              <div class="row">
+              <div class="row service-row">
                 <span class="u-pull-left"><input class="service-checked" id="{{_id}}" type="checkbox"></span>
                 <span class="service-list-port u-pull-left"><a href="/projects/{{projectId}}/hosts/{{hostId}}/services/{{_id}}">{{port}}/{{protocol}}</a></span>
                 {{#if isFlagged}}
@@ -61,6 +60,5 @@
      {{/if}}
    </div>
   </div>
-</div>
 </div>
 </template>

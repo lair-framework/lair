@@ -17,7 +17,7 @@
             <div class="four columns">
               <input type="text" class="u-full-width" name="name" placeholder="Name">
             </div>
-            <div class="two columns">
+            <div class="four columns">
               <button class="button button-primary">Add Reference</button>
             </div>
           </div>
@@ -30,7 +30,7 @@
         {{#each issue.references}}
           <li>
             <input type="checkbox" class="reference-checked" data-name="{{name}}" data-link="{{link}}">
-            <span class="issue-reference"><a href="{{link}}">{{name}}</a></span>
+            <span class="issue-reference right-mark"><a href="{{link}}">{{name}}</a></span>
           </li>
         {{/each}}
         </ul>
