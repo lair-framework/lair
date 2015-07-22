@@ -48,13 +48,9 @@ Template.hostIssueList.events({
     })
 
     for (var i = 0; i < issueIds.length; i++) {
-      console.log(issueIds[i])
       var issue = Issues.find({_id:issueIds[i]}).fetch()
-      console.log(issue[0].hosts)
       for (var k = 0; k < issue[0].hosts.length; k++) {
-        console.log(issue[0].hosts[k])
         if (this.host.ipv4 == issue[0].hosts[k].ipv4){
-          console.log('deleted this shit')
           Meteor.call('removeHostFromIssue', this.projectId, issueIds[i], issue[0].hosts[k].ipv4, issue[0].hosts[k].port, issue[0].hosts[k].protocol)
         
         }
