@@ -44,7 +44,24 @@ Models = { // eslint-disable-line
 
   netblock: function () {
     return {
-      projectId: ''
+      projectId: '',
+      asn: '',
+      asnCountryCode: '',
+      asnCidr: '',
+      asnDate: '',
+      asnRegistry: '',
+      cidr: '',
+      abuseEmails: '',
+      miscEmails: '',
+      techEmails: '',
+      name: '',
+      city: '',
+      country: '',
+      potalCode: '',
+      created: '',
+      updated: '',
+      description: '',
+      handle: ''
     }
   },
 

@@ -1,4 +1,4 @@
-/* globals Meteor Projects Hosts Services Issues Settings People Credentials AuthInterfaces */
+/* globals Meteor Projects Hosts Services Issues Settings People Credentials AuthInterfaces Netblocks */
 
 // TODO: Authorize function.
 Meteor.publish('projectListing', function () {
@@ -48,6 +48,15 @@ Meteor.publish('authInterfaces', function (id) {
     return []
   }
   return AuthInterfaces.find({
+    projectId: id
+  })
+})
+
+Meteor.publish('netblocks', function (id) {
+  if (!this.userId) {
+    return []
+  }
+  return Netblocks.find({
     projectId: id
   })
 })
