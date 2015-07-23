@@ -113,14 +113,23 @@ Models = { // eslint-disable-line
   person: function () {
     return {
       projectId: '',
+      isFlagged: false,
       principalName: '',
+      samAccountName: '',
+      distinguishedName: '',
+      firstName: '',
+      middleName: '',
+      lastName: '',
+      displayName: '',
       department: '',
       description: '',
+      address: '',
       emails: [],
       phones: [],
-      social: [],
+      references: [],
       groups: [],
-      credentials: [],
+      lastLogon: '',
+      lastOff: '',
       loggedIn: []
     }
   },

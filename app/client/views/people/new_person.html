@@ -2,9 +2,30 @@
 <div class="main">
   <div class="container content">
     <div class="row">
-      <div class="five columns">
+      <div class="six columns">
         <form>
-          <input type="text" name="principle" class="u-full-width" placeholder="Unique username or email address">
+          <input type="text" name="principle-name" class="u-full-width" placeholder="Unique username or email address">
+          <input type="text" name="firstname" class="u-full-width" placeholder="First Name">
+          <input type="text" name="middlename" class="u-full-width" placeholder="Middle Name">
+          <input type="text" name="lastname" class="u-full-width" placeholder="Last Name">
+          <input type="text" name="displayname" class="u-full-width" placeholder="Display Name">
+          <input type="text" name="samccount-name" class="u-full-width" placeholder="SAM Account Name">
+          <input type="text" name="distinguished-name" class="u-full-width" placeholder="Distinguished Name">
+          <input type="text" name="description" class="u-full-width" placeholder="Description">
+          <input type="text" name="department" class="u-full-width" placeholder="Department">
+          <input type="text" name="lastlogon" class="u-full-width" placeholder="Last logon">
+          <input type="text" name="lastloggoff" class="u-full-width" placeholder="Last logoff">
+          <textarea name="address" class="u-full-width" placeholder="Address"></textarea>
+          <label>Newline separated list of emails addresses</label>
+          <textarea name="emails" class="u-full-width"></textarea>
+          <label>Newline separated lsit of phone numbers</label>
+          <textarea name="phones" class="u-full-width"></textarea>
+          <label>Newline separated list of groups</label>
+          <textarea name="groups" class="u-full-width"></textarea>
+          <label>CSV of references in the format of description,username,link (ie. twitter,@laircat,https://twitter/laircat)</label>
+          <textarea name="references" class="u-full-width"></textarea>
+          <label>Newline separated list of hosts where the user is logged in</label>
+          <textarea name="loggedin" class="u-full-width"></textarea>
           <button class="button button-primary">Submit</button>
         </form>
       </div>
