@@ -4,10 +4,10 @@ Template.notes.events({
   'submit form': function (event, tpl) {
     event.preventDefault()
     var projectId = this.projectId
-    var content = tpl.find('[name=content]').value
+    var content = tpl.find('[class=epicarea]').value
     if (Session.equals('noteTitle', null)) {
       var title = tpl.find('[name=title]').value
-      Meteor.call('addNote', projectId, title, content, function (err) {
+      Meteor.call('addNote', projectId, title, content, true, function (err) {
         if (err) {
           Alerts.insert({
             class: 'alert-error',
@@ -25,7 +25,7 @@ Template.notes.events({
         return
       })
     } else {
-      Meteor.call('setNoteContent', projectId, Session.get('noteTitle'), content, function (err) {
+      Meteor.call('setNoteContent', projectId, Session.get('noteTitle'), content, true, function (err) {
         if (err) {
           Alerts.insert({
             class: 'alert-error',

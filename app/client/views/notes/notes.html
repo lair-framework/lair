@@ -31,21 +31,15 @@
           <li>{{note.title}}</li>
         </ul>
         <form>
-          <textarea name="content" class="u-full-width" row="15">{{note.content}}</textarea>
+          {{> epic note.content}}
+          <br />
           <button class="button button-primary">Save</button>
         </form>
         {{else}}
         <form>
-          <div class="row">
-            <div class="twelve columns">
-              <input type="text" class="u-full-width" name="title" placeholder="Title">
-            </div>
-          </div>
-          <div class="row">
-            <div class="twelve columns">
-              <textarea class="u-full-width" rows="15" name="content" placeholder="Content"></textarea>
-            </div>
-          </div>
+          <input type="text" class="u-full-width" name="title" placeholder="Title">
+          {{> epic '### New Note'}}
+          <br />
           <button class="button button-primary">Save</button>
         </form>
         {{/if}}
