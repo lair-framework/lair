@@ -293,7 +293,6 @@ Router.route('/projects/:id/hosts/:hid/issues', {
       this.next()
       return
     }
-    Session.set('hostIssueViewLimit', 25)
     Session.set('hostIssueListSearch', null)
     Session.set('hostIssueListStatusButtongrey', null)
     Session.set('hostIssueListStatusButtonblue', null)
@@ -309,81 +308,92 @@ Router.route('/projects/:id/hosts/:hid/issues', {
       }).count() < 1) {
       return null
     }
-    if (Hosts.find({
-        _id: this.params.hid
-      }).count() < 1) {
+    var host = Hosts.findOne({
+      _id: this.params.hid
+    })
+    if (!host) {
       return null
     }
-    var total = Issues.find({
-      projectId: this.params.id
-    }).count()
+    var ipv4 = host.ipv4
+    var query = {
+      projectId: this.params.id,
+      hosts: {
+        $elemMatch: {ipv4: ipv4}
+      },
+      status: {
+        $in: []
+      }
+    }
+    if (Session.equals('hostIssueListFlagFilter', 'enabled')) {
+      query.isFlagged = true
+    }
+    if (!Session.equals('hostIssueListStatusButtongrey', 'disabled')) {
+      query.status.$in.push('lair-grey')
+    }
+    if (!Session.equals('hostIssueListStatusButtonblue', 'disabled')) {
+      query.status.$in.push('lair-blue')
+    }
+    if (!Session.equals('hostIssueListStatusButtongreen', 'disabled')) {
+      query.status.$in.push('lair-green')
+    }
+    if (!Session.equals('hostIssueListStatusButtonorange', 'disabled')) {
+      query.status.$in.push('lair-orange')
+    }
+    if (!Session.equals('hostIssueListStatusButtonred', 'disabled')) {
+      query.status.$in.push('lair-red')
+    }
+    var search = Session.get('hostIssueListSearch')
+    if (search) {
+      query.$or = [
+        {statusMessage: {$regex: search, $options: 'i'}},
+        {cvss: parseInt(search, 10)},
+        {protocol: {$regex: search, $options: 'i'}},
+        {port: {$regex: search, $options: 'i'}},
+        {title: {$regex: search, $options: 'i'}},
+        {lastModifiedBy: {$regex: search, $options: 'i'}}
+      ]
+    }
     var self = this
+    var issues = []
+    Issues.find(query, {
+      sort: {
+        cvss: -1
+      }
+    }).fetch().forEach(function (issue) {
+      issue.hosts.forEach(function (host) {
+        var service = Services.findOne({
+          host_id: host._id,
+          port: host.port,
+          protocol: host.protocol
+        })
+        host.serviceId = service._id
+        host.hostId = self.params.hid
+        issues.push({
+          projectId: self.params.id,
+          issueId: issue._id,
+          title: issue.title,
+          cvss: issue.cvss,
+          rating: issue.rating,
+          lastModifiedBy: issue.lastModifiedBy,
+          isFlagged: issue.isFlagged,
+          isConfirmed: issue.isConfirmed,
+          status: issue.status,
+          host: host
+        })
+      })
+    })
+
     return {
       projectId: this.params.id,
       hostId: this.params.hid,
-      host: Hosts.findOne({
-        _id: this.params.hid
-      }),
-      total: total,
-      moreToShow: function () {
-        return total > Session.get('hostIssueViewLimit')
-      },
+      host: host,
       flagFilter: Session.get('hostIssueListFlagFilter'),
       issueStatusButtonActive: function (color) {
         if (Session.equals('hostIssueListStatusButton' + color, 'disabled')) {
           return 'disabled'
         }
       },
-      issues: function () {
-        var ipv4 = Hosts.findOne({
-          _id: self.params.hid
-        }).ipv4
-        var limit = Session.get('hostIssueViewLimit') || 25
-        var query = {
-          projectId: self.params.id,
-          hosts: {
-            $elemMatch: {ipv4: ipv4}
-          },
-          status: {
-            $in: []
-          }
-        }
-        if (Session.equals('hostIssueListFlagFilter', 'enabled')) {
-          query.isFlagged = true
-        }
-        if (!Session.equals('hostIssueListStatusButtongrey', 'disabled')) {
-          query.status.$in.push('lair-grey')
-        }
-        if (!Session.equals('hostIssueListStatusButtonblue', 'disabled')) {
-          query.status.$in.push('lair-blue')
-        }
-        if (!Session.equals('hostIssueListStatusButtongreen', 'disabled')) {
-          query.status.$in.push('lair-green')
-        }
-        if (!Session.equals('hostIssueListStatusButtonorange', 'disabled')) {
-          query.status.$in.push('lair-orange')
-        }
-        if (!Session.equals('hostIssueListStatusButtonred', 'disabled')) {
-          query.status.$in.push('lair-red')
-        }
-        var search = Session.get('hostIssueListSearch')
-        if (search) {
-          query.$or = [
-            {statusMessage: {$regex: search, $options: 'i'}},
-            {cvss: parseInt(search, 10)},
-            {protocol: {$regex: search, $options: 'i'}},
-            {port: {$regex: search, $options: 'i'}},
-            {title: {$regex: search, $options: 'i'}},
-            {lastModifiedBy: {$regex: search, $options: 'i'}}
-          ]
-        }
-        return Issues.find(query, {
-          sort: {
-            cvss: -1
-          },
-          limit: limit
-        }).fetch()
-      }
+      issues: issues
     }
   }
 })

@@ -1,4 +1,4 @@
-/* global Router Projects Services Hosts Issues*/
+/* global Router Projects Services Hosts Issues Settings Session*/
 
 Router.route('/projects/:id/hosts/:hid/services/new', {
   name: 'newService',
@@ -22,24 +22,24 @@ Router.route('/projects/:id/hosts/:hid/services/:sid', {
 Router.route('/projects/:id/hosts/:hid/services/:sid/issues', {
   name: 'serviceIssueList',
   controller: 'ProjectController',
-   onRun: function () {
-     if (Settings.findOne({
-      settings: 'persistViewFilters',
-      enabled: true
+  onRun: function () {
+    if (Settings.findOne({
+     settings: 'persistViewFilters',
+     enabled: true
     })) {
-       this.next()
-       return
+      this.next()
+      return
     }
-     Session.set('serviceIssueViewLimit', 25)
-     Session.set('serviceIssueListSearch', null)
-     Session.set('serviceIssueListStatusButtongrey', null)
-     Session.set('serviceIssueListStatusButtonblue', null)
-     Session.set('serviceIssueListStatusButtongreen', null)
-     Session.set('serviceIssueListStatusButtonorange', null)
-     Session.set('serviceIssueListStatusButtonred', null)
-     Session.set('serviceIssueListFlagFilter', null)
-     this.next()
-   },
+    Session.set('serviceIssueViewLimit', 25)
+    Session.set('serviceIssueListSearch', null)
+    Session.set('serviceIssueListStatusButtongrey', null)
+    Session.set('serviceIssueListStatusButtonblue', null)
+    Session.set('serviceIssueListStatusButtongreen', null)
+    Session.set('serviceIssueListStatusButtonorange', null)
+    Session.set('serviceIssueListStatusButtonred', null)
+    Session.set('serviceIssueListFlagFilter', null)
+    this.next()
+  },
   data: function () {
     if (Projects.find({
         _id: this.params.id
@@ -52,9 +52,6 @@ Router.route('/projects/:id/hosts/:hid/services/:sid/issues', {
     if (!service) {
       return null
     }
-    var total = Issues.find({
-      projectId: this.params.id
-    }).count()
     var host = Hosts.findOne({
       _id: this.params.hid
     })
@@ -62,9 +59,7 @@ Router.route('/projects/:id/hosts/:hid/services/:sid/issues', {
     return {
       projectId: this.params.id,
       host: host,
-      moreToShow: function () {
-        return total > Session.get('serviceIssueViewLimit')
-      },
+      service: service,
       flagFilter: Session.get('serviceIssueListFlagFilter'),
       serviceIssueStatusButtonActive: function (color) {
         if (Session.equals('serviceIssueListStatusButton' + color, 'disabled')) {
@@ -72,16 +67,15 @@ Router.route('/projects/:id/hosts/:hid/services/:sid/issues', {
         }
       },
       issues: function () {
-        var limit = Session.get('hostIssueViewLimit') || 25
         var query = {
-        projectId: self.params.id,
-        'hosts.ipv4': host.ipv4,
-        'hosts.port': service.port,
-        'hosts.protocol': service.protocol,
-        status: {
+          projectId: self.params.id,
+          'hosts.ipv4': host.ipv4,
+          'hosts.port': service.port,
+          'hosts.protocol': service.protocol,
+          status: {
             $in: []
           }
-      }
+        }
         if (Session.equals('serviceIssueListFlagFilter', 'enabled')) {
           query.isFlagged = true
         }
@@ -112,8 +106,7 @@ Router.route('/projects/:id/hosts/:hid/services/:sid/issues', {
         return Issues.find(query, {
           sort: {
             cvss: -1
-          },
-          limit: limit
+          }
         }).fetch()
       }
     }

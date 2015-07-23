@@ -1,9 +1,9 @@
 <template name="serviceIssueList">
 <div class="main">
   <div class="content-navd">
-    {{> hostNav}}
+    {{> serviceNav}}
   </div>
-  <div class="container host-content">
+  <div class="container service-content">
     <div class="row">
       <div class="six columns">
         <ul class="list-unstyled list-inline">
@@ -55,19 +55,9 @@
         </ul>
       </div>
     </div>
-    <div class="row">
-      <div class="six columns">
-        <p>Showing {{issues.length}} of {{total}} issues</p>
-      </div>
-      {{#if moreToShow}}
-      <div class="six columns">
-        <p class="pull-right"><button id="load-more" class="button">Show More</button><button id="load-all" class="button">Show All</button></p>
-      </div>
-      {{/if}}
-    </div>
   </div>
 </div>
-<div class="host-gist">
-  {{> hostGist}}
+<div class="service-gist">
+  {{> serviceGist}}
 </div>
 </template>

@@ -1,4 +1,4 @@
-/* globals $ Template Meteor Session StatusMap Service Issues */
+/* globals $ Template Meteor Session StatusMap */
 
 Template.serviceIssueList.events({
   'click .flag-enabled': function () {
@@ -7,6 +7,14 @@ Template.serviceIssueList.events({
 
   'click .flag-disabled': function () {
     Meteor.call('enableIssueFlag', this.projectId, this._id)
+  },
+
+  'click .confirm-enabled': function () {
+    Meteor.call('unconfirmIssue', this.projectId, this._id)
+  },
+
+  'click .confirm-disabled': function () {
+    Meteor.call('confirmIssue', this.projectId, this._id)
   },
 
   'click #flag-filter-enable': function () {
@@ -48,23 +56,8 @@ Template.serviceIssueList.events({
     })
 
     for (var i = 0; i < issueIds.length; i++) {
-      var issue = Issues.find({_id:issueIds[i]}).fetch()
-      for (var k = 0; k < issue[0].hosts.length; k++) {
-        if (this.host.ipv4 == issue[0].hosts[k].ipv4){
-          Meteor.call('removeHostFromIssue', this.projectId, issueIds[i], issue[0].hosts[k].ipv4, issue[0].hosts[k].port, issue[0].hosts[k].protocol)
-        
-        }
-      }
+      var issueId = issueIds[i]
+      Meteor.call('removeHostFromIssue', this.projectId, issueId, this.host.ipv4, this.service.port, this.service.protocol)
     }
-  },
-
-  'click #load-more': function () {
-    var previousLimit = Session.get('serviceIssueViewLimit') || 25
-    var newLimit = previousLimit + 25
-    Session.set('serviceIssueViewLimit', newLimit)
-  },
-
-  'click #load-all': function () {
-    Session.set('serviceIssueViewLimit', 10000)
   }
 })

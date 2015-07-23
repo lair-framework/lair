@@ -31,7 +31,7 @@
         <ul class="list-unstyled list-issues">
           {{#each issues}}
           <li>
-            <span class="issue-checkbox"><input type="checkbox" id="{{_id}}" class="issue-checked"></span>
+            <span class="issue-checkbox"><input type="checkbox" id="{{issueId}}-{{host.port}}-{{host.protocol}}" class="issue-checked"></span>
             <span class="issue-{{rating}} rating">{{cvss}}</span>
             <span class="issue-flag">
               {{#if isFlagged}}
@@ -48,22 +48,13 @@
               {{/if}}
             </span>
             <span class="clickable issue-status {{status}}">&nbsp;</span>
-            <span class="title"><a href="/projects/{{projectId}}/issues/{{_id}}">{{title}}</a></span>
-            <span class="last-modified-by">{{lastModifiedBy}}</span>
+            <span class="title"><a href="/projects/{{projectId}}/issues/{{issueId}}">{{title}}</a></span>
+            <span class="last-modified-by u-pull-right">{{lastModifiedBy}}</span>
+            <span style="padding-right: 10px" class="u-pull-right"><a href="/projects/{{projectId}}/hosts/{{host.hostId}}/services/{{host.serviceId}}">{{host.port}}/{{host.protocol}}</a></span>
           </li>
           {{/each}}
         </ul>
       </div>
-    </div>
-    <div class="row">
-      <div class="six columns">
-        <p>Showing {{issues.length}} of {{total}} issues</p>
-      </div>
-      {{#if moreToShow}}
-      <div class="six columns">
-        <p class="pull-right"><button id="load-more" class="button">Show More</button><button id="load-all" class="button">Show All</button></p>
-      </div>
-      {{/if}}
     </div>
   </div>
 </div>

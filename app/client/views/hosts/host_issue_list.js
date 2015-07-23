@@ -1,12 +1,12 @@
-/* globals $ Template Meteor Session StatusMap Issues Hosts */
+/* globals $ Template Meteor Session StatusMap */
 
 Template.hostIssueList.events({
   'click .flag-enabled': function () {
-    Meteor.call('disableIssueFlag', this.projectId, this._id)
+    Meteor.call('disableIssueFlag', this.projectId, this.issueId)
   },
 
   'click .flag-disabled': function () {
-    Meteor.call('enableIssueFlag', this.projectId, this._id)
+    Meteor.call('enableIssueFlag', this.projectId, this.issueId)
   },
 
   'click #flag-filter-enable': function () {
@@ -15,6 +15,14 @@ Template.hostIssueList.events({
 
   'click #flag-filter-disable': function () {
     Session.set('hostIssueListFlagFilter', null)
+  },
+
+  'click .confirm-enabled': function () {
+    Meteor.call('unconfirmIssue', this.projectId, this.issueId)
+  },
+
+  'click .confirm-disabled': function () {
+    Meteor.call('confirmIssue', this.projectId, this.issueId)
   },
 
   'click .issue-status-button': function (event) {
@@ -35,36 +43,26 @@ Template.hostIssueList.events({
     if (StatusMap.indexOf(this.status) === 4) {
       status = StatusMap[0]
     }
-    Meteor.call('setIssueStatus', this.projectId, this._id, status)
+    Meteor.call('setIssueStatus', this.projectId, this.issueId, status)
   },
 
   'click #remove-issues': function () {
     var inputs = $('.issue-checked')
-    var issueIds = []
+    var issuesToRemove = []
     inputs.each(function () {
       if ($(this).is(':checked')) {
-        issueIds.push($(this).attr('id'))
+        var parts = $(this).attr('id').split('-')
+        issuesToRemove.push({
+          issueId: parts[0],
+          port: parseInt(parts[1], 10),
+          protocol: parts[2]
+        })
       }
     })
 
-    for (var i = 0; i < issueIds.length; i++) {
-      var issue = Issues.find({_id:issueIds[i]}).fetch()
-      for (var k = 0; k < issue[0].hosts.length; k++) {
-        if (this.host.ipv4 == issue[0].hosts[k].ipv4){
-          Meteor.call('removeHostFromIssue', this.projectId, issueIds[i], issue[0].hosts[k].ipv4, issue[0].hosts[k].port, issue[0].hosts[k].protocol)
-        
-        }
-      }
+    for (var i = 0; i < issuesToRemove.length; i++) {
+      var issue = issuesToRemove[i]
+      Meteor.call('removeHostFromIssue', this.projectId, issue.issueId, this.host.ipv4, issue.port, issue.protocol)
     }
-  },
-
-  'click #load-more': function () {
-    var previousLimit = Session.get('hostIssueViewLimit') || 25
-    var newLimit = previousLimit + 25
-    Session.set('hostIssueViewLimit', newLimit)
-  },
-
-  'click #load-all': function () {
-    Session.set('hostIssueViewLimit', 10000)
   }
 })
