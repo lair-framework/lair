@@ -1,4 +1,4 @@
-/* global Router Projects Services Hosts Issues Settings Session*/
+/* global Router Projects Services Hosts Issues Settings Session Credentials*/
 
 Router.route('/projects/:id/hosts/:hid/services/new', {
   name: 'newService',
@@ -180,10 +180,21 @@ Router.route('/projects/:id/hosts/:hid/services/:sid/credentials', {
     return {
       projectId: this.params.id,
       host: host,
-      service: service
+      service: service,
+      credentials: Credentials.find({
+          $or: [{
+            host: {
+              $in: host.hostnames
+            }
+          }, {
+            host: host.ipv4,
+            service: {
+              $regex: service.port.toString()
+            }
+          }]
+      }).fetch()
     }
   }
-
 })
 
 Router.route('/projects/:id/hosts/:hid/services/:sid/settings', {
