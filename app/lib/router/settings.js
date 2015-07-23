@@ -50,7 +50,6 @@ Router.route('/settings/users/:id', {
     var user = Meteor.users.findOne({
       _id: this.params.id
     })
-    console.log(user)
     if (!user) {
       return null
     }
