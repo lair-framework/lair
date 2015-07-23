@@ -504,25 +504,56 @@ Router.route('/projects/:id/hosts/:hid/settings', {
 Router.route('/projects/:id/hosts/:hid/directories', {
   name: 'hostWebDirectoryList',
   controller: 'ProjectController',
+  onRun: function () {
+    Session.set('webDirectoryFlagFilter', null)
+    Session.set('webDirectorySearch', null)
+    this.next()
+  },
   data: function () {
     if (Projects.find({
         _id: this.params.id
       }).count() < 1) {
       return null
     }
-    if (Hosts.find({
-        _id: this.params.hid
-      }).count() < 1) {
+    var host = Hosts.findOne({
+      _id: this.params.hid
+    })
+    if (!host) {
       return null
+    }
+    var query = {
+      projectId: this.params.id,
+      hostId: host._id
+    }
+    if (Session.equals('webDirectoryFlagFilter', 'enabled')) {
+      query.isFlagged = true
+    }
+    var search = Session.get('webDirectorySearch')
+    if (search) {
+      query.$or = [{
+        port: parseInt(search, 10)
+      }, {
+        responseCode: {
+          $regex: search,
+          $options: 'i'
+        }
+      }, {
+        path: {
+          $regex: search,
+          $options: 'i'
+        }
+      }, {
+        lastModifiedBy: {
+          $regex: search,
+          $options: 'i'
+        }
+      }]
     }
     return {
       projectId: this.params.id,
-      host: Hosts.findOne({
-        _id: this.params.hid
-      }),
-      webDirectories: WebDirectories.find({
-        hostId: this.params.hid
-      }).fetch()
+      host: host,
+      paths: WebDirectories.find(query).fetch(),
+      flagFilter: Session.equals('webDirectoryFlagFilter', 'enabled')
     }
   }
 })

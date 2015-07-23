@@ -142,5 +142,17 @@ Models = { // eslint-disable-line
       host: '',
       service: ''
     }
+  },
+
+  webDirectory: function () {
+    return {
+      projectId: '',
+      hostId: '',
+      path: '',
+      port: 0,
+      responseCode: '',
+      lastModifiedBy: '',
+      isFlagged: false
+    }
   }
 }

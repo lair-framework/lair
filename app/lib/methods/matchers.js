@@ -44,5 +44,10 @@ Matchers = { // eslint-disable-line
   isCVE: Match.Where(function (x) {
     check(x, String)
     return x.match(/^[0-9]{4}-[0-9]{4}$/)
+  }),
+
+  isResponseCode: Match.Where(function (x) {
+    check(x, String)
+    return x.match(/^[1|2|3|4|5]\d{2}$/)
   })
 }

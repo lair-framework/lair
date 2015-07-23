@@ -1,4 +1,4 @@
-/* globals Meteor check AuthorizeChange Matchers Hosts IPUtils _ Models Services*/
+/* globals Meteor check AuthorizeChange Matchers Hosts IPUtils _ Models Services WebDirectories*/
 Meteor.methods({
   createHost: createHost,
   removeHost: removeHost,
@@ -13,7 +13,11 @@ Meteor.methods({
   enableHostFlag: enableHostFlag,
   addHostNote: addHostNote,
   removeHostNote: removeHostNote,
-  setHostNoteContent: setHostNoteContent
+  setHostNoteContent: setHostNoteContent,
+  addWebDirectory: addWebDirectory,
+  removeWebDirectory: removeWebDirectory,
+  enableWebDirectoryFlag: enableWebDirectoryFlag,
+  disableWebDirectoryFlag: disableWebDirectoryFlag
 })
 
 function createHost (id, ip, mac) {
@@ -297,6 +301,79 @@ function setHostNoteContent (id, hostId, title, content) {
     $set: {
       'notes.$.content': content,
       'notes.$.lastModifiedBy': Meteor.user().emails[0].address,
+      lastModifiedBy: Meteor.user().emails[0].address
+    }
+  })
+}
+
+function addWebDirectory (id, hostId, path, port, responseCode) {
+  check(id, Matchers.isObjectId)
+  check(hostId, Matchers.isObjectId)
+  check(port, Matchers.isPort)
+  check(path, Matchers.isNonEmptyString)
+  check(responseCode, Matchers.isResponseCode)
+  if (!AuthorizeChange(id, this.userId)) {
+    throw new Meteor.Error(403, 'Access Denied')
+  }
+  var existing = WebDirectories.find({
+    'projectId': id,
+    'hostId': hostId,
+    'path': path,
+    'port': port,
+    'responseCode': responseCode
+  }).count()
+  if (existing !== 0) {
+    throw new Meteor.Error('400', 'Path exists already, ignoring')
+  }
+  var web = _.extend(Models.webDirectory(), {
+    projectId: id,
+    hostId: hostId,
+    path: path,
+    port: port,
+    responseCode: responseCode,
+    lastModifiedBy: Meteor.user().emails[0].address
+  })
+  return WebDirectories.insert(web)
+}
+
+function removeWebDirectory (id, webId) {
+  check(id, Matchers.isObjectId)
+  check(webId, Matchers.isObjectId)
+  if (!AuthorizeChange(id, this.userId)) {
+    throw new Meteor.Error(403, 'Access Denied')
+  }
+  return WebDirectories.remove({projectId: id, _id: webId})
+}
+
+function enableWebDirectoryFlag (id, webId) {
+  check(id, Matchers.isObjectId)
+  check(webId, Matchers.isObjectId)
+  if (!AuthorizeChange(id, this.userId)) {
+    throw new Meteor.Error(403, 'Access Denied')
+  }
+  return WebDirectories.update({
+    projectId: id,
+    _id: webId
+  }, {
+    $set: {
+      isFlagged: true,
+      lastModifiedBy: Meteor.user().emails[0].address
+    }
+  })
+}
+
+function disableWebDirectoryFlag (id, webId) {
+  check(id, Matchers.isObjectId)
+  check(webId, Matchers.isObjectId)
+  if (!AuthorizeChange(id, this.userId)) {
+    throw new Meteor.Error(403, 'Access Denied')
+  }
+  return WebDirectories.update({
+    projectId: id,
+    _id: webId
+  }, {
+    $set: {
+      isFlagged: false,
       lastModifiedBy: Meteor.user().emails[0].address
     }
   })
