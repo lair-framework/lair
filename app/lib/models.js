@@ -163,5 +163,16 @@ Models = { // eslint-disable-line
       lastModifiedBy: '',
       isFlagged: false
     }
+  },
+
+  file: function () {
+    return {
+      projectid: '',
+      hostId: '',
+      serviceId: '',
+      issueId: '',
+      filename: '',
+      url: ''
+    }
   }
 }
