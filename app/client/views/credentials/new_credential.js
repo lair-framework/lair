@@ -5,11 +5,12 @@ Template.newCredential.events({
     event.preventDefault()
     var username = tpl.find('[name=username]').value || ''
     var password = tpl.find('[name=password]').value || ''
+    var format = tpl.find('[name=format]').value || ''
     var hash = tpl.find('[name=hash]').value || ''
     var host = tpl.find('[name=host]').value || ''
     var service = tpl.find('[name=service]').value || ''
     var projectId = this.projectId
-    Meteor.call('createCredential', projectId, username, password, hash, host, service, function (err) {
+    Meteor.call('createCredential', projectId, username, password, format, hash, host, service, function (err) {
       if (err) {
         Alerts.insert({
           class: 'alert-error',

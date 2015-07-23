@@ -137,6 +137,7 @@ Models = { // eslint-disable-line
     return {
       username: '',
       password: '',
+      format: '',
       hash: '',
       host: '',
       service: ''

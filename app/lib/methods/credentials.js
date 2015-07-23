@@ -4,10 +4,11 @@ Meteor.methods({
   removeCredential: removeCredential
 })
 
-function createCredential (id, username, password, hash, host, service) {
+function createCredential (id, username, password, format, hash, host, service) {
   check(id, Matchers.isObjectId)
   check(username, String)
   check(password, String)
+  check(format, String)
   check(hash, String)
   check(host, String)
   check(service, String)
@@ -18,6 +19,7 @@ function createCredential (id, username, password, hash, host, service) {
     projectId: id,
     username: username,
     password: password,
+    format: format,
     hash: hash,
     host: host,
     service: service
