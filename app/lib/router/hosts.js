@@ -1,4 +1,4 @@
-/* globals Projects Router Hosts Session Settings Services _ Credentials Issues */
+/* globals Projects Router Hosts Session Settings Services _ Credentials Issues WebDirectories */
 
 Router.route('/projects/:id/hosts', {
   name: 'hostList',
@@ -497,6 +497,32 @@ Router.route('/projects/:id/hosts/:hid/settings', {
       host: Hosts.findOne({
         _id: this.params.hid
       })
+    }
+  }
+})
+
+Router.route('/projects/:id/hosts/:hid/directories', {
+  name: 'hostWebDirectoryList',
+  controller: 'ProjectController',
+  data: function () {
+    if (Projects.find({
+        _id: this.params.id
+      }).count() < 1) {
+      return null
+    }
+    if (Hosts.find({
+        _id: this.params.hid
+      }).count() < 1) {
+      return null
+    }
+    return {
+      projectId: this.params.id,
+      host: Hosts.findOne({
+        _id: this.params.hid
+      }),
+      webDirectories: WebDirectories.find({
+        hostId: this.params.hid
+      }).fetch()
     }
   }
 })
