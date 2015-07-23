@@ -116,6 +116,10 @@ Router.route('/projects/:id/hosts/:hid/services/:sid/issues', {
 Router.route('/projects/:id/hosts/:hid/services/:sid/notes', {
   name: 'serviceNoteList',
   controller: 'ProjectController',
+  onRun: function () {
+    Session.set('noteTitle', null)
+    this.next()
+  },
   data: function () {
     if (Projects.find({
         _id: this.params.id
@@ -137,7 +141,17 @@ Router.route('/projects/:id/hosts/:hid/services/:sid/notes', {
     return {
       projectId: this.params.id,
       host: host,
-      service: service
+      service: service,
+      note: function () {
+        if (Session.equals('noteTitle', null)) {
+          return
+        }
+        for (var i = 0; i < service.notes.length; i++) {
+          if (Session.equals('noteTitle', service.notes[i].title)) {
+            return service.notes[i]
+          }
+        }
+      }
     }
   }
 })

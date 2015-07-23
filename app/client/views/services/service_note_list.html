@@ -4,6 +4,50 @@
     {{> serviceNav}}
   </div>
   <div class="container service-content">
+    <div class="row">
+      <div class="seven columns">
+      {{#if service.notes}}
+        <div>
+          <button id="remove-notes" class="button lair-red"><i class="fa fa-trash fa-lg"></i></button>
+          <button id="new-note" class="u-pull-right button button-primary">New Note</button>
+        </div>
+      {{/if}}
+        <ul class="list-unstyled list-alternate">
+        {{#each service.notes}}
+          <li>
+            <input class="note-checked" id="{{title}}" type="checkbox" />
+            <span class="service-note right-mark"><a href="#">{{title}}</a></span>
+            <span class="u-pull-right">{{lastModifiedBy}}</span>
+          </li>
+         {{/each}}
+         </ul>
+      </div>
+      <div class="five columns">
+        {{#if note}}
+          <ul class="list-unstyled">
+            <li>{{note.title}}</li>
+          </ul>
+          <form>
+            <textarea name="content" class="u-full-width" rows="10">{{note.content}}</textarea>
+            <button class="button button-primary">Save</button>
+          </form>
+        {{else}}
+          <form>
+            <div class="row">
+              <div class="twelve columns">
+                <input type="text" class="u-full-width" name="title" placeholder="Title">
+              </div>
+            </div>
+            <div class="row">
+              <div class="twelve columns">
+                <textarea class="u-full-width" rows="10" name="content" placeholder="Content"></textarea>
+              </div>
+            </div>
+            <button class="button button-primary">Save</button>
+          </form>
+        {{/if}}
+      </div>
+    </div>
   </div>
 </div>
 <div class="service-gist">
