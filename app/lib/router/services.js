@@ -30,7 +30,6 @@ Router.route('/projects/:id/hosts/:hid/services/:sid/issues', {
       this.next()
       return
     }
-    Session.set('serviceIssueViewLimit', 25)
     Session.set('serviceIssueListSearch', null)
     Session.set('serviceIssueListStatusButtongrey', null)
     Session.set('serviceIssueListStatusButtonblue', null)
@@ -108,7 +107,13 @@ Router.route('/projects/:id/hosts/:hid/services/:sid/issues', {
             cvss: -1
           }
         }).fetch()
-      }
+      },
+      total: Issues.find({
+        projectId: self.params.id,
+        'hosts.ipv4': host.ipv4,
+        'hosts.port': service.port,
+        'hosts.protocol': service.protocol
+      }).count()
     }
   }
 })

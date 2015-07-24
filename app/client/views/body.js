@@ -1,9 +1,31 @@
-/* globals Template key Hosts Router _ StatusMap Meteor Issues Alerts*/
+/* globals Template key Hosts Router _ StatusMap Meteor Issues Alerts Services*/
 
 Template.body.rendered = function () {
   var hostpathre = /\/projects\/([a-zA-Z0-9]{17,24})\/hosts\/([a-zA-Z0-9]{17,24})/
+  var servicepathre = /\/projects\/([a-zA-Z0-9]{17,24})\/hosts\/([a-zA-Z0-9]{17,24})\/services\/([a-zA-Z0-9]{17,24})/
   var issuepathre = /\/projects\/([a-zA-Z0-9]{17,24})\/issues\/([a-zA-Z0-9]{17,24})/
   key('alt+n', function () {
+    var servicematch = getServicePathGroups(document.location.pathname, servicepathre)
+    if (servicematch.isMatched) {
+      var services = Services.find({
+          projectId: servicematch.projectId,
+          hostId: servicematch.hostId
+        }, {
+          sort: {
+            port: 1
+          },
+          fields: {
+            _id: 1
+          }
+        }).fetch()
+      var k = _.indexOf(_.pluck(services, '_id'), servicematch.serviceId) + 1
+      if (k >= services.length) {
+        Router.go('/projects/' + servicematch.projectId + '/hosts/' + servicematch.hostId + '/services/' + services[0]._id)
+        return
+      }
+      Router.go('/projects/' + servicematch.projectId + '/hosts/' + servicematch.hostId + '/services/' + services[k]._id)
+      return
+    }
     var hostmatch = getHostPathGroups(document.location.pathname, hostpathre)
     if (hostmatch.isMatched) {
       var hosts = Hosts.find({
@@ -48,6 +70,27 @@ Template.body.rendered = function () {
   })
 
   key('alt+p', function () {
+    var servicematch = getServicePathGroups(document.location.pathname, servicepathre)
+    if (servicematch.isMatched) {
+      var services = Services.find({
+          projectId: servicematch.projectId,
+          hostId: servicematch.hostId
+        }, {
+          sort: {
+            port: 1
+          },
+          fields: {
+            _id: 1
+          }
+        }).fetch()
+      var k = _.indexOf(_.pluck(services, '_id'), servicematch.serviceId) - 1
+      if (k < 0) {
+        Router.go('/projects/' + servicematch.projectId + '/hosts/' + servicematch.hostId + '/services/' + services[services.length - 1]._id)
+        return
+      }
+      Router.go('/projects/' + servicematch.projectId + '/hosts/' + servicematch.hostId + '/services/' + services[k]._id)
+      return
+    }
     var hostmatch = getHostPathGroups(document.location.pathname, hostpathre)
     if (hostmatch.isMatched) {
       var hosts = Hosts.find({
@@ -92,6 +135,21 @@ Template.body.rendered = function () {
   })
 
   key('alt+s', function () {
+    var servicematch = getServicePathGroups(document.location.pathname, servicepathre)
+    if (servicematch.isMatched) {
+      var service = Services.findOne({
+        _id: servicematch.serviceId
+      })
+      if (!service) {
+        return
+      }
+      var servicestatus = StatusMap[StatusMap.indexOf(service.status) + 1]
+      if (StatusMap.indexOf(service.status) === 4) {
+        servicestatus = StatusMap[0]
+      }
+      Meteor.call('setServiceStatus', servicematch.projectId, servicematch.serviceId, servicestatus)
+      return
+    }
     var hostmatch = getHostPathGroups(document.location.pathname, hostpathre)
     if (hostmatch.isMatched) {
       var host = Hosts.findOne({
@@ -125,6 +183,21 @@ Template.body.rendered = function () {
   })
 
   key('alt+f', function () {
+    var servicematch = getServicePathGroups(document.location.pathname, servicepathre)
+    if (servicematch.isMatched) {
+      var service = Services.findOne({
+        _id: servicematch.serviceId
+      })
+      if (!service) {
+        return
+      }
+      if (service.isFlagged) {
+        Meteor.call('disableServiceFlag', servicematch.projectId, servicematch.serviceId)
+        return
+      }
+      Meteor.call('enableServiceFlag', servicematch.projectId, servicematch.serviceId)
+      return
+    }
     var hostmatch = getHostPathGroups(document.location.pathname, hostpathre)
     if (hostmatch.isMatched) {
       var host = Hosts.findOne({
@@ -175,6 +248,24 @@ function getHostPathGroups (path, re) {
   match.isMatched = true
   match.projectId = m[1]
   match.hostId = m[2]
+  return match
+}
+
+function getServicePathGroups (path, re) {
+  var match = {
+    isMatched: false,
+    projectId: '',
+    hostId: '',
+    serviceId: ''
+  }
+  var m = path.match(re)
+  if (!m) {
+    return match
+  }
+  match.isMatched = true
+  match.projectId = m[1]
+  match.hostId = m[2]
+  match.serviceId = m[3]
   return match
 }
 

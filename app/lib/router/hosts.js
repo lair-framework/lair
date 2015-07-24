@@ -147,7 +147,8 @@ Router.route('/projects/:id/hosts/:hid/services', {
       return null
     }
     var total = Services.find({
-      projectId: this.params.id
+      projectId: this.params.id,
+      hostId: this.params.hid
     }).count()
     var self = this
     return {
@@ -382,6 +383,12 @@ Router.route('/projects/:id/hosts/:hid/issues', {
         })
       })
     })
+    var total = Issues.find({
+      projectId: this.params.id,
+      hosts: {
+        $elemMatch: {ipv4: ipv4}
+      }
+    }).count()
 
     return {
       projectId: this.params.id,
@@ -393,7 +400,8 @@ Router.route('/projects/:id/hosts/:hid/issues', {
           return 'disabled'
         }
       },
-      issues: issues
+      issues: issues,
+      total: total
     }
   }
 })
