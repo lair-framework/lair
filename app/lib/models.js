@@ -104,6 +104,7 @@ Models = { // eslint-disable-line
       identifiedBy: [{
         tool: 'Manual'
       }],
+      notes: [],
       isFlagged: false,
       status: Status.grey,
       lastModifiedBy: ''
