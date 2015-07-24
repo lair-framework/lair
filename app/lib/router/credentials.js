@@ -90,3 +90,26 @@ Router.route('/projects/:id/credentials/bulk', {
     }
   }
 })
+
+Router.route('/projects/:id/credentials/:cid', {
+  name: 'editCredential',
+  controller: 'ProjectController',
+  data: function () {
+    if (Projects.find({
+      _id: this.params.id
+    }).count() < 1) {
+      return null
+    }
+    var credential = Credentials.findOne({
+      _id: this.params.cid
+    })
+    if (!credential) {
+      return null
+    }
+    var self = this
+    return {
+      projectId: self.params.id,
+      credential: credential
+    }
+  }
+})
