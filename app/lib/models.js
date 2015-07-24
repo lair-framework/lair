@@ -100,13 +100,28 @@ Models = { // eslint-disable-line
       hosts: [],
       pluginIds: [],
       cves: [],
-      refrences: [],
+      references: [],
       identifiedBy: [{
         tool: 'Manual'
       }],
       isFlagged: false,
       status: Status.grey,
       lastModifiedBy: ''
+    }
+  },
+
+  issueHost: function () {
+    return {
+      ipv4: '',
+      port: 0,
+      protocol: ''
+    }
+  },
+
+  issueReference: function () {
+    return {
+      link: '',
+      name: ''
     }
   },
 
