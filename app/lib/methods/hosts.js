@@ -1,4 +1,4 @@
-/* globals Meteor check AuthorizeChange Matchers Hosts IPUtils _ Models Services WebDirectories*/
+/* globals Meteor check AuthorizeChange Matchers Hosts IPUtils _ Models Services WebDirectories Issues */
 Meteor.methods({
   createHost: createHost,
   removeHost: removeHost,
@@ -43,7 +43,6 @@ function createHost (id, ip, mac) {
   return Hosts.insert(host)
 }
 
-// TODO: delete from vulns and directories
 function removeHost (id, hostId) {
   check(id, Matchers.isObjectId)
   check(hostId, Matchers.isObjectId)
@@ -54,7 +53,30 @@ function removeHost (id, hostId) {
     projectId: id,
     hostId: hostId
   })
-  return Hosts.remove({
+  WebDirectories.remove({
+    projectId: id,
+    hostId: hostId
+  })
+  var host = Hosts.findOne({
+    _id: hostId,
+    projectId: id
+  })
+  if (!host) {
+    throw new Meteor.Error(404, 'Not Found')
+  }
+  Issues.update({
+    projectId: id
+  }, {
+    $pull: {
+      hosts: {
+        ipv4: host.ipv4
+      }
+    },
+    $set: {
+      lastModifiedBy: Meteor.user().emails[0].address
+    }
+  })
+  Hosts.remove({
     projectId: id,
     _id: hostId
   })

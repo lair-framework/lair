@@ -1,4 +1,4 @@
-/* globals Meteor Matchers AuthorizeChange _ Models check Services */
+/* globals Meteor Matchers AuthorizeChange _ Models check Services Hosts Issues*/
 Meteor.methods({
   createService: createService,
   removeService: removeService,
@@ -41,7 +41,6 @@ function createService (id, hostId, port, protocol, service, product) {
   return Services.insert(p)
 }
 
-// TODO: remove issues.
 function removeService (id, hostId, serviceId) {
   check(id, Matchers.isObjectId)
   check(hostId, Matchers.isObjectId)
@@ -49,6 +48,34 @@ function removeService (id, hostId, serviceId) {
   if (!AuthorizeChange(id, this.userId)) {
     throw new Meteor.Error(403, 'Access Denied')
   }
+  var host = Hosts.findOne({
+    projectId: id,
+    _id: hostId
+  })
+  if (!host) {
+    throw new Meteor.Error(404, 'Not Found')
+  }
+  var service = Services.findOne({
+    projectId: id,
+    _id: serviceId
+  })
+  if (!service) {
+    throw new Meteor.Error(404, 'Not Found')
+  }
+  Issues.update({
+    projectId: id
+  }, {
+    $pull: {
+      hosts: {
+        ipv4: host.ipv4,
+        port: service.port,
+        protocol: service.protocol
+      }
+    },
+    $set: {
+      lastModifiedBy: Meteor.user().emails[0].address
+    }
+  })
   return Services.remove({
     projectId: id,
     _id: serviceId
