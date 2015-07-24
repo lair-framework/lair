@@ -21,7 +21,7 @@ ProjectController = RouteController.extend({ // eslint-disable-line
     return [
       Subs.subscribe('project', this.params.id),
       Subs.subscribe('hosts', this.params.id),
-      Subs.subscribe('ports', this.params.id),
+      Subs.subscribe('services', this.params.id),
       Subs.subscribe('issues', this.params.id),
       Subs.subscribe('people', this.params.id),
       Subs.subscribe('credentials', this.params.id),

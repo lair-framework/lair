@@ -1,6 +1,13 @@
 /* globals Meteor Projects Hosts Services Issues Settings People Credentials AuthInterfaces Netblocks WebDirectories */
 
-// TODO: Authorize function.
+function authorizeProjectSub (id, userId) {
+  var count = Projects.find({
+    _id: id,
+     $or: [{owner: userId}, {contributors: userId}]
+  }).count()
+  return count > 0
+}
+
 Meteor.publish('projectListing', function () {
   return Projects.find({
     $or: [{
@@ -38,6 +45,9 @@ Meteor.publish('people', function (id) {
   if (!this.userId) {
     return []
   }
+  if (!authorizeProjectSub(id, this.userId)) {
+    return []
+  }
   return People.find({
     projectId: id
   })
@@ -45,6 +55,9 @@ Meteor.publish('people', function (id) {
 
 Meteor.publish('authInterfaces', function (id) {
   if (!this.userId) {
+    return []
+  }
+  if (!authorizeProjectSub(id, this.userId)) {
     return []
   }
   return AuthInterfaces.find({
@@ -56,6 +69,9 @@ Meteor.publish('netblocks', function (id) {
   if (!this.userId) {
     return []
   }
+  if (!authorizeProjectSub(id, this.userId)) {
+    return []
+  }
   return Netblocks.find({
     projectId: id
   })
@@ -65,13 +81,19 @@ Meteor.publish('hosts', function (id) {
   if (!this.userId) {
     return []
   }
+  if (!authorizeProjectSub(id, this.userId)) {
+    return []
+  }
   return Hosts.find({
     projectId: id
   })
 })
 
-Meteor.publish('ports', function (id) {
+Meteor.publish('services', function (id) {
   if (!this.userId) {
+    return []
+  }
+  if (!authorizeProjectSub(id, this.userId)) {
     return []
   }
   return Services.find({
@@ -83,6 +105,9 @@ Meteor.publish('issues', function (id) {
   if (!this.userId) {
     return []
   }
+  if (!authorizeProjectSub(id, this.userId)) {
+    return []
+  }
   return Issues.find({
     projectId: id
   })
@@ -92,6 +117,9 @@ Meteor.publish('credentials', function (id) {
   if (!this.userId) {
     return []
   }
+  if (!authorizeProjectSub(id, this.userId)) {
+    return []
+  }
   return Credentials.find({
     projectId: id
   })
@@ -99,6 +127,9 @@ Meteor.publish('credentials', function (id) {
 
 Meteor.publish('web', function (id) {
   if (!this.userId) {
+    return []
+  }
+  if (!authorizeProjectSub(id, this.userId)) {
     return []
   }
   return WebDirectories.find({
