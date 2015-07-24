@@ -5,7 +5,8 @@ Router.plugin('dataNotFound', {
 
 Router.configure({
   layoutTemplate: 'layout',
-  loadingTemplate: 'loading'
+  loadingTemplate: 'loading',
+  notFoundTemplate: 'notFound'
 })
 
 Router.onBeforeAction(function () {
