@@ -57,7 +57,7 @@ Models = { // eslint-disable-line
       name: '',
       city: '',
       country: '',
-      potalCode: '',
+      postalCode: '',
       created: '',
       updated: '',
       description: '',
