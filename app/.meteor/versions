@@ -47,6 +47,8 @@ mquandalle:stylus@1.1.1
 npm-bcrypt@0.7.8_2
 observe-sequence@1.0.6
 ordered-dict@1.0.3
+percolate:momentum@0.7.2
+percolate:velocityjs@1.1.0
 pfafman:filesaver@0.2.0_1
 random@1.0.3
 reactive-dict@1.1.0
