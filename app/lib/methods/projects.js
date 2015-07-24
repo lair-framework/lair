@@ -1,4 +1,4 @@
-/* globals Meteor HTTP AuthorizeOwner check Models Projects _ moment Matchers AuthorizeChange Hosts Issues Services People WebDirectories AuthInterfaces Netblocks */
+/* globals Meteor HTTP AuthorizeOwner check Models Projects _ moment Matchers AuthorizeChange Hosts Issues Services People WebDirectories AuthInterfaces Netblocks Credentials */
 Meteor.methods({
   createProject: createProject,
   addNote: addNote,
@@ -107,6 +107,9 @@ function prepareExport (id) {
   project.hosts = hosts
   project.people = people
   project.issues = issues
+  project.credentials = Credentials.find({projectId: id}).fetch()
+  project.authInterfaces = AuthInterfaces.find({projectId: id}).fetch()
+  project.netblocks = Netblocks.find({projectid: id}).fetch()
   return project
 }
 
