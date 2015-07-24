@@ -7,7 +7,7 @@ Meteor.methods({
 function createNetblock (id, netblock) {
   check(id, Matchers.isObjectId)
   for (var key in netblock) {
-    check(key, String)
+    check(netblock[key], String)
   }
   if (!AuthorizeChange(id, this.userId)) {
     throw new Meteor.Error(403, 'Access Denied')

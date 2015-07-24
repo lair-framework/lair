@@ -74,3 +74,21 @@ Router.route('/projects/:id/settings/contributors', {
     }
   }
 })
+
+Router.route('/projects/:id/settings/log', {
+  name: 'projectSettingsLog',
+  controller: 'ProjectController',
+  data: function () {
+    if (Projects.find({
+      _id: this.params.id
+    }).count() < 1) {
+      return null
+    }
+    return {
+      projectId: this.params.id,
+      project: Projects.findOne({
+        _id: this.params.id
+      })
+    }
+  }
+})

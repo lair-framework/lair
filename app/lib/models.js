@@ -113,7 +113,6 @@ Models = { // eslint-disable-line
   person: function () {
     return {
       projectId: '',
-      isFlagged: false,
       principalName: '',
       samAccountName: '',
       distinguishedName: '',
@@ -129,8 +128,16 @@ Models = { // eslint-disable-line
       references: [],
       groups: [],
       lastLogon: '',
-      lastOff: '',
+      lastLogoff: '',
       loggedIn: []
+    }
+  },
+
+  personReference: function () {
+    return {
+      description: '',
+      username: '',
+      link: ''
     }
   },
 

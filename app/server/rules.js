@@ -1,4 +1,4 @@
-/* globals Projects Hosts Services Issues Settings */
+/* globals Projects Hosts Services Issues Settings People WebDirectories Credentials AuthInterfaces Netblocks */
 var opts = {
   insert: function (userId, doc) {
     return (userId && authorize(doc.projectId, userId))
@@ -31,6 +31,11 @@ Projects.allow({
 Hosts.allow(opts)
 Services.allow(opts)
 Issues.allow(opts)
+People.allow(opts)
+WebDirectories.allow(opts)
+Credentials.allow(opts)
+AuthInterfaces.allow(opts)
+Netblocks.allow(opts)
 
 function authorize (id, uid) {
   var p = Projects.findOne({_id: id, $or: [{owner: uid}, {contributors: uid}]})
