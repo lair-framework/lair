@@ -1,10 +1,8 @@
 # lair
 Lair is a reactive attack collaboration framework and web application built with meteor.
 
-[![js-standard-style](https://cdn.rawgit.com/feross/standard/master/badge.svg)](https://github.com/feross/standard)
-
 ## Getting Started
-Information on how to install, run, build, and develop the project are available in the [wiki](https://github.com/lair-framework/lair/wiki)
+Information on how to install, run, build, and develop the project are available in the [wiki](https://github.com/lair-framework/lair/wiki).
 
 ## Maintainers
 Tom Steele
