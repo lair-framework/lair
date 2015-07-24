@@ -83,7 +83,8 @@ Models = { // eslint-disable-line
       product: 'Unknown',
       status: Status.grey,
       isFlagged: false,
-      lastModifiedBy: ''
+      lastModifiedBy: '',
+      notes: []
     }
   },
 
