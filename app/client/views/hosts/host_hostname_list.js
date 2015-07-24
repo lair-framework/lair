@@ -1,11 +1,19 @@
-/* globals Template Meteor $ */
+/* globals Template Meteor $ Alerts */
 
 Template.hostHostnameList.events({
   'submit form': function (event, tpl) {
     event.preventDefault()
     var hostname = tpl.find('[name=hostname]').value
     tpl.find('[name=hostname]').value = ''
-    Meteor.call('addHostname', this.projectId, this.hostId, hostname)
+    Meteor.call('addHostname', this.projectId, this.hostId, hostname, function (err) {
+      if (err) {
+        Alerts.insert({
+          class: 'alert-error',
+          strong: 'Error',
+          message: err.reason
+        })
+      }
+    })
   },
 
   'click #remove-hostnames': function (event, tpl) {
