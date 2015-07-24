@@ -6,12 +6,10 @@
   <div class="container service-content">
     <div class="row">
       <div class="seven columns">
-      {{#if service.notes}}
         <div>
           <button id="remove-notes" class="button lair-red"><i class="fa fa-trash fa-lg"></i></button>
           <button id="new-note" class="u-pull-right button button-primary">New Note</button>
         </div>
-      {{/if}}
         <ul class="list-unstyled list-alternate">
         {{#each service.notes}}
           <li>
