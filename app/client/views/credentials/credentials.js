@@ -1,4 +1,4 @@
-/* globals Template Meteor $ */
+/* globals Template Meteor $ Session */
 Template.credentials.events({
   'click #remove-credentials': function () {
     var inputs = $('.credential-checked')
@@ -13,5 +13,9 @@ Template.credentials.events({
       var id = credentialIds[i]
       Meteor.call('removeCredential', this.projectId, id)
     }
+  },
+
+  'keyup #credentials-search': function (event, tpl) {
+    Session.set('credentialsSearch', tpl.find('#credentials-search').value)
   }
 })
