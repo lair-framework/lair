@@ -14,4 +14,4 @@ Dan Kottmann
 - djkottmann@gmail.com
 
 ## Security
-If you identified any security issues in the project, please contact the maintainers privately. We will work with you to resolve the issue. Your support is highly appreciated.
+If you identify any security issues in the project, please contact the maintainers privately. We will work with you to resolve the issue. Your support is highly appreciated.
