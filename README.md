@@ -19,19 +19,26 @@ Precompiled application packages are available for Linux and OS X. Download one 
 
 [lair-v1.0.5-linux-x86.7z](https://github.com/fishnetsecurity/Lair/releases/download/v1.0.5/lair-v1.0.5-linux-x86.7z)
 
-Next, download the latest drones python package [here](https://github.com/fishnetsecurity/Lair-Drones/releases/latest).
+
+Extract lair package with p7zip:
+```
+7z x lair-v1.0.5-linux-x64.7z
+```
 
 Running lair from the application package above is self-explanatory.
-To start Lair and all the required services:
+To start Lair and all the required services, change directories into the extracted directory and run `start.sh`:
 
 
-        ./start.sh <ip>
+```
+./start.sh <ip>
+```
 
 To stop Lair:
+```
+./stop.sh
+```
 
-
-        ./stop.sh
-
+Next, download the latest drones python package [here](https://github.com/fishnetsecurity/Lair-Drones/releases/latest).
 
 ##Drones##
 Lair takes a different approach to uploading, parsing, and ingestion of automated tool output (xml). We push this work off onto client side scripts called drones. These drones connect directly to the database. To use them all you have to do is export an environment variable "MONGO_URL". This variable is probably going to be the same you used for installation
