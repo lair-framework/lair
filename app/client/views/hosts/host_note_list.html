@@ -15,8 +15,9 @@
           <li>
           {{#if serviceId}}
             <input class="service-note-checked" id="{{title}}" data-service-id="{{serviceId}}" type="checkbox">
-            <span class="service-note right-mark"><a href="#">{{title}}</a></span><span class="note-port u-pull-right">{{port}}/{{protocol}}</span>
+            <span class="service-note right-mark"><a href="#">{{title}}</a></span>
             <span class="u-pull-right">{{lastModifiedBy}}</span>
+            <span class="note-port u-pull-right">{{port}}/{{protocol}}</span>
           {{else}}
              <input class="note-checked" id="{{title}}" type="checkbox" />
              <span class="host-note right-mark"><a href="#">{{title}}</a></span>
