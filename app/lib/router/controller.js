@@ -1,4 +1,4 @@
-/* globals Meteor RouteController Session Subs ProjectController SettingsController */
+/* globals Meteor RouteController Session Meteor ProjectController SettingsController */
 ProjectController = RouteController.extend({ // eslint-disable-line
   onBeforeAction: function () {
     if (!(Meteor.loggingIn() || Meteor.user())) {
@@ -19,17 +19,17 @@ ProjectController = RouteController.extend({ // eslint-disable-line
   },
   waitOn: function () {
     return [
-      Subs.subscribe('project', this.params.id),
-      Subs.subscribe('hosts', this.params.id),
-      Subs.subscribe('services', this.params.id),
-      Subs.subscribe('issues', this.params.id),
-      Subs.subscribe('people', this.params.id),
-      Subs.subscribe('credentials', this.params.id),
-      Subs.subscribe('authInterfaces', this.params.id),
-      Subs.subscribe('netblocks', this.params.id),
-      Subs.subscribe('web', this.params.id),
-      Subs.subscribe('directory'),
-      Subs.subscribe('settings')
+      Meteor.subscribe('project', this.params.id),
+      Meteor.subscribe('hosts', this.params.id),
+      Meteor.subscribe('services', this.params.id),
+      Meteor.subscribe('issues', this.params.id),
+      Meteor.subscribe('people', this.params.id),
+      Meteor.subscribe('credentials', this.params.id),
+      Meteor.subscribe('authInterfaces', this.params.id),
+      Meteor.subscribe('netblocks', this.params.id),
+      Meteor.subscribe('web', this.params.id),
+      Meteor.subscribe('directory'),
+      Meteor.subscribe('settings')
     ]
   }
 })
@@ -50,8 +50,8 @@ SettingsController = RouteController.extend({// eslint-disable-line
   },
   waitOn: function () {
     return [
-      Subs.subscribe('directory'),
-      Subs.subscribe('settings')
+      Meteor.subscribe('directory'),
+      Meteor.subscribe('settings')
     ]
   }
 })

@@ -37,11 +37,10 @@ localstorage@1.0.3
 logging@1.0.7
 meteor@1.1.6
 meteor-platform@1.2.2
-meteorhacks:subs-manager@1.5.2
 minifiers@1.1.5
 minimongo@1.0.8
 mobile-status-bar@1.0.3
-momentjs:moment@2.10.3
+momentjs:moment@2.10.6
 mongo@1.1.0
 mquandalle:stylus@1.1.1
 npm-bcrypt@0.7.8_2

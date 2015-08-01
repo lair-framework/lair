@@ -1,1 +1,0 @@
-Subs = new SubsManager({cacheLimit: 20}) // eslint-disable-line
