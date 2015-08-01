@@ -44,12 +44,12 @@ Template.hostList.events({
   },
 
   'click #load-more': function () {
-    var previousLimit = Session.get('hostsViewLimit') || 25
+    var previousLimit = Session.get('hostViewLimit') || 25
     var newLimit = previousLimit + 25
-    Session.set('hostsViewLimit', newLimit)
+    Session.set('hostViewLimit', newLimit)
   },
 
   'click #load-all': function () {
-    Session.set('hostsViewLimit', 10000)
+    Session.set('hostViewLimit', 10000)
   }
 })
