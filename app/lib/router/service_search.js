@@ -16,9 +16,9 @@ Router.route('/projects/:id/services', {
     }
     var services = []
     if (Session.get('servicesViewQuery') === null) {
-      services = Services.find({}).fetch()
+      services = Services.find({}, {sort: {port: 1}}).fetch()
     } else {
-      services = Services.find(Session.get('servicesViewQuery')).fetch()
+      services = Services.find(Session.get('servicesViewQuery'), {sort: {port: 1}}).fetch()
     }
     var hosts = []
     for (var i = 0; i < services.length; i++) {
