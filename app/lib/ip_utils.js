@@ -4,6 +4,6 @@ IPUtils = { // eslint-disable-line
     return ((b[0] || 0) << 24 | (b[1] || 0) << 16 | (b[2] || 0) << 8 | (b[3] || 0)) >>> 0
   },
   sortLongAddr: function (a, b) {
-    return (a.long_addr > b.long_addr) ? 1 : ((b.long_addr > a.long_addr) ? -1 : 0)
+    return (a.longIpv4Addr > b.longIpv4Addr) ? 1 : ((b.longIpv4Addr > a.longIpv4Addr) ? -1 : 0)
   }
 }
