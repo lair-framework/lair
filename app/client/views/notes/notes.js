@@ -1,4 +1,8 @@
-/* globals Template Meteor $ Alerts Session */
+/* globals Template Meteor $ Alerts Session Epic Projects _*/
+
+Template.notes.rendered = function () {
+  Epic.update('### New Note')
+}
 
 Template.notes.events({
   'submit form': function (event, tpl) {
@@ -45,10 +49,19 @@ Template.notes.events({
 
   'click .note': function () {
     Session.set('noteTitle', this.title)
+    var project = Projects.findOne({
+      _id: Session.get('projectId')
+    }, {notes: 1})
+    if (!project) {
+      return
+    }
+    var note = project.notes[_.indexOf(_.pluck(project.notes, 'title'), Session.get('noteTitle'))]
+    Epic.update(note.content)
   },
 
   'click #new-note': function () {
     Session.set('noteTitle', null)
+    Epic.update('### New Note')
   },
 
   'click #remove-notes': function () {

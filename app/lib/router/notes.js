@@ -1,10 +1,12 @@
-/* globals Projects Router Session _ */
+/* globals Projects Router Session _ Epic */
 
 Router.route('/projects/:id/notes', {
   name: 'notes',
   controller: 'ProjectController',
   onRun: function () {
     Session.set('noteTitle', null)
+    Epic.editorInstances = []
+    Epic.editorIds = []
     this.next()
   },
   data: function () {

@@ -28,22 +28,14 @@
         <ul class="list-unstyled">
           <li>{{note.title}}</li>
         </ul>
-        <form>
-          {{note.content}}
-          {{#if note.content}}
-          {{> epic note.content}}
-          {{/if}}
-          <br />
-          <button class="button button-primary">Save</button>
-        </form>
         {{else}}
-        <form>
           <input type="text" class="u-full-width" name="title" placeholder="Title">
-          {{> epic '### New Note'}}
+        {{/if}}
+        <form>
+          {{> epic}}
           <br />
           <button class="button button-primary">Save</button>
         </form>
-        {{/if}}
       </div>
     </div>
   </div>
