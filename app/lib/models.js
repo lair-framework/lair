@@ -199,7 +199,6 @@ Models = { // eslint-disable-line
   file: function () {
     return {
       filename: '',
-      uname: '',
       url: ''
     }
   }
