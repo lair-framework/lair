@@ -1,4 +1,4 @@
-/* globals Models Status */
+/* globals Models Status Random */
 
 Models = { // eslint-disable-line
   project: function () {
@@ -99,7 +99,10 @@ Models = { // eslint-disable-line
       evidence: '',
       solution: '',
       hosts: [],
-      pluginIds: [],
+      pluginIds: [{
+        tool: 'Manual',
+        id: Random.id()
+      }],
       cves: [],
       references: [],
       identifiedBy: [{
