@@ -29,7 +29,10 @@
           <li>{{note.title}}</li>
         </ul>
         <form>
+          {{note.content}}
+          {{#if note.content}}
           {{> epic note.content}}
+          {{/if}}
           <br />
           <button class="button button-primary">Save</button>
         </form>
