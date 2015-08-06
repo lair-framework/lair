@@ -11,7 +11,8 @@ Models = { // eslint-disable-line
       contributors: [],
       commands: [],
       notes: [],
-      droneLog: []
+      droneLog: [],
+      files: []
     }
   },
 
@@ -28,7 +29,8 @@ Models = { // eslint-disable-line
       tags: [],
       status: Status.grey,
       lastModifiedBy: '',
-      isFlagged: false
+      isFlagged: false,
+      files: []
     }
   },
 
@@ -84,7 +86,8 @@ Models = { // eslint-disable-line
       status: Status.grey,
       isFlagged: false,
       lastModifiedBy: '',
-      notes: []
+      notes: [],
+      files: []
     }
   },
 
@@ -111,7 +114,8 @@ Models = { // eslint-disable-line
       notes: [],
       isFlagged: false,
       status: Status.grey,
-      lastModifiedBy: ''
+      lastModifiedBy: '',
+      files: []
     }
   },
 
@@ -194,11 +198,8 @@ Models = { // eslint-disable-line
 
   file: function () {
     return {
-      projectid: '',
-      hostId: '',
-      serviceId: '',
-      issueId: '',
       filename: '',
+      uname: '',
       url: ''
     }
   }
