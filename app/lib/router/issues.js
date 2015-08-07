@@ -11,14 +11,14 @@ Router.route('/projects/:id/issues', {
       this.next()
       return
     }
-    Session.set('IssueViewLimit', 25)
-    Session.set('IssueListSearch', null)
-    Session.set('IssueListStatusButtongrey', null)
-    Session.set('IssueListStatusButtonblue', null)
-    Session.set('IssueListStatusButtongreen', null)
-    Session.set('IssueListStatusButtonorange', null)
-    Session.set('IssueListStatusButtonred', null)
-    Session.set('IssueListFlagFilter', null)
+    Session.set('issueViewLimit', 25)
+    Session.set('issueListSearch', null)
+    Session.set('issueListStatusButtongrey', null)
+    Session.set('issueListStatusButtonblue', null)
+    Session.set('issueListStatusButtongreen', null)
+    Session.set('issueListStatusButtonorange', null)
+    Session.set('issueListStatusButtonred', null)
+    Session.set('issueListFlagFilter', null)
     this.next()
   },
   data: function () {

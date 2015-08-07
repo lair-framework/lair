@@ -383,12 +383,15 @@ Router.route('/projects/:id/hosts/:hid/issues', {
         })
       })
     })
-    var total = Issues.find({
+    var total = 0
+    Issues.find({
       projectId: this.params.id,
       hosts: {
         $elemMatch: {ipv4: ipv4}
       }
-    }).count()
+    }).fetch().forEach(function (i) {
+      total += i.hosts.length
+    })
 
     return {
       projectId: this.params.id,
