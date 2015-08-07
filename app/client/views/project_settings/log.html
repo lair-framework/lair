@@ -6,9 +6,9 @@
   <div class="container">
     <div class="row">
       <div class="six columns log-box">
-        <ul>
-          {{#each projects.commands}}
-           <li>{{tool}}: {{command}}</li>
+        <ul class="list-unstyled">
+          {{#each project.commands}}
+          <li><span style="padding-left: 5px">{{tool}}: {{command}}</span></li>
           {{/each}}
         </ul>
       </div>
