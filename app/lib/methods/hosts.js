@@ -75,6 +75,8 @@ function removeHost (id, hostId) {
     $set: {
       lastModifiedBy: Meteor.user().emails[0].address
     }
+  }, {
+    multi: true
   })
   Hosts.remove({
     projectId: id,

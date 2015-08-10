@@ -414,6 +414,8 @@ function removeHostFromIssues (id, ip) {
     $set: {
       lastModifiedBy: Meteor.user().emails[0].address
     }
+  }, {
+    multi: true
   })
 }
 
@@ -438,6 +440,8 @@ function removeServiceFromIssues (id, ip, port, protocol) {
     $set: {
       lastModifiedBy: Meteor.user().emails[0].address
     }
+  }, {
+    multi: true
   })
 }
 
