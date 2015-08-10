@@ -16,6 +16,7 @@ Template.newNetblock.events({
       miscEmails: tpl.find('[name=misc-emails]').value,
       techEmails: tpl.find('[name=tech-emails]').value,
       name: tpl.find('[name=name]').value,
+      address: tpl.find('[name=address]').value,
       city: tpl.find('[name=city]').value,
       state: tpl.find('[name=state]').value,
       country: tpl.find('[name=country]').value,

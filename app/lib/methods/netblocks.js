@@ -24,6 +24,7 @@ function createNetblock (id, netblock) {
     miscEmails: netblock.miscEmails,
     techEmails: netblock.techEmails,
     name: netblock.name,
+    address: netblock.address,
     city: netblock.city,
     state: netblock.state,
     country: netblock.country,
