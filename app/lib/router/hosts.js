@@ -117,7 +117,7 @@ Router.route('/projects/:id/hosts/:hid', {
 Router.route('/projects/:id/hosts/:hid/services', {
   name: 'hostServiceList',
   controller: 'ProjectController',
-   onRun: function () {
+  onRun: function () {
     if (Settings.findOne({
       settings: 'persistViewFilters',
       enabled: true
@@ -286,7 +286,7 @@ Router.route('/projects/:id/hosts/:hid/notes', {
 Router.route('/projects/:id/hosts/:hid/issues', {
   name: 'hostIssueList',
   controller: 'ProjectController',
-   onRun: function () {
+  onRun: function () {
     if (Settings.findOne({
       settings: 'persistViewFilters',
       enabled: true
@@ -361,14 +361,20 @@ Router.route('/projects/:id/hosts/:hid/issues', {
         cvss: -1
       }
     }).fetch().forEach(function (issue) {
-      issue.hosts.forEach(function (host) {
+      issue.hosts.forEach(function (h) {
+        if (h.ipv4 !== host.ipv4) {
+          return
+        }
         var service = Services.findOne({
-          host_id: host._id,
-          port: host.port,
-          protocol: host.protocol
+          hostId: host._id,
+          port: h.port,
+          protocol: h.protocol
         })
-        host.serviceId = service._id
-        host.hostId = self.params.hid
+        if (!service) {
+          return
+        }
+        h.serviceId = service._id
+        h.hostId = host._id
         issues.push({
           projectId: self.params.id,
           issueId: issue._id,
@@ -379,7 +385,7 @@ Router.route('/projects/:id/hosts/:hid/issues', {
           isFlagged: issue.isFlagged,
           isConfirmed: issue.isConfirmed,
           status: issue.status,
-          host: host
+          host: h
         })
       })
     })
@@ -484,7 +490,7 @@ Router.route('/projects/:id/hosts/:hid/credentials', {
             host: host.ipv4
           }]
 
-      }).fetch()
+        }).fetch()
     }
   }
 })
