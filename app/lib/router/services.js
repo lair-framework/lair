@@ -24,8 +24,8 @@ Router.route('/projects/:id/hosts/:hid/services/:sid/issues', {
   controller: 'ProjectController',
   onRun: function () {
     if (Settings.findOne({
-     settings: 'persistViewFilters',
-     enabled: true
+      settings: 'persistViewFilters',
+      enabled: true
     })) {
       this.next()
       return
@@ -46,7 +46,8 @@ Router.route('/projects/:id/hosts/:hid/services/:sid/issues', {
       return null
     }
     var service = Services.findOne({
-      _id: this.params.sid
+      _id: this.params.sid,
+      hostId: this.params.hid
     })
     if (!service) {
       return null
@@ -132,7 +133,8 @@ Router.route('/projects/:id/hosts/:hid/services/:sid/notes', {
       return null
     }
     var service = Services.findOne({
-      _id: this.params.sid
+      _id: this.params.sid,
+      hostId: this.params.hid
     })
     if (!service) {
       return null
@@ -171,7 +173,8 @@ Router.route('/projects/:id/hosts/:hid/services/:sid/credentials', {
       return null
     }
     var service = Services.findOne({
-      _id: this.params.sid
+      _id: this.params.sid,
+      hostId: this.params.hid
     })
     if (!service) {
       return null
@@ -197,7 +200,7 @@ Router.route('/projects/:id/hosts/:hid/services/:sid/credentials', {
               $regex: service.port.toString()
             }
           }]
-      }).fetch()
+        }).fetch()
     }
   }
 })
@@ -212,7 +215,8 @@ Router.route('/projects/:id/hosts/:hid/services/:sid/settings', {
       return null
     }
     var service = Services.findOne({
-      _id: this.params.sid
+      _id: this.params.sid,
+      hostId: this.params.hid
     })
     if (!service) {
       return null
@@ -229,5 +233,4 @@ Router.route('/projects/:id/hosts/:hid/services/:sid/settings', {
       service: service
     }
   }
-
 })
