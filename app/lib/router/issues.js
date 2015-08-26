@@ -1,4 +1,4 @@
-/* globals Router Session Projects Issues Settings _ Hosts Services */
+/* globals Router Session Projects Issues Settings _ Hosts */
 
 Router.route('/projects/:id/issues', {
   name: 'issueList',
@@ -11,7 +11,7 @@ Router.route('/projects/:id/issues', {
       this.next()
       return
     }
-    Session.set('issueViewLimit', 25)
+    Session.set('issueViewLimit', 10000)
     Session.set('issueListSearch', null)
     Session.set('issueListStatusButtongrey', null)
     Session.set('issueListStatusButtonblue', null)
@@ -44,7 +44,7 @@ Router.route('/projects/:id/issues', {
         }
       },
       issues: function () {
-        var limit = Session.get('issueViewLimit') || 25
+        var limit = Session.get('issueViewLimit') || 10000
         var query = {
           projectId: self.params.id,
           status: {
@@ -193,22 +193,19 @@ Router.route('/projects/:id/issues/:iid/hosts', {
       return null
     }
     var self = this
-    issue.hosts.forEach(function (host) {
-      var h = Hosts.findOne({
-        projectId: self.params.id,
-        ipv4: host.ipv4
+    if (issue.hosts.length < 500) {
+      issue.hosts.forEach(function (host) {
+        var h = Hosts.findOne({
+          projectId: self.params.id,
+          ipv4: host.ipv4
+        })
+        host.hostId = h._id
+        host.longIpv4Addr = h.longIpv4Addr
       })
-      host.hostId = h._id
-      host.longIpv4Addr = h.longIpv4Addr
-      host.serviceId = Services.findOne({
-        projectId: self.params.id,
-        hostId: host.hostId,
-        port: host.port,
-        protocol: host.protocol})._id
-    })
-    issue.hosts.sort(function (a, b) {
-      return (a.longIpv4Addr > b.longIpv4Addr) ? 1 : ((b.longIpv4Addr > a.longIpv4Addr) ? -1 : 0)
-    })
+      issue.hosts.sort(function (a, b) {
+        return (a.longIpv4Addr > b.longIpv4Addr) ? 1 : ((b.longIpv4Addr > a.longIpv4Addr) ? -1 : 0)
+      })
+    }
     return {
       projectId: this.params.id,
       issue: issue
