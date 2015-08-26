@@ -50,6 +50,19 @@
         </ul>
       </div>
     </div>
+    <div class="row">
+      <div class="six columns">
+        <p>Showing {{issues.length}} of {{total}} issues</p>
+      </div>
+      {{#if moreToShow}}
+        <div class="six columns">
+          <ul class="list-unstyled list-inline">
+            <li class="u-pull-right"><button id="load-all" class="button">Show All</button></li>
+            <li class="u-pull-right"><button id="load-more" class="button" style="margin-right: 10px">Show More</button></li>
+          </ul>
+        </div>
+      {{/if}}
+    </div>
   </div>
 </div>
 </template>

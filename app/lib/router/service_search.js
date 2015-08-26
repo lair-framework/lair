@@ -1,4 +1,4 @@
-/* globals Projects Router Session Services _  Hosts IPUtils */
+/* globals Projects Router Session Services _  Hosts IPUtils Alerts */
 
 Router.route('/projects/:id/services', {
   name: 'serviceSearch',
@@ -10,15 +10,27 @@ Router.route('/projects/:id/services', {
   },
   data: function () {
     if (Projects.find({
-        _id: this.params.id
-      }).count() < 1) {
+      _id: this.params.id
+    }).count() < 1) {
       return null
     }
     var services = []
     if (Session.get('servicesViewQuery') === null) {
-      services = Services.find({}, {sort: {port: 1}}).fetch()
+      if (Services.find({}).count() > 1000) {
+        services = []
+      } else {
+        services = Services.find({}, {sort: {port: 1}}).fetch()
+      }
     } else {
       services = Services.find(Session.get('servicesViewQuery'), {sort: {port: 1}}).fetch()
+    }
+    if (services.length > 1000) {
+      services = []
+      Alerts.insert({
+        class: 'alert-warning',
+        strong: 'Error',
+        message: 'Data set too large. Suggest using CLI utilities'
+      })
     }
     var hosts = []
     for (var i = 0; i < services.length; i++) {

@@ -46,13 +46,13 @@ Template.issueList.events({
   },
 
   'click #load-more': function () {
-    var previouslimit = Session.get('issuesViewLimit') || 25
+    var previouslimit = Session.get('issueViewLimit') || 25
     var newlimit = previouslimit + 25
-    Session.set('issuesViewLimit', newlimit)
+    Session.set('issueViewLimit', newlimit)
   },
 
   'click #load-all': function () {
-    Session.set('issuesViewLimit', 10000)
+    Session.set('issueViewLimit', 10000)
   },
 
   'click #remove-issues': function () {

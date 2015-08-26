@@ -2,7 +2,15 @@
 
 Template.settingsUser.events({
   'click #toggle-user-admin': function () {
-    Meteor.call('toggleLairUserIsAdmin', this.user._id)
+    Meteor.call('toggleLairUserIsAdmin', this.user._id, function (err) {
+      if (err) {
+        Alerts.insert({
+          class: 'alert-error',
+          strong: 'Error',
+          message: err.reason
+        })
+      }
+    })
   },
   'submit form': function (event, tpl) {
     event.preventDefault()

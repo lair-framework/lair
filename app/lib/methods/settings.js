@@ -32,18 +32,18 @@ function removeLairUser (id) {
   check(id, Matchers.isObjectId)
   Projects.update({
     contributors: id
-    }, {
-      $pull: {
-        contributors: id
-      }
+  }, {
+    $pull: {
+      contributors: id
+    }
   })
   var projects = Projects.find({
     owner: id
-    }, {
-      fields: {
-        _id: 1
-      }
-    }).fetch()
+  }, {
+    fields: {
+      _id: 1
+    }
+  }).fetch()
   projects.forEach(function (id) {
     Hosts.remove({projectId: id})
     Services.remove({projectId: id})
@@ -66,6 +66,9 @@ function toggleLairUserIsAdmin (id) {
     throw new Meteor.Error(404, 'User not found')
   }
   if (user.isAdmin) {
+    if (Meteor.users.find({}).count() < 2) {
+      throw new Meteor.Error(400, 'Must have at least 1 admin user')
+    }
     return Meteor.users.update({
       _id: id
     }, {
