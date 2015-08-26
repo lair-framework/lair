@@ -11,7 +11,7 @@ Router.route('/projects/:id/issues', {
       this.next()
       return
     }
-    Session.set('issueViewLimit', 10000)
+    Session.set('issueViewLimit', 50)
     Session.set('issueListSearch', null)
     Session.set('issueListStatusButtongrey', null)
     Session.set('issueListStatusButtonblue', null)
@@ -44,7 +44,7 @@ Router.route('/projects/:id/issues', {
         }
       },
       issues: function () {
-        var limit = Session.get('issueViewLimit') || 10000
+        var limit = Session.get('issueViewLimit') || 50
         var query = {
           projectId: self.params.id,
           status: {
