@@ -4,7 +4,6 @@ Template.issueGist.events({
   'click #issue-gist-set-title-submit': function (event, tpl) {
     var title = tpl.find('[name=issue-title]').value
     tpl.find('[name=issue-title]').value = ''
-    console.log(title)
     Meteor.call('setIssueTitle', this.projectId, this.issue._id, title, function (err) {
       if (err) {
         Alerts.insert({
