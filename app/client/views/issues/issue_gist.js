@@ -1,9 +1,10 @@
 /* globals Template Meteor Alerts StatusMap */
 
 Template.issueGist.events({
-  'submit #issue-gist-set-title': function (event, tpl) {
+  'click #issue-gist-set-title-submit': function (event, tpl) {
     var title = tpl.find('[name=issue-title]').value
     tpl.find('[name=issue-title]').value = ''
+    console.log(title)
     Meteor.call('setIssueTitle', this.projectId, this.issue._id, title, function (err) {
       if (err) {
         Alerts.insert({
@@ -15,7 +16,7 @@ Template.issueGist.events({
     })
   },
 
-  'submit #issue-gist-set-cvss': function (event, tpl) {
+  'click #issue-gist-set-cvss-submit': function (event, tpl) {
     var cvss = parseFloat(tpl.find('[name=issue-cvss]').value)
     tpl.find('[name=issue-cvss]').value = ''
     Meteor.call('setIssueCVSS', this.projectId, this.issue._id, cvss, function (err) {

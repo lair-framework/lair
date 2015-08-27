@@ -22,26 +22,22 @@
       </ul>
     </div>
     <div class="four columns gist">
-      <form id="issue-gist-set-title">
-        <div class="row">
-          <div class="eight columns">
-            <input type="text" name="issue-title" class="u-full-width" placeholder="Title">
-          </div>
-          <div class="two columns">
-            <button class="button button-primary">Set Title</button>
-          </div>
+      <div class="row">
+        <div class="eight columns">
+          <input type="text" name="issue-title" class="u-full-width" placeholder="Title">
         </div>
-      </form>
-      <form id="issue-gist-set-cvss">
-        <div class="row">
-          <div class="eight columns">
-            <input type="number" class="u-full-width" name="issue-cvss" min="0.0" max="10.0" step="0.1" placeholder="CVSS">
-          </div>
-          <div class="two columns">
-            <button class="button button-primary">Set CVSS</button>
-          </div>
+        <div class="two columns">
+          <button id="issue-gist-set-title-submit" class="button button-primary">Set Title</button>
         </div>
-      </form>
+      </div>
+      <div class="row">
+        <div class="eight columns">
+          <input type="number" class="u-full-width" name="issue-cvss" min="0.0" max="10.0" step="0.1" placeholder="CVSS">
+        </div>
+        <div class="two columns">
+          <button id="issue-gist-set-cvss-submit" class="button button-primary">Set CVSS</button>
+        </div>
+      </div>
     </div>
   </div>
 </div>
