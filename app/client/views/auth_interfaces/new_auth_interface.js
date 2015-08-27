@@ -1,5 +1,4 @@
-
-/* globals Template Meteor Alerts Router */
+/* globals Template Meteor Alerts Router $*/
 
 Template.newAuthInterface.events({
   'submit form': function (event, tpl) {
@@ -7,7 +6,7 @@ Template.newAuthInterface.events({
     var kind = tpl.find('[name=kind]').value || ''
     var description = tpl.find('[name=description]').value || ''
     var url = tpl.find('[name=url]').value || ''
-    var isMulti = tpl.find('[name=multifactor]').value === 'on'
+    var isMulti = $('[name=multifactor]').is(':checked')
     var projectId = this.projectId
     Meteor.call('createAuthInterface', projectId, kind, url, description, isMulti, function (err) {
       if (err) {
