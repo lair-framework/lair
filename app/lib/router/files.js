@@ -14,7 +14,8 @@ Router.route('/projects/:id/files', {
       projectId: self.params.id,
       project: Projects.findOne({
         _id: this.params.id
-      })
+      }),
+      progress: Session.get('progress')
     }
   }
 })

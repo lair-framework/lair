@@ -8,12 +8,16 @@
           <input type="file" id="file-input"><br />
           <button type="submit" class="button button-primary">submit</button>
         </form>
+        {{#if progress}}
+          <p>Uploading... {{progress}}%</p>
+        {{/if}}
       </div>
       <div class="six columns">
+        <button id="remove-files" class="button lair-red"><i class="fa fa-trash fa-lg"></i></button>
         <ul class="list-unstyled list-alternate">
         {{#each project.files}}
           <li>
-            <input class="file-checked" id="{{fileName}}" type="checkbox">
+            <input class="file-checked" id="{{url}}" type="checkbox">
             <span class="note"><a class="file-href" href="{{url}}">{{fileName}}</a></span>
           </li>
         {{/each}}
