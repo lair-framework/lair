@@ -11,7 +11,10 @@ Router.route('/projects/:id/files', {
     }
     var self = this
     return {
-      projectId: self.params.id
+      projectId: self.params.id,
+      project: Projects.findOne({
+        _id: this.params.id
+      })
     }
   }
 })

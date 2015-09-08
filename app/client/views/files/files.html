@@ -1,6 +1,25 @@
 <template name="files">
 <div class="main">
   <div class="container content">
+    <div class="row">
+      <div class="six columns">
+        <p>Attach a file to the project. Note, because of how Lair is architected with Meteor and a separate API server, access to retrieve files is not authenticated. Files are saved and retreived using a random 48 character alphanumeric string. Access to files is dependent on the URL staying a secret. As a result, links should be treated as a secret.</p>
+        <form>
+          <input type="file" id="file-input"><br />
+          <button type="submit" class="button button-primary">submit</button>
+        </form>
+      </div>
+      <div class="six columns">
+        <ul class="list-unstyled list-alternate">
+        {{#each project.files}}
+          <li>
+            <input class="file-checked" id="{{fileName}}" type="checkbox">
+            <span class="note"><a class="file-href" href="{{url}}">{{fileName}}</a></span>
+          </li>
+        {{/each}}
+        </ul>
+      </div>
+    </div>
   </div>
 </div>
 </template>
