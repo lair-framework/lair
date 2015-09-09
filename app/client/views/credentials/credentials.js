@@ -8,11 +8,13 @@ Template.credentials.events({
         credentialIds.push($(this).attr('id'))
       }
     })
-
     for (var i = 0; i < credentialIds.length; i++) {
       var id = credentialIds[i]
       Meteor.call('removeCredential', this.projectId, id)
     }
+    inputs.each(function () {
+      $(this).prop('checked', false)
+    })
   },
 
   'keyup #credentials-search': function (event, tpl) {

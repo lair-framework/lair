@@ -34,5 +34,8 @@ Template.issueReferenceList.events({
     referenceIds.forEach(function (id) {
       Meteor.call('removeReference', projectId, issueId, id.link, id.name)
     })
+    inputs.each(function () {
+      $(this).prop('checked', false)
+    })
   }
 })

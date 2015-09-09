@@ -21,5 +21,8 @@ Template.peopleList.events({
       var id = peopleIds[i]
       Meteor.call('removePerson', this.projectId, id)
     }
+    inputs.each(function () {
+      $(this).prop('checked', false)
+    })
   }
 })

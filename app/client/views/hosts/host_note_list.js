@@ -120,6 +120,9 @@ Template.hostNoteList.events({
         noteIds.push($(this).attr('id'))
       }
     })
+    inputs.each(function () {
+      $(this).prop('checked', false)
+    })
     inputs = $('.service-note-checked')
     inputs.each(function () {
       if ($(this).is(':checked')) {
@@ -128,6 +131,9 @@ Template.hostNoteList.events({
           serviceId: $(this).attr('data-service-id')
         })
       }
+    })
+    inputs.each(function () {
+      $(this).prop('checked', false)
     })
     noteIds.forEach(function (id) {
       Meteor.call('removeHostNote', projectId, hostId, id)

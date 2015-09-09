@@ -9,6 +9,9 @@ Template.authInterfaces.events({
         interfaceIds.push($(this).attr('id'))
       }
     })
+    inputs.each(function() {
+      $(this).prop('checked', false)
+    })
 
     for (var i = 0; i < interfaceIds.length; i++) {
       var id = interfaceIds[i]

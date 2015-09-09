@@ -76,5 +76,8 @@ Template.notes.events({
     noteIds.forEach(function (id) {
       Meteor.call('removeNote', projectId, id)
     })
+    inputs.each(function () {
+      $(this).prop('checked', false)
+    })
   }
 })

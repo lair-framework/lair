@@ -57,5 +57,8 @@ Template.serviceNoteList.events({
     for (var i = 0; i < serviceNoteIds.length; i++) {
       Meteor.call('removeServiceNote', this.projectId, this.service._id, serviceNoteIds[i])
     }
+    inputs.each(function () {
+      $(this).prop('checked', false)
+    })
   }
 })

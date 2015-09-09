@@ -27,5 +27,8 @@ Template.hostHostnameList.events({
     for (var i = 0; i < hostnameIds.length; i++) {
       Meteor.call('removeHostname', this.projectId, this.hostId, hostnameIds[i])
     }
+    inputs.each(function () {
+      $(this).prop('checked', false)
+    })
   }
 })

@@ -29,5 +29,8 @@ Template.issueCVEList.events({
     cveIds.forEach(function (id) {
       Meteor.call('removeCVE', projectId, issueId, id)
     })
+    inputs.each(function () {
+      $(this).prop('checked', false)
+    })
   }
 })

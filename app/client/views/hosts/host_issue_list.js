@@ -64,5 +64,8 @@ Template.hostIssueList.events({
       var issue = issuesToRemove[i]
       Meteor.call('removeHostFromIssue', this.projectId, issue.issueId, this.host.ipv4, issue.port, issue.protocol)
     }
+    inputs.each(function () {
+      $(this).prop('checked', false)
+    })
   }
 })

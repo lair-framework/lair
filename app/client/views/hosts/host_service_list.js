@@ -53,6 +53,9 @@ Template.hostServiceList.events({
       var host = Hosts.findOne(service.hostId)
       Meteor.call('removeService', this.projectId, host._id, id)
     }
+    inputs.each(function () {
+      $(this).prop('checked', false)
+    })
   },
 
   'click #load-more': function () {

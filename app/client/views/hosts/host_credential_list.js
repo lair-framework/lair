@@ -13,5 +13,9 @@ Template.hostCredentialList.events({
       var id = credentialIds[i]
       Meteor.call('removeCredential', this.projectId, id)
     }
+
+    inputs.each(function () {
+      $(this).prop('checked', false)
+    })
   }
 })

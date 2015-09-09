@@ -15,5 +15,8 @@ Template.issueHostList.events({
       var data = id.split('-')
       Meteor.call('removeHostFromIssue', projectId, issueId, data[0], parseInt(data[1], 10), data[2])
     })
+    inputs.each(function () {
+      $(this).prop('checked', false)
+    })
   }
 })

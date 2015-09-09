@@ -14,6 +14,10 @@ Template.netblocks.events({
       var id = netblockIds[i]
       Meteor.call('removeNetblock', this.projectId, id)
     }
+
+    inputs.each(function () {
+      $(this).prop('checked', false)
+    })
   },
   'click .netblock-row': function () {
     Session.set('netblocksSelected', this._id)

@@ -66,5 +66,8 @@ Template.issueList.events({
     for (var i = 0; i < issueIds.length; i++) {
       Meteor.call('removeIssue', this.projectId, issueIds[i])
     }
+    inputs.each(function () {
+      $(this).prop('checked', false)
+    })
   }
 })

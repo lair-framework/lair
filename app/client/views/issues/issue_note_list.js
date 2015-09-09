@@ -53,5 +53,8 @@ Template.issueNoteList.events({
     noteIds.forEach(function (id) {
       Meteor.call('removeIssueNote', projectId, issueId, id)
     })
+    inputs.each(function () {
+      $(this).prop('checked', false)
+    })
   }
 })
