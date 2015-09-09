@@ -4,14 +4,16 @@ Router.route('/projects/:id/settings', {
   name: 'projectSettings',
   controller: 'ProjectController',
   data: function () {
-    if (Projects.find({
-        _id: this.params.id
-      }).count() < 1) {
+    var project = Projects.findOne({
+      _id: this.params.id
+    })
+    if (!project) {
       return null
     }
     var self = this
     return {
-      projectId: self.params.id
+      projectId: self.params.id,
+      projectName: project.name
     }
   }
 })
@@ -20,15 +22,13 @@ Router.route('/projects/:id/settings/contributors', {
   name: 'projectSettingsContributors',
   controller: 'ProjectController',
   data: function () {
-    if (Projects.find({
-        _id: this.params.id
-      }).count() < 1) {
-      return null
-    }
-    var self = this
     var project = Projects.findOne({
       _id: this.params.id
     })
+    if (!project) {
+      return null
+    }
+    var self = this
     var projectUsers = Meteor.users.find({
       $and: [{
         _id: {
@@ -69,6 +69,7 @@ Router.route('/projects/:id/settings/contributors', {
     })
     return {
       projectId: self.params.id,
+      projectName: project.name,
       users: users,
       contributors: contributors
     }
@@ -79,16 +80,16 @@ Router.route('/projects/:id/settings/log', {
   name: 'projectSettingsLog',
   controller: 'ProjectController',
   data: function () {
-    if (Projects.find({
+    var project = Projects.findOne({
       _id: this.params.id
-    }).count() < 1) {
+    })
+    if (!project) {
       return null
     }
     return {
       projectId: this.params.id,
-      project: Projects.findOne({
-        _id: this.params.id
-      })
+      project: project,
+      projectName: project.name
     }
   }
 })

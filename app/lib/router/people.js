@@ -9,14 +9,16 @@ Router.route('/projects/:id/people', {
     this.next()
   },
   data: function () {
-    if (Projects.find({
+    var project = Projects.findOne({
       _id: this.params.id
-    }).count() < 1) {
+    })
+    if (!project) {
       return null
     }
     var self = this
     return {
       projectId: this.params.id,
+      projectName: project.name,
       people: function () {
         var query = {
           projectId: self.params.id
@@ -90,12 +92,15 @@ Router.route('/projects/:id/people/new', {
   name: 'newPerson',
   controller: 'ProjectController',
   data: function () {
-    if (Projects.find({
-    }).count() < 1) {
+    var project = Projects.findOne({
+      _id: this.params.id
+    })
+    if (!project) {
       return null
     }
     return {
-      projectId: this.params.id
+      projectId: this.params.id,
+      projectName: project.name
     }
   }
 })
@@ -104,8 +109,10 @@ Router.route('/projects/:id/people/:pid', {
   name: 'person',
   controller: 'ProjectController',
   data: function () {
-    if (Projects.find({
-    }).count() < 1) {
+    var project = Projects.findOne({
+      _id: this.params.id
+    })
+    if (!project) {
       return null
     }
     var person = People.findOne({
@@ -126,6 +133,7 @@ Router.route('/projects/:id/people/:pid', {
     person.references = references.trimRight('\n')
     return {
       projectId: this.params.id,
+      projectName: project.name,
       person: person
     }
   }

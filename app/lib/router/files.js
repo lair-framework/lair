@@ -4,17 +4,17 @@ Router.route('/projects/:id/files', {
   name: 'files',
   controller: 'ProjectController',
   data: function () {
-    if (Projects.find({
-        _id: this.params.id
-      }).count() < 1) {
+    var project = Projects.findOne({
+      _id: this.params.id
+    })
+    if (!project) {
       return null
     }
     var self = this
     return {
       projectId: self.params.id,
-      project: Projects.findOne({
-        _id: this.params.id
-      }),
+      project: project,
+      projectName: project.name,
       progress: Session.get('progress')
     }
   }

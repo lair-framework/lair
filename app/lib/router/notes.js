@@ -19,6 +19,7 @@ Router.route('/projects/:id/notes', {
     return {
       projectId: this.params.id,
       project: project,
+      projectName: project.name,
       note: function () {
         if (Session.equals('noteTitle', null)) {
           return

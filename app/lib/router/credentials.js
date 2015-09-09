@@ -8,9 +8,10 @@ Router.route('/projects/:id/credentials', {
     this.next()
   },
   data: function () {
-    if (Projects.find({
-        _id: this.params.id
-      }).count() < 1) {
+    var project = Projects.findOne({
+      _id: this.params.id
+    })
+    if (!project) {
       return null
     }
     var query = {
@@ -53,6 +54,7 @@ Router.route('/projects/:id/credentials', {
     var self = this
     return {
       projectId: self.params.id,
+      projectName: project.name,
       credentials: Credentials.find(query).fetch(),
       total: Credentials.find({projectId: self.params.id}).count()
     }
@@ -63,14 +65,16 @@ Router.route('/projects/:id/credentials/new', {
   name: 'newCredential',
   controller: 'ProjectController',
   data: function () {
-    if (Projects.find({
-        _id: this.params.id
-      }).count() < 1) {
+    var project = Projects.findOne({
+      _id: this.params.id
+    })
+    if (!project) {
       return null
     }
     var self = this
     return {
-      projectId: self.params.id
+      projectId: self.params.id,
+      projectName: project.name
     }
   }
 })
@@ -79,14 +83,16 @@ Router.route('/projects/:id/credentials/bulk', {
   name: 'newCredentialBulk',
   controller: 'ProjectController',
   data: function () {
-    if (Projects.find({
-        _id: this.params.id
-      }).count() < 1) {
+    var project = Projects.findOne({
+      _id: this.params.id
+    })
+    if (!project) {
       return null
     }
     var self = this
     return {
-      projectId: self.params.id
+      projectId: self.params.id,
+      projectName: project.name
     }
   }
 })
@@ -95,9 +101,10 @@ Router.route('/projects/:id/credentials/:cid', {
   name: 'editCredential',
   controller: 'ProjectController',
   data: function () {
-    if (Projects.find({
+    var project = Projects.findOne({
       _id: this.params.id
-    }).count() < 1) {
+    })
+    if (!project) {
       return null
     }
     var credential = Credentials.findOne({
@@ -109,6 +116,7 @@ Router.route('/projects/:id/credentials/:cid', {
     var self = this
     return {
       projectId: self.params.id,
+      projectName: project.name,
       credential: credential
     }
   }

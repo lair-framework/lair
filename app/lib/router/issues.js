@@ -22,9 +22,10 @@ Router.route('/projects/:id/issues', {
     this.next()
   },
   data: function () {
-    if (Projects.find({
+    var project = Projects.findOne({
       _id: this.params.id
-    }).count() < 1) {
+    })
+    if (!project) {
       return null
     }
     var total = Issues.find({
@@ -38,6 +39,7 @@ Router.route('/projects/:id/issues', {
       flagFilter: Session.get('issueListFlagFilter'),
       total: total,
       projectId: self.params.id,
+      projectName: project.name,
       issueStatusButtonActive: function (color) {
         if (Session.equals('issueListStatusButton' + color, 'disabled')) {
           return 'disabled'
@@ -94,8 +96,15 @@ Router.route('/projects/:id/issues/new', {
   name: 'newIssue',
   controller: 'ProjectController',
   data: function () {
+    var project = Projects.findOne({
+      _id: this.params.id
+    })
+    if (!project) {
+      return null
+    }
     return {
-      projectId: this.params.id
+      projectId: this.params.id,
+      projectName: project.name
     }
   }
 })
@@ -112,9 +121,10 @@ Router.route('/projects/:id/issues/:iid/description', {
   name: 'issueDescription',
   controller: 'ProjectController',
   data: function () {
-    if (Projects.find({
+    var project = Projects.findOne({
       _id: this.params.id
-    }).count() < 1) {
+    })
+    if (!project) {
       return null
     }
     if (Issues.find({
@@ -124,6 +134,7 @@ Router.route('/projects/:id/issues/:iid/description', {
     }
     return {
       projectId: this.params.id,
+      projectName: project.name,
       issue: Issues.findOne({
         _id: this.params.iid
       })
@@ -135,9 +146,10 @@ Router.route('/projects/:id/issues/:iid/evidence', {
   name: 'issueEvidence',
   controller: 'ProjectController',
   data: function () {
-    if (Projects.find({
+    var project = Projects.findOne({
       _id: this.params.id
-    }).count() < 1) {
+    })
+    if (!project) {
       return null
     }
     if (Issues.find({
@@ -147,6 +159,7 @@ Router.route('/projects/:id/issues/:iid/evidence', {
     }
     return {
       projectId: this.params.id,
+      projectName: project.name,
       issue: Issues.findOne({
         _id: this.params.iid
       })
@@ -158,9 +171,10 @@ Router.route('/projects/:id/issues/:iid/solution', {
   name: 'issueSolution',
   controller: 'ProjectController',
   data: function () {
-    if (Projects.find({
+    var project = Projects.findOne({
       _id: this.params.id
-    }).count() < 1) {
+    })
+    if (!project) {
       return null
     }
     if (Issues.find({
@@ -170,6 +184,7 @@ Router.route('/projects/:id/issues/:iid/solution', {
     }
     return {
       projectId: this.params.id,
+      projectName: project.name,
       issue: Issues.findOne({
         _id: this.params.iid
       })
@@ -181,9 +196,10 @@ Router.route('/projects/:id/issues/:iid/hosts', {
   name: 'issueHostList',
   controller: 'ProjectController',
   data: function () {
-    if (Projects.find({
+    var project = Projects.findOne({
       _id: this.params.id
-    }).count() < 1) {
+    })
+    if (!project) {
       return null
     }
     var issue = Issues.findOne({
@@ -208,6 +224,7 @@ Router.route('/projects/:id/issues/:iid/hosts', {
     }
     return {
       projectId: this.params.id,
+      projectName: project.name,
       issue: issue
     }
   }
@@ -217,9 +234,10 @@ Router.route('/projects/:id/issues/:iid/hosts/new', {
   name: 'addIssueHost',
   controller: 'ProjectController',
   data: function () {
-    if (Projects.find({
+    var project = Projects.findOne({
       _id: this.params.id
-    }).count() < 1) {
+    })
+    if (!project) {
       return null
     }
     if (Issues.find({
@@ -229,6 +247,7 @@ Router.route('/projects/:id/issues/:iid/hosts/new', {
     }
     return {
       projectId: this.params.id,
+      projectName: project.name,
       issueId: this.params.iid
     }
   }
@@ -238,9 +257,10 @@ Router.route('/projects/:id/issues/:iid/hosts/bulk', {
   name: 'addIssueHostBulk',
   controller: 'ProjectController',
   data: function () {
-    if (Projects.find({
+    var project = Projects.findOne({
       _id: this.params.id
-    }).count() < 1) {
+    })
+    if (!project) {
       return null
     }
     if (Issues.find({
@@ -250,6 +270,7 @@ Router.route('/projects/:id/issues/:iid/hosts/bulk', {
     }
     return {
       projectId: this.params.id,
+      projectName: project.name,
       issueId: this.params.iid
     }
   }
@@ -259,9 +280,10 @@ Router.route('/projects/:id/issues/:iid/cves', {
   name: 'issueCVEList',
   controller: 'ProjectController',
   data: function () {
-    if (Projects.find({
+    var project = Projects.findOne({
       _id: this.params.id
-    }).count() < 1) {
+    })
+    if (!project) {
       return null
     }
     if (Issues.find({
@@ -271,6 +293,7 @@ Router.route('/projects/:id/issues/:iid/cves', {
     }
     return {
       projectId: this.params.id,
+      projectName: project.name,
       issue: Issues.findOne({
         _id: this.params.iid
       })
@@ -282,9 +305,10 @@ Router.route('/projects/:id/issues/:iid/references', {
   name: 'issueReferenceList',
   controller: 'ProjectController',
   data: function () {
-    if (Projects.find({
+    var project = Projects.findOne({
       _id: this.params.id
-    }).count() < 1) {
+    })
+    if (!project) {
       return null
     }
     if (Issues.find({
@@ -294,6 +318,7 @@ Router.route('/projects/:id/issues/:iid/references', {
     }
     return {
       projectId: this.params.id,
+      projectName: project.name,
       issue: Issues.findOne({
         _id: this.params.iid
       })
@@ -309,9 +334,10 @@ Router.route('/projects/:id/issues/:iid/notes', {
     this.next()
   },
   data: function () {
-    if (Projects.find({
+    var project = Projects.findOne({
       _id: this.params.id
-    }).count() < 1) {
+    })
+    if (!project) {
       return null
     }
     var issue = Issues.findOne({
@@ -322,6 +348,7 @@ Router.route('/projects/:id/issues/:iid/notes', {
     }
     return {
       projectId: this.params.id,
+      projectName: project.name,
       issue: issue,
       note: function () {
         if (Session.equals('noteTitle', null)) {
@@ -333,13 +360,39 @@ Router.route('/projects/:id/issues/:iid/notes', {
   }
 })
 
+Router.route('/projects/:id/issues/:iid/files', {
+  name: 'issueFileList',
+  controller: 'ProjectController',
+  data: function () {
+    var project = Projects.findOne({
+      _id: this.params.id
+    })
+    if (!project) {
+      return null
+    }
+    if (Issues.find({
+      _id: this.params.iid
+    }).count() < 1) {
+      return null
+    }
+    return {
+      progress: Session.get('progress'),
+      projectId: this.params.id,
+      projectName: project.name,
+      issue: Issues.findOne({
+        _id: this.params.iid
+      })
+    }
+  }
+})
 Router.route('/projects/:id/issues/:iid/settings', {
   name: 'issueSettings',
   controller: 'ProjectController',
   data: function () {
-    if (Projects.find({
+    var project = Projects.findOne({
       _id: this.params.id
-    }).count() < 1) {
+    })
+    if (!project) {
       return null
     }
     if (Issues.find({
@@ -349,6 +402,7 @@ Router.route('/projects/:id/issues/:iid/settings', {
     }
     return {
       projectId: this.params.id,
+      projectName: project.name,
       issue: Issues.findOne({
         _id: this.params.iid
       })

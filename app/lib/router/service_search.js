@@ -9,9 +9,10 @@ Router.route('/projects/:id/services', {
     this.next()
   },
   data: function () {
-    if (Projects.find({
+    var project = Projects.findOne({
       _id: this.params.id
-    }).count() < 1) {
+    })
+    if (!project) {
       return null
     }
     var services = []
@@ -44,6 +45,7 @@ Router.route('/projects/:id/services', {
     }
     return {
       projectId: this.params.id,
+      projectName: project.name,
       services: _.uniq(services, function (i) {
         return JSON.stringify({port: i.port, protocol: i.protocol, service: i.service, product: i.product})
       }),

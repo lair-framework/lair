@@ -4,8 +4,15 @@ Router.route('/projects/:id/hosts/:hid/services/new', {
   name: 'newService',
   controller: 'ProjectController',
   data: function () {
+    var project = Projects.findOne({
+      _id: this.params.id
+    })
+    if (!project) {
+      return null
+    }
     return {
       projectId: this.params.id,
+      projectName: project.name,
       hostId: this.params.hid
     }
   }
@@ -40,9 +47,10 @@ Router.route('/projects/:id/hosts/:hid/services/:sid/issues', {
     this.next()
   },
   data: function () {
-    if (Projects.find({
-        _id: this.params.id
-      }).count() < 1) {
+    var project = Projects.findOne({
+      _id: this.params.id
+    })
+    if (!project) {
       return null
     }
     var service = Services.findOne({
@@ -58,6 +66,7 @@ Router.route('/projects/:id/hosts/:hid/services/:sid/issues', {
     var self = this
     return {
       projectId: this.params.id,
+      projectName: project.name,
       host: host,
       service: service,
       flagFilter: Session.get('serviceIssueListFlagFilter'),
@@ -127,9 +136,10 @@ Router.route('/projects/:id/hosts/:hid/services/:sid/notes', {
     this.next()
   },
   data: function () {
-    if (Projects.find({
-        _id: this.params.id
-      }).count() < 1) {
+    var project = Projects.findOne({
+      _id: this.params.id
+    })
+    if (!project) {
       return null
     }
     var service = Services.findOne({
@@ -147,6 +157,7 @@ Router.route('/projects/:id/hosts/:hid/services/:sid/notes', {
     }
     return {
       projectId: this.params.id,
+      projectName: project.name,
       host: host,
       service: service,
       note: function () {
@@ -167,9 +178,10 @@ Router.route('/projects/:id/hosts/:hid/services/:sid/credentials', {
   name: 'serviceCredentialList',
   controller: 'ProjectController',
   data: function () {
-    if (Projects.find({
-        _id: this.params.id
-      }).count() < 1) {
+    var project = Projects.findOne({
+      _id: this.params.id
+    })
+    if (!project) {
       return null
     }
     var service = Services.findOne({
@@ -187,6 +199,7 @@ Router.route('/projects/:id/hosts/:hid/services/:sid/credentials', {
     }
     return {
       projectId: this.params.id,
+      projectName: project.name,
       host: host,
       service: service,
       credentials: Credentials.find({
@@ -209,9 +222,10 @@ Router.route('/projects/:id/hosts/:hid/services/:sid/settings', {
   name: 'serviceSettings',
   controller: 'ProjectController',
   data: function () {
-    if (Projects.find({
-        _id: this.params.id
-      }).count() < 1) {
+    var project = Projects.findOne({
+      _id: this.params.id
+    })
+    if (!project) {
       return null
     }
     var service = Services.findOne({
@@ -229,6 +243,7 @@ Router.route('/projects/:id/hosts/:hid/services/:sid/settings', {
     }
     return {
       projectId: this.params.id,
+      projectName: project.name,
       host: host,
       service: service
     }

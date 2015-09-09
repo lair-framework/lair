@@ -22,9 +22,10 @@ Router.route('/projects/:id/hosts', {
     this.next()
   },
   data: function () {
-    if (Projects.find({
-        _id: this.params.id
-      }).count() < 1) {
+    var project = Projects.findOne({
+      _id: this.params.id
+    })
+    if (!project) {
       return null
     }
     var total = Hosts.find({
@@ -38,6 +39,7 @@ Router.route('/projects/:id/hosts', {
       flagFilter: Session.get('hostListFlagFilter'),
       total: total,
       projectId: self.params.id,
+      projectName: project.name,
       hostStatusButtonActive: function (color) {
         if (Session.equals('hostListStatusButton' + color, 'disabled')) {
           return 'disabled'
@@ -95,13 +97,15 @@ Router.route('/projects/:id/hosts/new', {
   name: 'newHost',
   controller: 'ProjectController',
   data: function () {
-    if (Projects.find({
-        _id: this.params.id
-      }).count() < 1) {
+    var project = Projects.findOne({
+      _id: this.params.id
+    })
+    if (!project) {
       return null
     }
     return {
-      projectId: this.params.id
+      projectId: this.params.id,
+      projectName: project.name
     }
   }
 })
@@ -136,9 +140,10 @@ Router.route('/projects/:id/hosts/:hid/services', {
     this.next()
   },
   data: function () {
-    if (Projects.find({
-        _id: this.params.id
-      }).count() < 1) {
+    var project = Projects.findOne({
+      _id: this.params.id
+    })
+    if (!project) {
       return null
     }
     if (Hosts.find({
@@ -153,6 +158,7 @@ Router.route('/projects/:id/hosts/:hid/services', {
     var self = this
     return {
       projectId: this.params.id,
+      projectName: project.name,
       hostId: this.params.hid,
       host: Hosts.findOne({
         _id: this.params.hid
@@ -225,9 +231,10 @@ Router.route('/projects/:id/hosts/:hid/notes', {
     this.next()
   },
   data: function () {
-    if (Projects.find({
-        _id: this.params.id
-      }).count() < 1) {
+    var project = Projects.findOne({
+      _id: this.params.id
+    })
+    if (!project) {
       return null
     }
     var host = Hosts.findOne({
@@ -257,6 +264,7 @@ Router.route('/projects/:id/hosts/:hid/notes', {
     }
     return {
       projectId: this.params.id,
+      projectName: project.name,
       hostId: this.params.hid,
       host: host,
       notes: host.notes,
@@ -304,9 +312,10 @@ Router.route('/projects/:id/hosts/:hid/issues', {
     this.next()
   },
   data: function () {
-    if (Projects.find({
-        _id: this.params.id
-      }).count() < 1) {
+    var project = Projects.findOne({
+      _id: this.params.id
+    })
+    if (!project) {
       return null
     }
     var host = Hosts.findOne({
@@ -401,6 +410,7 @@ Router.route('/projects/:id/hosts/:hid/issues', {
 
     return {
       projectId: this.params.id,
+      projectName: project.name,
       hostId: this.params.hid,
       host: host,
       flagFilter: Session.get('hostIssueListFlagFilter'),
@@ -419,9 +429,10 @@ Router.route('/projects/:id/hosts/:hid/hostnames', {
   name: 'hostHostnameList',
   controller: 'ProjectController',
   data: function () {
-    if (Projects.find({
-        _id: this.params.id
-      }).count() < 1) {
+    var project = Projects.findOne({
+      _id: this.params.id
+    })
+    if (!project) {
       return null
     }
     var host = Hosts.findOne(this.params.hid)
@@ -452,6 +463,7 @@ Router.route('/projects/:id/hosts/:hid/hostnames', {
     }
     return {
       projectId: this.params.id,
+      projectName: project.name,
       hostId: this.params.hid,
       host: host,
       links: linkList
@@ -463,11 +475,13 @@ Router.route('/projects/:id/hosts/:hid/credentials', {
   name: 'hostCredentialList',
   controller: 'ProjectController',
   data: function () {
-    if (Projects.find({
+    var project = Projects.findOne({
       _id: this.params.id
-    }).count() < 1) {
+    })
+    if (!project) {
       return null
     }
+
     if (Hosts.find({
         _id: this.params.hid
       }).count() < 1) {
@@ -479,6 +493,7 @@ Router.route('/projects/:id/hosts/:hid/credentials', {
     var self = this
     return {
       projectId: self.params.id,
+      projectName: project.name,
       host: host,
       credentials: Credentials.find({
 
@@ -499,9 +514,10 @@ Router.route('/projects/:id/hosts/:hid/settings', {
   name: 'hostSettings',
   controller: 'ProjectController',
   data: function () {
-    if (Projects.find({
-        _id: this.params.id
-      }).count() < 1) {
+    var project = Projects.findOne({
+      _id: this.params.id
+    })
+    if (!project) {
       return null
     }
     if (Hosts.find({
@@ -511,12 +527,40 @@ Router.route('/projects/:id/hosts/:hid/settings', {
     }
     return {
       projectId: this.params.id,
+      projectName: project.name,
       host: Hosts.findOne({
         _id: this.params.hid
       })
     }
   }
 })
+
+Router.route('/projects/:id/hosts/:hid/files', {
+  name: 'hostFileList',
+  controller: 'ProjectController',
+  data: function () {
+    var project = Projects.findOne({
+      _id: this.params.id
+    })
+    if (!project) {
+      return null
+    }
+    if (Hosts.find({
+        _id: this.params.hid
+      }).count() < 1) {
+      return null
+    }
+    return {
+      projectId: this.params.id,
+      projectName: project.name,
+      host: Hosts.findOne({
+        _id: this.params.hid
+      }),
+      progress: Session.get('progress')
+    }
+  }
+})
+
 
 Router.route('/projects/:id/hosts/:hid/directories', {
   name: 'hostWebDirectoryList',
@@ -527,9 +571,10 @@ Router.route('/projects/:id/hosts/:hid/directories', {
     this.next()
   },
   data: function () {
-    if (Projects.find({
-        _id: this.params.id
-      }).count() < 1) {
+    var project = Projects.findOne({
+      _id: this.params.id
+    })
+    if (!project) {
       return null
     }
     var host = Hosts.findOne({
@@ -568,6 +613,7 @@ Router.route('/projects/:id/hosts/:hid/directories', {
     }
     return {
       projectId: this.params.id,
+      projectName: project.name,
       host: host,
       paths: WebDirectories.find(query).fetch(),
       flagFilter: Session.equals('webDirectoryFlagFilter', 'enabled')
