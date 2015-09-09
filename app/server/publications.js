@@ -3,7 +3,7 @@
 function authorizeProjectSub (id, userId) {
   var count = Projects.find({
     _id: id,
-     $or: [{owner: userId}, {contributors: userId}]
+    $or: [{owner: userId}, {contributors: userId}]
   }).count()
   return count > 0
 }

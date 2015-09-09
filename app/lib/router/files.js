@@ -1,4 +1,4 @@
-/* globals Router Projects */
+/* globals Router Projects Session */
 
 Router.route('/projects/:id/files', {
   name: 'files',

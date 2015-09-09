@@ -1,4 +1,4 @@
-/* globals Template $ localStorage Alerts FormData btoa */
+/* globals Template $ localStorage Alerts FormData btoa Session */
 
 Template.files.events({
   'click .file-href': function (event) {
@@ -21,7 +21,7 @@ Template.files.events({
       },
       xhr: function () {
         var xhr = new window.XMLHttpRequest()
-        xhr.upload.addEventListener("progress", function (event) {
+        xhr.upload.addEventListener('progress', function (event) {
           if (event.lengthComputable) {
             var percent = (event.loaded / event.total) * 100
             Session.set('progress', percent.toFixed(2))
@@ -65,7 +65,7 @@ Template.files.events({
         url: fileIds[i],
         headers: {
           Authorization: 'Basic ' + btoa(token + ':' + token)
-        },
+        }
       })
     }
   }

@@ -8,16 +8,16 @@ Template.body.rendered = function () {
     var servicematch = getServicePathGroups(document.location.pathname, servicepathre)
     if (servicematch.isMatched) {
       var services = Services.find({
-          projectId: servicematch.projectId,
-          hostId: servicematch.hostId
-        }, {
-          sort: {
-            port: 1
-          },
-          fields: {
-            _id: 1
-          }
-        }).fetch()
+        projectId: servicematch.projectId,
+        hostId: servicematch.hostId
+      }, {
+        sort: {
+          port: 1
+        },
+        fields: {
+          _id: 1
+        }
+      }).fetch()
       var k = _.indexOf(_.pluck(services, '_id'), servicematch.serviceId) + 1
       if (k >= services.length) {
         Router.go('/projects/' + servicematch.projectId + '/hosts/' + servicematch.hostId + '/services/' + services[0]._id)
@@ -29,15 +29,15 @@ Template.body.rendered = function () {
     var hostmatch = getHostPathGroups(document.location.pathname, hostpathre)
     if (hostmatch.isMatched) {
       var hosts = Hosts.find({
-          projectId: hostmatch.projectId
-        }, {
-          sort: {
-            longIpv4Addr: 1
-          },
-          fields: {
-            _id: 1
-          }
-        }).fetch()
+        projectId: hostmatch.projectId
+      }, {
+        sort: {
+          longIpv4Addr: 1
+        },
+        fields: {
+          _id: 1
+        }
+      }).fetch()
       var i = _.indexOf(_.pluck(hosts, '_id'), hostmatch.hostId) + 1
       if (i >= hosts.length) {
         Router.go('/projects/' + hostmatch.projectId + '/hosts/' + hosts[0]._id + '/services')
@@ -73,16 +73,16 @@ Template.body.rendered = function () {
     var servicematch = getServicePathGroups(document.location.pathname, servicepathre)
     if (servicematch.isMatched) {
       var services = Services.find({
-          projectId: servicematch.projectId,
-          hostId: servicematch.hostId
-        }, {
-          sort: {
-            port: 1
-          },
-          fields: {
-            _id: 1
-          }
-        }).fetch()
+        projectId: servicematch.projectId,
+        hostId: servicematch.hostId
+      }, {
+        sort: {
+          port: 1
+        },
+        fields: {
+          _id: 1
+        }
+      }).fetch()
       var k = _.indexOf(_.pluck(services, '_id'), servicematch.serviceId) - 1
       if (k < 0) {
         Router.go('/projects/' + servicematch.projectId + '/hosts/' + servicematch.hostId + '/services/' + services[services.length - 1]._id)
@@ -94,15 +94,15 @@ Template.body.rendered = function () {
     var hostmatch = getHostPathGroups(document.location.pathname, hostpathre)
     if (hostmatch.isMatched) {
       var hosts = Hosts.find({
-          projectId: hostmatch.projectId
-        }, {
-          sort: {
-            longIpv4Addr: 1
-          },
-          fields: {
-            _id: 1
-          }
-        }).fetch()
+        projectId: hostmatch.projectId
+      }, {
+        sort: {
+          longIpv4Addr: 1
+        },
+        fields: {
+          _id: 1
+        }
+      }).fetch()
       var i = _.indexOf(_.pluck(hosts, '_id'), hostmatch.hostId) - 1
       if (i < 0) {
         Router.go('/projects/' + hostmatch.projectId + '/hosts/' + hosts[hosts.length - 1]._id + '/services')
@@ -114,16 +114,16 @@ Template.body.rendered = function () {
     var issuematch = getIssuePathGroups(document.location.pathname, issuepathre)
     if (issuematch.isMatched) {
       var issues = Issues.find({
-          projectId: issuematch.projectId
-        }, {
-          sort: {
-            cvss: -1,
-            title: 1
-          },
-          fields: {
-            _id: 1
-          }
-        }).fetch()
+        projectId: issuematch.projectId
+      }, {
+        sort: {
+          cvss: -1,
+          title: 1
+        },
+        fields: {
+          _id: 1
+        }
+      }).fetch()
       var j = _.indexOf(_.pluck(issues, '_id'), issuematch.issueId) - 1
       if (j < 0) {
         Router.go('/projects/' + issuematch.projectId + '/issues/' + issues[issues.length - 1]._id + '/description')

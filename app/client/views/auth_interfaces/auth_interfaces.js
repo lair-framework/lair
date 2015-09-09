@@ -9,7 +9,7 @@ Template.authInterfaces.events({
         interfaceIds.push($(this).attr('id'))
       }
     })
-    inputs.each(function() {
+    inputs.each(function () {
       $(this).prop('checked', false)
     })
 

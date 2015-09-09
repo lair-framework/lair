@@ -147,8 +147,8 @@ Router.route('/projects/:id/hosts/:hid/services', {
       return null
     }
     if (Hosts.find({
-        _id: this.params.hid
-      }).count() < 1) {
+      _id: this.params.hid
+    }).count() < 1) {
       return null
     }
     var total = Services.find({
@@ -483,8 +483,8 @@ Router.route('/projects/:id/hosts/:hid/credentials', {
     }
 
     if (Hosts.find({
-        _id: this.params.hid
-      }).count() < 1) {
+      _id: this.params.hid
+    }).count() < 1) {
       return null
     }
     var host = Hosts.findOne({
@@ -496,16 +496,14 @@ Router.route('/projects/:id/hosts/:hid/credentials', {
       projectName: project.name,
       host: host,
       credentials: Credentials.find({
-
-          $or: [{
-            host: {
-              $in: host.hostnames
-            }
-          }, {
-            host: host.ipv4
-          }]
-
-        }).fetch()
+        $or: [{
+          host: {
+            $in: host.hostnames
+          }
+        }, {
+          host: host.ipv4
+        }]
+      }).fetch()
     }
   }
 })
@@ -521,8 +519,8 @@ Router.route('/projects/:id/hosts/:hid/settings', {
       return null
     }
     if (Hosts.find({
-        _id: this.params.hid
-      }).count() < 1) {
+      _id: this.params.hid
+    }).count() < 1) {
       return null
     }
     return {
@@ -546,8 +544,8 @@ Router.route('/projects/:id/hosts/:hid/files', {
       return null
     }
     if (Hosts.find({
-        _id: this.params.hid
-      }).count() < 1) {
+      _id: this.params.hid
+    }).count() < 1) {
       return null
     }
     return {
@@ -560,7 +558,6 @@ Router.route('/projects/:id/hosts/:hid/files', {
     }
   }
 })
-
 
 Router.route('/projects/:id/hosts/:hid/directories', {
   name: 'hostWebDirectoryList',

@@ -203,17 +203,17 @@ Router.route('/projects/:id/hosts/:hid/services/:sid/credentials', {
       host: host,
       service: service,
       credentials: Credentials.find({
-          $or: [{
-            host: {
-              $in: host.hostnames
-            }
-          }, {
-            host: host.ipv4,
-            service: {
-              $regex: service.port.toString()
-            }
-          }]
-        }).fetch()
+        $or: [{
+          host: {
+            $in: host.hostnames
+          }
+        }, {
+          host: host.ipv4,
+          service: {
+            $regex: service.port.toString()
+          }
+        }]
+      }).fetch()
     }
   }
 })

@@ -18,7 +18,6 @@ Template.issueEvidence.events({
         strong: 'Success',
         message: 'Evidence saved'
       })
-
     })
   }
 })
