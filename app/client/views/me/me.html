@@ -1,0 +1,20 @@
+<template name="me">
+<div class="container content">
+  <div class="row">
+    <div class="twelve columns">
+      <h4>{{currentUser.emails.[0].address}}</h4>
+    </div>
+  </div>
+  <div class="row">
+    <div class="six columns">
+      <h5>Change Password</h5>
+      <form>
+        <input class="u-full-width" type="password" name="old-password" placeholder="Current Password">
+        <input class="u-full-width" type="password" name="password" placeholder="New Password">
+        <input class="u-full-width" type="password" name="confirm-password" placeholder="Confirm password">
+        <button class="button-primary">Submit</button>
+      </form>
+    </div>
+  </div>
+</div>
+</template>

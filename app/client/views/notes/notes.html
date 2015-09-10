@@ -1,0 +1,43 @@
+<template name="notes">
+<div class="main">
+  <div class="container content">
+    <div class="row">
+      <div class="five columns">
+         <div class="row">
+            <div class="twelve columns">
+              <button id="remove-notes" class="button lair-red"><i class="fa fa-trash fa-lg"></i></button>
+              <button id="new-note" class="u-pull-right button button-primary">New Note</button>
+            </div>
+          </div>
+        <div class="row">
+          <div class="twelve columns">
+            <ul class="list-unstyled list-alternate">
+            {{#each project.notes}}
+              <li>
+                <input class="note-checked" id="{{title}}" type="checkbox">
+                <span class="note"><a href="#">{{title}}</a></span>
+                <span class="u-pull-right">{{lastModifiedBy}}</span>
+              </li>
+            {{/each}}
+            </ul>
+          </div>
+        </div>
+      </div>
+      <div class="seven columns">
+        {{#if note}}
+        <ul class="list-unstyled">
+          <li>{{note.title}}</li>
+        </ul>
+        {{else}}
+          <input type="text" class="u-full-width" name="title" placeholder="Title">
+        {{/if}}
+        <form>
+          {{> epic}}
+          <br />
+          <button class="button button-primary">Save</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+</template>

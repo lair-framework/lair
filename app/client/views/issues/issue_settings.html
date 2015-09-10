@@ -1,0 +1,20 @@
+<template name="issueSettings">
+<div class="main">
+  <div class="content-navd">
+    {{> issueNav}}
+  </div>
+  <div class="container issue-content">
+    <div class="row">
+      <div class="four columns">
+        <form>
+          <input type="text" name="title-delete" class="u-full-width" placeholder="Title to confirm to delete">
+          <button class="button lair-red">Delete</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="issue-gist">
+  {{> issueGist}}
+</div>
+</template>

@@ -1,0 +1,31 @@
+<template name="issueHostList">
+<div class="main">
+  <div class="content-navd">
+    {{> issueNav}}
+  </div>
+  <div class="container issue-content">
+    <div class="row">
+      <div class="twelve columns">
+        <button class="button lair-red" id="remove-hosts"><i class="fa fa-trash fa-lg"></i></button>
+        <a href="/projects/{{projectId}}/issues/{{issue._id}}/hosts/bulk" class="issue-hosts-button u-pull-right button button-primary">Bulk Host Upload</a>
+        <a href="/projects/{{projectId}}/issues/{{issue._id}}/hosts/new" class="issue-hosts-button u-pull-right button button-primary">Add Host</a>
+      </div>
+    </div>
+    <div class="row">
+      <div class="twelve columns">
+        <ul class="list-unstyled list-alternate list-issue-hosts">
+        {{#each issue.hosts}}
+          <li>
+            <span class="host-checkbox"><input type="checkbox" class="host-checked" id="{{ipv4}}-{{port}}-{{protocol}}"></span>
+            <span class="host-ip right-mark">{{#if hostId}}<a href="/projects/{{../projectId}}/hosts/{{hostId}}/services">{{ipv4}} ({{port}}/{{protocol}})</a>{{else}}{{ipv4}} ({{port}}/{{protocol}}){{/if}}</span>
+          </li>
+        {{/each}}
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="issue-gist">
+  {{> issueGist}}
+</div>
+</template>

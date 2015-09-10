@@ -1,0 +1,67 @@
+<template name="hostWebDirectoryList">
+<div class="main">
+  <div class="content-navd">
+    {{> hostNav}}
+  </div>
+  <div class="container host-content">
+    <div class="row">
+      <div class="twelve columns">
+        <ul class="list-unstyled list-inline">
+          {{#if flagFilter}}
+            <li><button id="flag-filter-disable" class="button"><i class="fa fa-flag fa-lg"></i></button></li>
+          {{else}}
+            <li><button id="flag-filter-enable" class="button"><i class="fa fa-flag-o fa-lg"></i></button></li>
+          {{/if}}
+          <li><button id="remove-paths" class="button lair-red"><i class="fa fa-trash fa-lg"></i></button></li>
+          <li><input type="text" id="directory-search" placeholder="Search..." name="search"></li>
+        </ul>
+      </div>
+    </div>
+    <div class="row">
+      <div class="eight columns">
+        <table class="u-full-width">
+          <thead>
+            <tr>
+              <th class="onepix"><input id="select-all-shown" name="select-all-shown" type="checkbox"></th>
+              <th class="onepix"></th>
+              <th>Path</th>
+              <th style="width: 120px">Response Code</th>
+              <th class="onepix">Port</th>
+            </tr>
+          </thead>
+          <tbody>
+          {{#if paths}}
+          {{#each paths}}
+            <tr>
+              <td><input class="path-checked" id="{{_id}}" type="checkbox"></td>
+              <td class="onepix">
+              {{#if isFlagged}}
+                <i class="fa fa-flag flag-enabled clickable"></i>
+              {{else}}
+                <i class="fa fa-flag-o flag-disabled clickable"></i>
+              {{/if}}
+              </td>
+              <td>{{path}}</td>
+              <td style="width: 120px">{{responseCode}}</td>
+              <td class="onepix">{{port}}</td>
+            </tr>
+          {{/each}}
+          {{/if}}
+          </tbody>
+        </table>
+      </div>
+      <div class="four columns">
+        <form>
+          <input type="text" name="path" placeholder="Path" class="u-full-width" />
+          <input type="text" name="response-code" placeholder="Response Code" class="u-full-width" />
+          <input class="u-full-width" type="number" name="port" min="0" max="65535" step="any" placeholder="Port"/>
+          <button type="submit" class="button button-primary">Add Directory</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="host-gist">
+  {{> hostGist}}
+</div>
+</template>

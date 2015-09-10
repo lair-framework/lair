@@ -1,79 +1,65 @@
 <template name="hostList">
-  <div class="row-fluid">
-    <div class="span2">
-      {{> sideNav}}
+<div class="main">
+  <div class="container content">
+    <div class="row">
+      <div class="twelve columns">
+        <ul class="list-unstyled list-inline">
+          <li><button id="grey" class="button host-status-button lair-grey {{hostStatusButtonActive 'grey'}}">&nbsp;</button></li>
+          <li><button id="blue" class="button host-status-button lair-blue {{hostStatusButtonActive 'blue'}}">&nbsp;</button></li>
+          <li><button id="green" class="button host-status-button lair-green {{hostStatusButtonActive 'green'}}">&nbsp;</button></li>
+          <li><button id="orange" class="button host-status-button lair-orange {{hostStatusButtonActive 'orange'}}">&nbsp;</button></li>
+          <li><button id="red" class="button host-status-button lair-red {{hostStatusButtonActive 'red'}}">&nbsp;</button></li>
+          {{#if flagFilter}}
+            <li><button id="flag-filter-disable" class="button"><i class="fa fa-flag fa-lg"></i></button></li>
+          {{else}}
+            <li><button id="flag-filter-enable" class="button"><i class="fa fa-flag-o fa-lg"></i></button></li>
+          {{/if}}
+          <li><input type="text" id="host-list-search" placeholder="Search..." name="search"></li>
+          <li class="u-pull-right"><a href="/projects/{{projectId}}/hosts/new" class="button button-primary">New Host</a></li>
+        </ul>
+      </div>
     </div>
-    <div class="span10">
-      <div class="row-fluid">
-        <div class="span12">
-          <div class="btn-group">
-            <button id="grey" type="button" class="btn host-status-button hover-hand lair-grey {{hostStatusButtonActive 'grey'}}"></button>
-            <button id="blue" type="button" class="btn host-status-button hover-hand lair-blue {{hostStatusButtonActive 'blue'}}"></button>
-            <button id="green" type="button" class="btn host-status-button hover-hand lair-green {{hostStatusButtonActive 'green'}}"></button>
-            <button id="orange" type="button" class="btn host-status-button hover-hand lair-orange {{hostStatusButtonActive 'orange'}}"></button>
-            <button id="red" type="button" class="btn host-status-button hover-hand lair-red {{hostStatusButtonActive 'red'}}"></button>
-            {{#if flagFilter}}
-              <button type="button" id="flag-filter-disable" class="btn flag-filter hover-hand"><i class="fa fa-flag"></i></button>
-            {{else}}
-              <button type="button" id="flag-filter-enable" class="btn flag-filter hover-hand"><i class="fa fa-flag-o"></i></button>
-            {{/if}}
-        </div>
-        <a class="btn btn-success" href="/project/{{projectId}}/hosts/new">Add a host</a>
-        <span class="pull-right">
-            <p class="pull-right">
-            <input id="host-list-search" type="text" class="search-query" placeholder="Search" value="{{searchTerm}}" />
-            </p>
-            {{#if moreToShow}}
-            <p class="pull-right">
-                <button id="prev-page" class="btn" style="margin-right: 5px"><i class="fa fa-fast-backward"></i></button>
-                <button id="next-page" class="btn" style="margin-right: 5px"><i class="fa fa-fast-forward"></i></button>
-            </p>
-            {{/if}}
-          </span>
-        </div>
+    <div class="row">
+      <div class="twelve columns">
+        <ul class="list-unstyled list-hosts">
+          {{#each hosts}}
+            <li>
+              <div class="row list-hosts-top">
+                <span class="host-list-ip u-pull-left"><a href="/projects/{{projectId}}/hosts/{{_id}}">{{ipv4}}</a></span>
+                {{#if isFlagged}}
+                  <span class="u-pull-left"><i class="fa fa-flag flag-enabled clickable"></i></span>
+                {{else}}
+                  <span class="u-pull-left"><i class="fa fa-flag-o flag-disabled clickable"></i></span>
+                {{/if}}
+                <span class="status-span u-pull-left clickable host-status {{status}}">&nbsp;</span>
+                <span class="u-pull-left">{{statusMessage}}</span>
+                <span class="u-pull-right">{{lastModifiedBy}}</span>
+              </div>
+              <div class="row">
+                {{#each tags}}
+                  <span class="left u-pull-left tag">{{this}}&nbsp;<i id="remove-tag-{{../_id}}" class="clickable remove-tag fa fa-times"></i></span>
+                {{/each}}
+                <span class="u-pull-right right">{{hostnames.[0]}}</span>
+                <span class="u-pull-right right">{{os.fingerprint}}</span>
+              </div>
+            </li>
+          {{/each}}
+        </ul>
       </div>
-      <br />
-      <div class="row-fluid">
-      {{#if loading}}
-        {{> spinner}}
-        {{else}}
-        <div class="span12">
-          <table class="table table-bordered">
-            <thead>
-            <tr>
-              <th class="onepix"></th>
-              <th>IP Address</th>
-              <th>Hostname</th>
-              <th>Operating System</th>
-              <th>Last Modified By</th>
-            </tr>
-            </thead>
-            <tbody>
-            {{#each hosts}}
-            <tr>
-              <td>
-              {{#if flag}}
-                <i class="fa fa-flag flag-enabled hover-hand"></i>
-              {{else}}
-                <i class="fa fa-flag-o flag-disabled hover-hand"></i>
-              {{/if}}
-          </td>
-          <td class="{{status}}"><a class="dontstyle" href="/project/{{projectId}}/hosts/{{_id}}">{{string_addr}}</a></td>
-              <td class="hover-hand host-status {{status}}">{{hostnames.[0]}}</td>
-              <td class="hover-hand host-status {{status}}">{{os.fingerprint}}</td>
-              <td class="hover-hand host-status {{status}}">{{last_modified_by}}</td>
-            </tr>
-            {{/each}}
-            </tbody>
-          </table>
-        </div>
-        {{/if}}
+    </div>
+    <div class="row">
+      <div class="six columns">
+        <p>Showing {{hosts.length}} of {{total}} hosts</p>
       </div>
-      <div class="row-fluid">
-        <div class="span6">
-          <p>Displaying records {{start}} to {{end}} of {{total}}</p>
+      {{#if moreToShow}}
+        <div class="six columns">
+          <ul class="list-unstyled list-inline">
+            <li class="u-pull-right"><button id="load-all" class="button">Show All</button></li>
+            <li class="u-pull-right"><button id="load-more" class="button" style="margin-right: 10px">Show More</button></li>
+          </ul>
         </div>
-      </div>
+      {{/if}}
     </div>
   </div>
-  </template>
+</div>
+</template>

@@ -1,0 +1,11 @@
+<template name="alerts">
+{{#momentum plugin='right-to-left'}}
+{{#if alerts}}
+<div id="alerts">
+  {{#each alerts}}
+    <div class="alert {{class}}"><span class="strong">{{strong}}:</span>&nbsp;{{message}}</div>
+  {{/each}}
+</div>
+{{/if}}
+{{/momentum}}
+</template>

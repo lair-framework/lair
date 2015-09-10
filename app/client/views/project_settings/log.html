@@ -1,0 +1,25 @@
+<template name="projectSettingsLog">
+<div class="main">
+  <div class="content-navd">
+    {{> projectSettingsNav}}
+  </div>
+  <div class="container">
+    <div class="row">
+      <div class="six columns log-box">
+        <ul class="list-unstyled">
+          {{#each project.commands}}
+          <li><span style="padding-left: 5px">{{tool}}: {{command}}</span></li>
+          {{/each}}
+        </ul>
+      </div>
+      <div class="six u-pull-right columns log-box">
+        <ul class="list-unstyled">
+        {{#each project.droneLog}}
+        <li><span style="padding-left: 5px">{{this}}</span></li>
+        {{/each}}
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+</template>

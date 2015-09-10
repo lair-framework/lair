@@ -1,0 +1,25 @@
+<template name="projectList">
+<div class="container content">
+  <div class="row">
+    <div class="twelve columns">
+      <div class="u-pull-right">
+        <a href="{{pathFor route='newProject'}}" class="button button-primary">New Project</a>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="twelve columns">
+      <ul class="list-unstyled list-projects">
+        {{#each this}}
+          <li>
+            <a href="/projects/{{_id}}" class="project-name">{{name}}</a>
+            <span class="u-pull-right">Created on {{createdAt}}</span><br />
+            {{#if industry}}<p>{{industry}}</p>{{/if}}
+            {{#if description}}<p>{{description}}</p>{{/if}}
+          </li>
+        {{/each}}
+      </ul>
+    </div>
+  </div>
+</div>
+</template>

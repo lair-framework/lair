@@ -1,0 +1,18 @@
+<template name="newIssue">
+<div class="main">
+  <div class="container content">
+    <div class="row">
+      <div class="five columns">
+        <form>
+          <input type="text" class="u-full-width" name="title" placeholder="Title">
+          <input type="number" name="cvss" class="u-full-width" min="0.0" max="10.0" step="0.1" placeholder="CVSS">
+          <textarea class="u-full-width" placeholder="Description" name="description"></textarea>
+          <textarea class="u-full-width" placeholder="Evidence" name="evidence"></textarea>
+          <textarea class="u-full-width" placeholder="solution" name="solution"></textarea>
+          <button class="button button-primary">Submit</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+</template>

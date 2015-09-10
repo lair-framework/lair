@@ -1,0 +1,20 @@
+<template name="hostSettings">
+<div class="main">
+  <div class="content-navd">
+    {{> hostNav}}
+  </div>
+  <div class="container host-content">
+    <div class="row">
+      <div class="four columns">
+        <form>
+          <input type="text" name="ip-delete" class="u-full-width" placeholder="IP Address to confirm delete">
+          <button class="button lair-red">Delete</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="host-gist">
+  {{> hostGist}}
+</div>
+</template>

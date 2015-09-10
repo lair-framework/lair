@@ -1,0 +1,67 @@
+<template name="serviceSearch">
+<div class="main">
+  <div class="container content">
+    <div class="row">
+      <div class="twelve columns">
+        <p>Searching returns a unique list of services and associated hosts. All fields are optional and case insensitive.</p>
+        <form>
+          <input name="port" class="input-small" type="number" min="0" max="65535" placeholder="Port" step="any" />
+          <input name="protocol" class="input-small" type="text" placeholder="Protocol" />
+          <input name="service" class="input-medium" type="text" placeholder="Service (e.g. http)" />
+          <input name="product" class="input-medium" type="text" placeholder="Product (e.g. nginx)" />
+          <button id="services-submit" class="button"><i class="fa fa-search fa-wt"></i>&nbsp;Search</button>
+          <button id="services-clear" class="button"><i class="fa fa-refresh fa-wt"></i>&nbsp;Clear</button>
+        </form>
+      </div>
+    </div>
+    <div class="row">
+      <div class="eight columns">
+        <table class="u-full-width">
+          <thead>
+            <tr>
+              <th>Port</th>
+              <th>Protocol</th>
+              <th>Service</th>
+              <th>Product</th>
+            </tr>
+          </thead>
+          <tbody>
+          {{#each services}}
+            <tr class="port-row" style="cursor: pointer">
+              <td>{{port}}</td>
+              <td>{{protocol}}</td>
+              <td>{{service}}</td>
+              <td>{{product}}</td>
+            </tr>
+          {{/each}}
+          </tbody>
+        </table>
+        {{#if searched}}
+        <ul class="list-unstyled list-services">
+        {{#each servicesWithHosts}}
+          <li>
+            <div class="row service-row">
+              <span class="u-pull-left service-search-ip"><a href="/projects/{{projectId}}/hosts/{{hostId}}/services/{{_id}}">{{ipv4}} {{port}}/{{protocol}}</a></span>
+              {{#if isFlagged}}
+                <span class="u-pull-left"><i class="fa fa-flag flag-enabled clickable"></i></span>
+              {{else}}
+                <span class="u-pull-left"><i class="fa fa-flag-o flag-disabled clickable"></i></span>
+              {{/if}}
+              <span class="status-span u-pull-left clickable service-status {{status}}">&nbsp;</span>
+              <span class="u-pull-left">{{service}}</span>
+              <span class="u-pull-left">{{product}}</span>
+              <span class="u-pull-right">{{lastModifiedBy}}</span>
+            </div>
+          </li>
+        {{/each}}
+        </ul>
+        {{/if}}
+      </div>
+      <div class="four columns">
+        <h5>Hosts</h5>
+        <textarea id="host-textarea" class="copyonly full-height span12" readonly>{{hosts}}</textarea>
+      </div>
+    </div>
+  </div>
+</div>
+</template>

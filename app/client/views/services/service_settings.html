@@ -1,0 +1,20 @@
+<template name="serviceSettings">
+<div class="main">
+  <div class="content-navd">
+    {{> serviceNav}}
+  </div>
+  <div class="container service-content">
+    <div class="row">
+      <div class="four columns">
+        <form>
+          <input type="text" name="service-delete" class="u-full-width" placeholder="Port number to confirm delete">
+          <button class="button lair-red">Delete</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="service-gist">
+  {{> serviceGist}}
+</div>
+</template>

@@ -1,8 +1,17 @@
-// Copyright (c) 2014 Tom Steele, Dan Kottmann, FishNet Security
-// See the file license.txt for copying permission
-
-// Inserts the current version number
-Meteor.startup(function() {
-  Versions.remove({});
-  Versions.insert({"version": DOC_VERSION})
-});
+/* globals Meteor Accounts Versions Random DOCVERSION */
+Meteor.startup(function () {
+  Versions.remove({})
+  Versions.insert({
+    version: DOCVERSION
+  })
+  if (Meteor.users.find({}).count() > 0) {
+    return
+  }
+  var password = Random.hexString(15)
+  Accounts.createUser({
+    email: 'admin@localhost',
+    password: password,
+    isAdmin: true
+  })
+  console.log('Created admin@localhost with password ' + password)
+})

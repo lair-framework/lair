@@ -1,0 +1,93 @@
+<template name="peopleList">
+<div class="main">
+  <div class="container content">
+    <div class="row">
+      <div class="twelve columns">
+        <button id="remove-people" class="button lair-red"><i class="fa fa-trash fa-lg"></i></button>
+        <input type="text" id="people-search" placeholder="Search..">
+        <span class="u-pull-right">
+          <a href="/projects/{{projectId}}/people/new" class="button button-primary">New Person</a>
+        </span>
+      </div>
+    </div>
+    <div class="row">
+      <div class="eight columns">
+        <table class="u-full-width">
+          <thead>
+            <tr>
+              <th class="onepix"></th>
+              <th>Principal Name</th>
+              <th>Groups</th>
+              <th class="onepix">Creds</th>
+              <th class="onepix">Logged In</th>
+            </tr>
+          </thead>
+          <tbody>
+          {{#each people}}
+          <tr>
+            <td class="onepix"><input type="checkbox" id="{{_id}}" class="person-checked"></td>
+            <td><a class="person" href="#">{{principalName}}</a></td>
+            <td>
+              {{#each groups}}
+              {{this}}<br />
+              {{/each}}
+            </td>
+            <td class="onepix">{{credentials.length}}</td>
+            <td class="onepix">{{loggedIn.length}}</td>
+          </tr>
+          {{/each}}
+          </tbody>
+        </table>
+      </div>
+      <div class="four columns">
+      {{#momentum plugin='right-to-left'}}
+      {{#if person}}
+      {{#with person}}
+        <ul class="list-unstyled person">
+          <li>Principal Name: {{principalName}}</li>
+          <li>First Name: {{firstName}}</li>
+          <li>Middle Name: {{middleName}}</li>
+          <li>Last Name: {{lastName}}</li>
+          <li>Display Name: {{displayName}}</li>
+          <li>SAM Account Name: {{samAccountName}}</li>
+          <li>Distinguished Name: {{distinguishedName}}</li>
+          <li>Description: {{description}}</li>
+          <li>Department: {{department}}</li>
+          <li>Address: {{address}}</li>
+          <li>Last Logon: {{lastLogon}}</li>
+          <li>Last Logoff: {{lastLogoff}}</li>
+          <li>Emails:</li>
+          {{#each emails}}
+          <li>{{this}}</li>
+          {{/each}}
+          <li>Phones:</li>
+          {{#each phones}}
+          <li>{{this}}</li>
+          {{/each}}
+          <li>Groups:</li>
+          {{#each groups}}
+          <li>{{this}}</li>
+          {{/each}}
+          <li>References:</li>
+          {{#each references}}
+          <li><a href="{{link}}">{{description}}: {{username}}</a></li>
+          {{/each}}
+          <li>Logged In:</li>
+          {{#each loggedIn}}
+          <li>{{this}}</li>
+          {{/each}}
+          <li>Credentials</li>
+          {{#each credentials}}
+          <li>{{password}} {{hash}}</li>
+          {{/each}}
+          <br />
+          <li><a href="/projects/{{projectId}}/people/{{_id}}" class="button button-primary">Edit</a></li>
+        </ul>
+      {{/with}}
+      {{/if}}
+      {{/momentum}}
+      </div>
+    </div>
+  </div>
+</div>
+</template>

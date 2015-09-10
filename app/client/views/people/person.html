@@ -1,0 +1,46 @@
+<template name="person">
+<div class="main">
+  <div class="container content">
+    <div class="row">
+      <div class="six columns">
+        <h5>{{person.principalName}}</h5>
+        <form>
+          <label>First Name</label>
+          <input type="text" name="firstname" class="u-full-width" value="{{person.firstName}}">
+          <label>Middle Name</label>
+          <input type="text" name="middlename" class="u-full-width" value="{{person.middleName}}">
+          <label>Last Name</label>
+          <input type="text" name="lastname" class="u-full-width" value="{{person.lastName}}">
+          <label>Display Name</label>
+          <input type="text" name="displayname" class="u-full-width" value="{{person.displayName}}">
+          <label>SAM Account Name</label>
+          <input type="text" name="samccount-name" class="u-full-width" value="{{person.samAccountName}}">
+          <label>Distinguished Name</label>
+          <input type="text" name="distinguished-name" class="u-full-width" value="{{person.distinguishedName}}">
+          <label>Description</label>
+          <input type="text" name="description" class="u-full-width" value="{{person.description}}">
+          <label>Department</label>
+          <input type="text" name="department" class="u-full-width" value="{{person.department}}">
+          <label>Last Logon</label>
+          <input type="text" name="lastlogon" class="u-full-width" value="{{person.lastLogon}}">
+          <label>Last Logoff</label>
+          <input type="text" name="lastlogoff" class="u-full-width" value="{{person.lastLogoff}}">
+          <label>Address</label>
+          <textarea name="address" class="u-full-width" value="Address">{{person.address}}</textarea>
+          <label>Newline separated list of emails addresses</label>
+          <textarea name="emails" class="u-full-width">{{person.emails}}</textarea>
+          <label>Newline separated lsit of phone numbers</label>
+          <textarea name="phones" class="u-full-width">{{person.phones}}</textarea>
+          <label>Newline separated list of groups</label>
+          <textarea name="groups" class="u-full-width">{{person.groups}}</textarea>
+          <label>CSV of references in the format of description,username,link (ie. twitter,@laircat,https://twitter/laircat)</label>
+          <textarea name="references" class="u-full-width">{{person.references}}</textarea>
+          <label>Newline separated list of hosts where the user is logged in</label>
+          <textarea name="loggedin" class="u-full-width">{{person.loggedIn}}</textarea>
+          <button class="button button-primary">Submit</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+</template>

@@ -1,0 +1,20 @@
+<template name="issueDescription">
+<div class="main">
+  <div class="content-navd">
+    {{> issueNav}}
+  </div>
+  <div class="container issue-content">
+    <div class="row">
+      <div class="twelve columns">
+        <form>
+        <textarea class="u-full-width" rows="10" name="description">{{issue.description}}</textarea>
+        <button class="button button-primary">Save</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="issue-gist">
+  {{> issueGist}}
+</div>
+</template>

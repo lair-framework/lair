@@ -1,0 +1,67 @@
+<template name="hostServiceList">
+<div class="main">
+  <div class="content-navd">
+    {{> hostNav}}
+  </div>
+  <div class="container host-content">
+    <div class="row">
+      <div class="twelve columns">
+        <ul class="list-unstyled list-inline">
+          <li><button id="grey" class="button borderless service-status-button lair-grey {{serviceStatusButtonActive 'grey'}}">&nbsp;</button></li>
+          <li><button id="blue" class="button borderless service-status-button lair-blue {{serviceStatusButtonActive 'blue'}}">&nbsp;</button></li>
+          <li><button id="green" class="button service-status-button lair-green {{serviceStatusButtonActive 'green'}}">&nbsp;</button></li>
+          <li><button id="orange" class="button service-status-button lair-orange {{serviceStatusButtonActive 'orange'}}">&nbsp;</button></li>
+          <li><button id="red" class="button service-status-button lair-red {{serviceStatusButtonActive 'red'}}">&nbsp;</button></li>
+          {{#if flagFilter}}
+            <li><button id="flag-filter-disable" class="button"><i class="fa fa-flag fa-lg"></i></button></li>
+          {{else}}
+            <li><button id="flag-filter-enable" class="button"><i class="fa fa-flag-o fa-lg"></i></button></li>
+          {{/if}}
+          <li><button id="remove-services" class="button lair-red"><i class="fa fa-trash fa-lg"></i></button></li>
+          <li><input type="text" id="service-list-search" placeholder="Search..." name="search"></li>
+          <li class="u-pull-right"><a href="/projects/{{projectId}}/hosts/{{host._id}}/services/new" class="button button-primary">New Service</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="row">
+      <div class="twelve columns">
+        <ul class="list-unstyled list-services">
+          {{#each services}}
+            <li>
+              <div class="row service-row">
+                <span class="u-pull-left"><input class="service-checked" id="{{_id}}" type="checkbox"></span>
+                <span class="service-list-port u-pull-left"><a href="/projects/{{projectId}}/hosts/{{hostId}}/services/{{_id}}">{{port}}/{{protocol}}</a></span>
+                {{#if isFlagged}}
+                  <span class="u-pull-left"><i class="fa fa-flag flag-enabled clickable"></i></span>
+                {{else}}
+                  <span class="u-pull-left"><i class="fa fa-flag-o flag-disabled clickable"></i></span>
+                {{/if}}
+                <span class="status-span u-pull-left clickable service-status {{status}}">&nbsp;</span>
+                <span class="u-pull-left">{{service}}</span>
+                <span class="u-pull-left">{{product}}</span>
+                <span class="u-pull-right">{{lastModifiedBy}}</span>
+              </div>
+            </li>
+          {{/each}}
+        </ul>
+      </div>
+    </div>
+    <div class="row">
+      <div class="six columns">
+        <p>Showing {{services.length}} of {{total}} services</p>
+      </div>
+      {{#if moreToShow}}
+      <div class="six columns">
+        <ul class="list-unstyled list-inline">
+          <li class="u-pull-right"><button id="load-all" class="button">Show All</button></li>
+          <li class="u-pull-right"><button id="load-more" class="button" style="margin-right: 10px">Show More</button></li>
+        </ul>
+      </div>
+     {{/if}}
+   </div>
+  </div>
+</div>
+<div class="host-gist">
+  {{> hostGist}}
+</div>
+</template>

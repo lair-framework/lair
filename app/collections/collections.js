@@ -1,11 +1,14 @@
-// Copyright (c) 2014 Tom Steele, Dan Kottmann, FishNet Security
-// See the file license.txt for copying permission
-
-Projects = new Meteor.Collection("projects");
-Hosts = new Meteor.Collection("hosts");
-Ports = new Meteor.Collection("ports");
-Vulnerabilities = new Meteor.Collection("vulnerabilities");
-Versions = new Meteor.Collection("versions");
-Settings = new Meteor.Collection("settings");
-Counts = new Meteor.Collection("counts");
-WebDirectories = new Meteor.Collection("web_directories");
+/* eslint-disable */
+Projects = new Meteor.Collection('projects')
+Hosts = new Meteor.Collection('hosts')
+Services = new Meteor.Collection('services')
+Issues = new Meteor.Collection('issues')
+People = new Meteor.Collection('people')
+Versions = new Meteor.Collection('versions')
+Settings = new Meteor.Collection('settings')
+WebDirectories = new Meteor.Collection('web_directories')
+Credentials = new Meteor.Collection('credentials')
+AuthInterfaces = new Meteor.Collection('auth_interfaces')
+Netblocks = new Meteor.Collection('netblocks')
+Alerts = new Meteor.Collection(null)
+/* eslint-enable */

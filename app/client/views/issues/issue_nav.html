@@ -1,0 +1,17 @@
+<template name="issueNav">
+<div class="subnav">
+  <div class="container">
+    <ul>
+      <li class="{{isActive 'issueDescription' }}"><a href="/projects/{{projectId}}/issues/{{issue._id}}/description">DESCRIPTION</a></li>
+      <li class="{{isActive 'issueEvidence' }}"><a href="/projects/{{projectId}}/issues/{{issue._id}}/evidence">EVIDENCE</a></li>
+      <li class="{{isActive 'issueSolution' }}"><a href="/projects/{{projectId}}/issues/{{issue._id}}/solution">SOLUTION</a></li>
+      <li class="{{isActive 'issueHostList' }}"><a href="/projects/{{projectId}}/issues/{{issue._id}}/hosts">HOSTS</a></li>
+      <li class="{{isActive 'issueCVEList' }}"><a href="/projects/{{projectId}}/issues/{{issue._id}}/cves">CVEs</a></li>
+      <li class="{{isActive 'issueReferenceList' }}"><a href="/projects/{{projectId}}/issues/{{issue._id}}/references">REFERENCES</a></li>
+      <li class="{{isActive 'issueNoteList' }}"><a href="/projects/{{projectId}}/issues/{{issue._id}}/notes">NOTES</a></li>
+      <li class="{{isActive 'issueFileList' }}"><a href="/projects/{{projectId}}/issues/{{issue._id}}/files">FILES</a></li>
+      <li class="{{isActive 'issueSettings' }}"><a href="/projects/{{projectId}}/issues/{{issue._id}}/settings">SETTINGS</a></li>
+    </ul>
+  </div>
+</div>
+</template>

@@ -1,0 +1,48 @@
+<template name="projectSettings">
+<div class="main">
+  <div class="content-navd">
+    {{> projectSettingsNav}}
+  </div>
+  <div class="container">
+    <div class="row">
+      <div class="twelve columns">
+        <h5>Download</h5>
+        <p>Download this project as a JSON file</p>
+        <button class="button button-primary" id="download">Download</button>
+        <hr />
+        <h5>Export</h5>
+        <p>Export this project to an HTTP listener</p>
+        <form id="export">
+          <div class="row">
+            <div class="four columns">
+              <input class="u-full-width" placeholder="HTTP(S) Listener" type="text" name="url">
+            </div>
+          </div>
+          <div class="row">
+            <div class="four columns">
+              <input class="u-full-width" type="text" placeholder="Username" name="username">
+            </div>
+          </div>
+          <div class="row">
+            <div class="four columns">
+              <input class="u-full-width" type="password" placeholder="Password" name="password">
+            </div>
+          </div>
+          <input class="button-primary" type="submit" value="submit">
+        </form>
+        <hr />
+        <h5>Delete</h5>
+        <p>Deletion is permanent. Type the project id into the form below to delete</p>
+        <form>
+          <div class="row">
+            <div class="four columns">
+              <input class="u-full-width" type="text" name="project-id" placeholder="Project ID">
+            </div>
+          </div>
+          <button id="delete" class="button lair-red">Delete</button>
+        </form>
+      </div>
+      </div>
+    </div>
+  </div>
+</template>

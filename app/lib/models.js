@@ -1,134 +1,207 @@
-// Copyright (c) 2014 Tom Steele, Dan Kottmann, FishNet Security
-// See the file license.txt for copying permission
+/* globals Models Status Random */
 
-models = {
-  project: function() {
+Models = { // eslint-disable-line
+  project: function () {
     return {
-      'project_name': '',
-      'industry': '',
-      'creation_date': '',
-      'description': '',
-      'owner': '',
-      'contributors': [],
-      'commands': [],
-      'notes': [],
-      'drone_log': [],
-      'messages': [],
-      'files': []
-    };
+      name: '',
+      industry: '',
+      createdAt: '',
+      description: '',
+      owner: '',
+      contributors: [],
+      commands: [],
+      notes: [],
+      droneLog: [],
+      files: []
+    }
   },
 
-  file: function() {
+  host: function () {
     return {
-      'name': '',
-      'url': ''
-    };
+      projectId: '',
+      longIpv4Addr: 0,
+      ipv4: '',
+      mac: '',
+      hostnames: [],
+      os: '',
+      notes: [],
+      statusMessage: '',
+      tags: [],
+      status: Status.grey,
+      lastModifiedBy: '',
+      isFlagged: false,
+      files: []
+    }
   },
 
-  message: function() {
+  authInterface: function () {
     return {
-      'user': '',
-      'message': ''
-    };
+      projectId: '',
+      isMultifactor: true,
+      kind: '',
+      url: '',
+      description: ''
+    }
   },
 
-  host: function() {
+  netblock: function () {
     return {
-      'project_id': '',
-      'long_addr': 0,
-      'string_addr': '',
-      'mac_addr': '',
-      'hostnames': [],
-      'os': [],
-      'notes': [],
-      'tags': [],
-      'alive': true,
-      'status': STATUS_GREY,
-      'last_modified_by': '',
-      'flag': false
-    };
+      projectId: '',
+      asn: '',
+      asnCountryCode: '',
+      asnCidr: '',
+      asnDate: '',
+      asnRegistry: '',
+      cidr: '',
+      abuseEmails: '',
+      miscEmails: '',
+      techEmails: '',
+      name: '',
+      address: '',
+      city: '',
+      state: '',
+      country: '',
+      postalCode: '',
+      created: '',
+      updated: '',
+      description: '',
+      handle: ''
+    }
   },
 
-  web: function() {
+  os: function () {
     return {
-      'project_id': '',
-      'host_id': '',
-      'path': '',
-      'path_clean': '',
-      'port': '',
-      'response_code': '',
-      'last_modified_by': '',
-      'flag': false
-    };
+      tool: '',
+      fingerprint: 'Unknown',
+      weight: 0
+    }
   },
 
-  os: function() {
+  service: function () {
     return {
-      'tool': '',
-      'weight': 0,
-      'fingerprint': 'unknown'
-    };
-  },
-  
-  note: function() {
-    return {
-      'title': '',
-      'content': '',
-      'last_modified_by': ''
-    };
-  },
-
-  port: function() {
-    return {
-      'project_id': '',
-      'host_id': '',
-      'port': 0,
-      'protocol': PROTOCOL_TCP,
-      'service': SERVICE_UNKNOWN,
-      'product': PRODUCT_UNKNOWN,
-      'alive': true,
-      'status': STATUS_GREY,
-      'credentials': [],
-      'notes': [],
-      'last_modified_by': '',
-      'flag': false
-    };
-  },
- 
-  credential: function() {
-    return {
-      'username': '',
-      'password': '',
-      'hash': '',
-    };
+      projectId: '',
+      hostId: '',
+      port: 0,
+      protocol: 'tcp',
+      service: 'Unknown',
+      product: 'Unknown',
+      status: Status.grey,
+      isFlagged: false,
+      lastModifiedBy: '',
+      notes: [],
+      files: []
+    }
   },
 
-  vulnerability: function() {
+  issue: function () {
     return {
-      'project_id': '',
-      'title': '',
-      'description': '',
-      'solution': '',
-      'status': STATUS_GREY,
-      'cvss': 0,
-      'cves': [],
-      'plugin_ids': [],
-      'identified_by': [],
-      'confirmed': false,
-      'notes': [],
-      'tags': [],
-      'evidence': '',
-      'hosts': [],
-      'last_modified_by': '',
-      'flag': false
-    };
+      projectId: '',
+      title: '',
+      cvss: 0,
+      rating: '',
+      isConfirmed: false,
+      description: '',
+      evidence: '',
+      solution: '',
+      hosts: [],
+      pluginIds: [{
+        tool: 'Manual',
+        id: Random.id()
+      }],
+      cves: [],
+      references: [],
+      identifiedBy: [{
+        tool: 'Manual'
+      }],
+      notes: [],
+      isFlagged: false,
+      status: Status.grey,
+      lastModifiedBy: '',
+      files: []
+    }
   },
 
-  plugin_id: function(s) {
-    var hex = string2Hex(s);
+  issueHost: function () {
     return {
-      'tool': '',
-      'id': hex
-    };
+      ipv4: '',
+      port: 0,
+      protocol: ''
+    }
+  },
+
+  issueReference: function () {
+    return {
+      link: '',
+      name: ''
+    }
+  },
+
+  person: function () {
+    return {
+      projectId: '',
+      principalName: '',
+      samAccountName: '',
+      distinguishedName: '',
+      firstName: '',
+      middleName: '',
+      lastName: '',
+      displayName: '',
+      department: '',
+      description: '',
+      address: '',
+      emails: [],
+      phones: [],
+      references: [],
+      groups: [],
+      lastLogon: '',
+      lastLogoff: '',
+      loggedIn: []
+    }
+  },
+
+  personReference: function () {
+    return {
+      description: '',
+      username: '',
+      link: ''
+    }
+  },
+
+  note: function () {
+    return {
+      title: '',
+      content: '',
+      lastModifiedBy: ''
+    }
+  },
+
+  credential: function () {
+    return {
+      username: '',
+      password: '',
+      format: '',
+      hash: '',
+      host: '',
+      service: ''
+    }
+  },
+
+  webDirectory: function () {
+    return {
+      projectId: '',
+      hostId: '',
+      path: '',
+      port: 0,
+      responseCode: '',
+      lastModifiedBy: '',
+      isFlagged: false
+    }
+  },
+
+  file: function () {
+    return {
+      filename: '',
+      url: ''
+    }
   }
-};
+}

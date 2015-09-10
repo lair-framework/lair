@@ -1,0 +1,61 @@
+<template name="netblocks">
+<div class="main">
+  <div class="content container">
+    <div class="row">
+      <div class="twelve columns">
+        <button id="remove-netblocks" class="button lair-red"><i class="fa fa-trash fa-lg"></i></button>
+        <div class="u-pull-right">
+          <a href="/projects/{{projectId}}/netblocks/new" class="button button-primary">New Netblock</a>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="six columns">
+        <table class="u-full-width">
+          <thead>
+            <tr>
+              <th style="width: 1px"></th>
+              <td>CIDR</td>
+              <td>Description</td>
+            </tr>
+          </thead>
+          <tbody>
+          {{#each netblocks}}
+            <tr class="netblock-row" style="cursor: pointer">
+              <td style="width: 1px"><input class="netblock-checked" id="{{_id}}" type="checkbox"></td>
+              <td>{{cidr}}</td>
+              <td>{{description}}</td>
+            </tr>
+          {{/each}}
+          </tbody>
+        </table>
+      </div>
+      <div class="six columns">
+      {{#if netblock}}
+      <ul class="list-unstyled">
+        <li>ASN: {{netblock.asn}}</li>
+        <li>ASN Country Code: {{netblock.asnCountryCode}}</li>
+        <li>ASN CIDR: {{netblock.asnCidr}}</li>
+        <li>ASN Date: {{netblock.asnDate}}</li>
+        <li>ASN Registry: {{netblock.asnRegistry}}</li>
+        <li>CIDR: {{netblock.cidr}}</li>
+        <li>Description: {{netblock.description}}</li>
+        <li>Name: {{netblock.name}}</li>
+        <li>Handle: {{netblock.handle}}</li>
+        <li>Abuse Email: {{netblock.abuseEmails}}</li>
+        <li>Misc. Email: {{netblock.miscEmails}}</li>
+        <li>Tech. Email: {{netblock.techEmails}}</li>
+        <li>Address: {{netblock.address}}</li>
+        <li>City: {{netblock.city}}</li>
+        <li>State: {{netblock.state}}</li>
+        <li>Country: {{netblock.country}}</li>
+        <li>Postal Code: {{netblock.postalCode}}</li>
+        <li>Created: {{netblock.created}}</li>
+        <li>Updated: {{netblock.updated}}</li>
+      </ul>
+      {{/if}}
+      </div>
+    </div>
+  </div>
+</div>
+</template>

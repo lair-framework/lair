@@ -1,0 +1,41 @@
+<template name="issueCVEList">
+<div class="main">
+  <div class="content-navd">
+    {{> issueNav}}
+  </div>
+  <div class="container issue-content">
+    <div class="row">
+      <div class="seven columns">
+        <button class="button lair-red" id="remove-cves"><i class="fa fa-trash fa-lg"></i></button>
+      </div>
+      <div class="five columns">
+        <form>
+          <div class="row">
+            <div class="eight columns">
+              <input type="text" class="u-full-width" name="cve" placeholder="2008-4250">
+            </div>
+            <div class="four columns">
+              <button class="button button-primary">Add CVE</button>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+    <div class="row">
+      <div class="four columns">
+        <ul class="list-unstyled list-alternate">
+        {{#each issue.cves}}
+          <li>
+            <input type="checkbox" class="cve-checked" id="{{this}}">
+            <span class="issue-cve right-mark">{{this}}</span>
+          </li>
+        {{/each}}
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="issue-gist">
+  {{> issueGist}}
+</div>
+</template>
