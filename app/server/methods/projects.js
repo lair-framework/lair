@@ -117,13 +117,11 @@ function downloadProject (id) {
   if (!AuthorizeChange(id, this.userId)) {
     throw new Meteor.Error(403, 'Access Denied')
   }
-  this.unblock()
   check(id, Matchers.isObjectId)
   return prepareExport(id)
 }
 
 function exportProject (id, url, username, password) {
-  this.unblock()
   check(id, Matchers.isObjectId)
   if (!AuthorizeChange(id, this.userId)) {
     throw new Meteor.Error(403, 'Access Denied')
