@@ -55,3 +55,19 @@ SettingsController = RouteController.extend({// eslint-disable-line
     ]
   }
 })
+
+MeController = RouteController.extend({// eslint-disable-line
+  onBeforeAction: function () {
+    if (!(Meteor.loggingIn() || Meteor.user())) {
+      this.redirect('signin')
+      this.next()
+      return
+    }
+    this.next()
+  },
+  waitOn: function () {
+    return [
+      Meteor.subscribe('directory')
+    ]
+  }
+})

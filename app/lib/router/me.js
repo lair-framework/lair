@@ -2,5 +2,5 @@
 
 Router.route('/me', {
   name: 'me',
-  controller: 'SettingsController'
+  controller: 'MeController'
 })
