@@ -15,6 +15,17 @@
       </div>
     </div>
     <div class="row">
+      <div class="twelve columns">
+        {{#unless services}}
+        {{#if searched}}
+          <p>No services found.</p>
+        {{else}}
+          <p>The default searched returned too many services. Please use the search fields above to filter the results.</p>
+        {{/if}}
+        {{/unless}}
+      </div>
+    </div>
+    <div class="row">
       <div class="eight columns">
         <table class="u-full-width">
           <thead>
