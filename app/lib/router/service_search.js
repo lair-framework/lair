@@ -17,39 +17,38 @@ Router.route('/projects/:id/services', {
     }
     var services = []
     if (Session.get('servicesViewQuery') === null) {
-      if (Services.find({}).count() > 1000) {
-        services = []
-      } else {
-        services = Services.find({}, {sort: {port: 1}}).fetch()
-      }
+      services = Services.find({}, {sort: {port: 1}}).fetch()
     } else {
       services = Services.find(Session.get('servicesViewQuery'), {sort: {port: 1}}).fetch()
     }
-    if (services.length > 1000) {
-      services = []
+    var hosts = []
+    var servicesWithHosts = []
+    if (services.length < 5000) {
+      for (var i = 0; i < services.length; i++) {
+        var service = services[i]
+        var host = Hosts.findOne({_id: service.hostId})
+        if (host) {
+          hosts.push(host)
+          service.ipv4 = host.ipv4
+          service.longIpv4Addr = host.longIpv4Addr
+        }
+      }
+      servicesWithHosts = services.sort(IPUtils.sortLongAddr)
+    } else {
       Alerts.insert({
         class: 'alert-warning',
         strong: 'Error',
-        message: 'Data set too large. Suggest using CLI utilities'
+        message: 'Data set too large, associated hosts will not be shown. Suggest using CLI utilities or further reducing search'
       })
     }
-    var hosts = []
-    for (var i = 0; i < services.length; i++) {
-      var service = services[i]
-      var host = Hosts.findOne({_id: service.hostId})
-      if (host) {
-        hosts.push(host)
-        service.ipv4 = host.ipv4
-        service.longIpv4Addr = host.longIpv4Addr
-      }
-    }
+
     return {
       projectId: this.params.id,
       projectName: project.name,
       services: _.uniq(services, function (i) {
         return JSON.stringify({port: i.port, protocol: i.protocol, service: i.service, product: i.product})
       }),
-      servicesWithHosts: services.sort(IPUtils.sortLongAddr),
+      servicesWithHosts: servicesWithHosts,
       hosts: _.pluck(_.uniq(hosts.sort(IPUtils.sortLongAddr), function (i) {
         return i.ipv4
       }), 'ipv4').join('\n'),
