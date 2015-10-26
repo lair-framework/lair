@@ -38,6 +38,7 @@ function createIssue (id, title, cvss, description, evidence, solution) {
     throw new Meteor.Error(403, 'Access Denied')
   }
   if (Issues.findOne({
+    projectId: id,
     title: title
   })) {
     throw new Meteor.Error(400, 'An Issue with that title alrady exists')
@@ -173,6 +174,7 @@ function setIssueTitle (id, issueId, title) {
     throw new Meteor.Error(403, 'Access Denied')
   }
   if (Issues.findOne({
+    projectId: id,
     title: title
   })) {
     throw new Meteor.Error(400, 'An Issue with that title alrady exists')
