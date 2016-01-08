@@ -31,7 +31,7 @@ Router.route('/projects/:id/hosts/:hid/services/:sid/issues', {
   controller: 'ProjectController',
   onRun: function () {
     if (Settings.findOne({
-      settings: 'persistViewFilters',
+      setting: 'persistViewFilters',
       enabled: true
     })) {
       this.next()
