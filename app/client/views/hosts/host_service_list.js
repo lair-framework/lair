@@ -59,8 +59,9 @@ Template.hostServiceList.events({
   },
 
   'click #load-more': function () {
-    var previousLimit = Session.get('hostServiceViewLimit') || 25
-    var newLimit = previousLimit + 25
+    var viewIncrement = Session.get('viewIncrement') || 25
+    var previousLimit = Session.get('hostServiceViewLimit') || viewIncrement
+    var newLimit = previousLimit + viewIncrement
     Session.set('hostServiceViewLimit', newLimit)
   },
 

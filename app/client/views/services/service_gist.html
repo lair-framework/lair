@@ -19,7 +19,7 @@
     </div>
     <div class="four columns">
       <ul class="list-unstyled gist">
-        <li>Host:&nbsp;<a href="/projects/{{projectId}}/hosts/{{host._id}}">{{host.ipv4}}</a></li>
+        <li>Host:&nbsp;{{#linkTo route="hostServiceList" id=projectId hid=host._id}}{{host.ipv4}}{{/linkTo}}</li>
       </ul>
     </div>
     <div class="four columns gist">

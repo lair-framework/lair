@@ -11,6 +11,9 @@ Router.route('/settings', {
       persistViewFilters: Settings.findOne({
         setting: 'persistViewFilters'
       }),
+      numViewItems: Settings.findOne({
+        setting: 'numViewItems'
+      }),
       isSettings: true
     }
   }
