@@ -5,7 +5,7 @@ Router.route('/projects/:id/issues', {
   controller: 'ProjectController',
   onRun: function () {
     if (Settings.findOne({
-      settings: 'persistViewFilters',
+      setting: 'persistViewFilters',
       enabled: true
     })) {
       this.next()

@@ -5,7 +5,7 @@ Router.route('/projects/:id/hosts', {
   controller: 'ProjectController',
   onRun: function () {
     if (Settings.findOne({
-      settings: 'persistViewFilters',
+      setting: 'persistViewFilters',
       enabled: true
     })) {
       this.next()
@@ -137,7 +137,7 @@ Router.route('/projects/:id/hosts/:hid/services', {
   controller: 'ProjectController',
   onRun: function () {
     if (Settings.findOne({
-      settings: 'persistViewFilters',
+      setting: 'persistViewFilters',
       enabled: true
     })) {
       this.next()
@@ -324,7 +324,7 @@ Router.route('/projects/:id/hosts/:hid/issues', {
   controller: 'ProjectController',
   onRun: function () {
     if (Settings.findOne({
-      settings: 'persistViewFilters',
+      setting: 'persistViewFilters',
       enabled: true
     })) {
       this.next()
