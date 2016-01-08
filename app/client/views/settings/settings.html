@@ -24,6 +24,28 @@
         {{/if}}
       </div>
     </div>
+    <hr />
+    <div class="row">
+      <div class="six columns">
+        <h5>View</h5>
+        <p>Number of hosts/services/etc. to show per page</p>
+        
+        <form id="set-view-increment">
+          <div class="row">
+            <div class="four columns">
+              {{#if numViewItems.value}}
+                <input type="text"  class="u-full-width" name="num-items" placeholder="{{numViewItems.value}}">
+              {{else}}
+                <input type="text"  class="u-full-width" name="num-items" placeholder="22">
+              {{/if}}
+            </div>
+            <div class="two columns">
+              <button class="button button-primary">Save</button>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
   </div>
 </div>
 </template>
