@@ -25,7 +25,7 @@
           {{#each hosts}}
             <li>
               <div class="row list-hosts-top">
-                <span class="host-list-ip u-pull-left"><a href="/projects/{{projectId}}/hosts/{{_id}}">{{ipv4}}</a></span>
+                <span class="host-list-ip u-pull-left">{{#linkTo route="hostServiceList" id=projectId hid=_id }}{{ipv4}}{{/linkTo}}</span>
                 {{#if isFlagged}}
                   <span class="u-pull-left"><i class="fa fa-flag flag-enabled clickable"></i></span>
                 {{else}}
