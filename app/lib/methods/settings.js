@@ -6,7 +6,8 @@ Meteor.methods({
   changeLairUserPassword: changeLairUserPassword,
   toggleLairUserIsAdmin: toggleLairUserIsAdmin,
   toggleClientSideUpdates: toggleClientSideUpdates,
-  togglePersistViewFilters: togglePersistViewFilters
+  togglePersistViewFilters: togglePersistViewFilters,
+  setViewIncrement: setViewIncrement
 })
 
 function createLairUser (email, password, isAdmin) {
@@ -120,4 +121,13 @@ function togglePersistViewFilters () {
   } else {
     return Settings.update({setting: 'persistViewFilters'}, {$set: {enabled: false}})
   }
+}
+
+function setViewIncrement (numItems) {
+  if (!Meteor.user().isAdmin) {
+    throw new Meteor.Error(403, 'Access Denied')
+  }
+  numItems = parseInt(numItems, 10)
+  check(numItems, Matchers.isPositiveInteger)
+  return Settings.upsert({setting: 'numViewItems'}, {$set: {value: numItems}})
 }

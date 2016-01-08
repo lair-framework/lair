@@ -11,6 +11,7 @@ Router.route('/projects/:id/hosts', {
       this.next()
       return
     }
+    Session.set('viewIncrement', 25)
     Session.set('hostViewLimit', 25)
     Session.set('hostListSearch', null)
     Session.set('hostListStatusButtongrey', null)
@@ -22,6 +23,19 @@ Router.route('/projects/:id/hosts', {
     this.next()
   },
   data: function () {
+    // Handle updating of the number of items to view by default
+    var numViewItems = 25
+    var numViewItemsSetting = Settings.findOne({setting: 'numViewItems'})
+    if (numViewItemsSetting) {
+      numViewItems = numViewItemsSetting.value
+    }
+    if ( Session.get('hostViewLimit') == Session.get('viewIncrement')) {
+      Session.set('hostViewLimit', numViewItems)
+    } else if (Session.get('hostViewLimit') < numViewItems) {
+      Session.set('hostViewLimit', numViewItems)
+    }
+    Session.set('viewIncrement', numViewItems)
+
     var project = Projects.findOne({
       _id: this.params.id
     })
@@ -46,7 +60,7 @@ Router.route('/projects/:id/hosts', {
         }
       },
       hosts: function () {
-        var limit = Session.get('hostViewLimit') || 25
+        var limit = Session.get('hostViewLimit') || Session.get('viewIncrement') || 25
         var query = {
           projectId: self.params.id,
           status: {
@@ -129,6 +143,7 @@ Router.route('/projects/:id/hosts/:hid/services', {
       this.next()
       return
     }
+    Session.set('viewIncrement', 25)
     Session.set('hostServiceViewLimit', 25)
     Session.set('hostServiceListSearch', null)
     Session.set('hostServiceListStatusButtongrey', null)
@@ -140,6 +155,19 @@ Router.route('/projects/:id/hosts/:hid/services', {
     this.next()
   },
   data: function () {
+    // Handle updating of the number of items to view by default
+    var numViewItems = 25
+    var numViewItemsSetting = Settings.findOne({setting: 'numViewItems'})
+    if (numViewItemsSetting) {
+      numViewItems = numViewItemsSetting.value
+    }
+    if ( Session.get('hostServiceViewLimit') == Session.get('viewIncrement')) {
+      Session.set('hostServiceViewLimit', numViewItems)
+    } else if (Session.get('hostServiceViewLimit') < numViewItems) {
+      Session.set('hostServiceViewLimit', numViewItems)
+    }
+    Session.set('viewIncrement', numViewItems)
+
     var project = Projects.findOne({
       _id: this.params.id
     })
@@ -174,7 +202,7 @@ Router.route('/projects/:id/hosts/:hid/services', {
         }
       },
       services: function () {
-        var limit = Session.get('hostServiceViewLimit') || 25
+        var limit = Session.get('hostServiceViewLimit') || Session.get('viewIncrement') || 25
         var query = {
           projectId: self.params.id,
           hostId: self.params.hid,
