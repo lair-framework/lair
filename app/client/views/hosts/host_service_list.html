@@ -30,7 +30,7 @@
             <li>
               <div class="row service-row">
                 <span class="u-pull-left"><input class="service-checked" id="{{_id}}" type="checkbox"></span>
-                <span class="service-list-port u-pull-left"><a href="/projects/{{projectId}}/hosts/{{hostId}}/services/{{_id}}">{{port}}/{{protocol}}</a></span>
+                <span class="service-list-port u-pull-left">{{#linkTo route="serviceIssueList" id=projectId hid=hostId sid=_id}}{{port}}/{{protocol}}{{/linkTo}}</span>
                 {{#if isFlagged}}
                   <span class="u-pull-left"><i class="fa fa-flag flag-enabled clickable"></i></span>
                 {{else}}
