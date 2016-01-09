@@ -49,5 +49,10 @@ Matchers = { // eslint-disable-line
   isResponseCode: Match.Where(function (x) {
     check(x, String)
     return x.match(/^[1|2|3|4|5]\d{2}$/)
+  }),
+
+  isPositiveInteger: Match.Where(function (x) {
+    check(x, Match.Integer)
+    return x > 0
   })
 }

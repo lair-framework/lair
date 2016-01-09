@@ -44,8 +44,9 @@ Template.hostList.events({
   },
 
   'click #load-more': function () {
-    var previousLimit = Session.get('hostViewLimit') || 25
-    var newLimit = previousLimit + 25
+    var viewIncrement = Session.get('viewIncrement') || 25
+    var previousLimit = Session.get('hostViewLimit') || viewIncrement
+    var newLimit = previousLimit + viewIncrement
     Session.set('hostViewLimit', newLimit)
   },
 
