@@ -3,12 +3,12 @@
     <div class="navbar-content">
       <span class="brand"><a href="/">LAIR</a></span>
       <ul class="u-pull-right">
-        <li><a href="/info"><i class="fa fa-info"></i></a></li>
+        <li>{{#linkTo route="hotKeys"}}<i class="fa fa-info"></i>{{/linkTo}}</li>
         {{#if currentUser.isAdmin}}
-        <li><a href="/settings"><i class="fa fa-cogs"></i></a></li>
+        <li>{{#linkTo route="settings"}}<i class="fa fa-cogs"></i>{{/linkTo}}</li>
         {{/if}}
-        <li><a href="/me"><i class="fa fa-user"></i></a></li>
-        <li><a href="/signout"><i class="fa fa-sign-out"></i></a></li>
+        <li>{{#linkTo route="me"}}<i class="fa fa-user"></i>{{/linkTo}}</li>
+        <li>{{#linkTo route="signout"}}<i class="fa fa-sign-out"></i>{{/linkTo}}</li>
       </ul>
     </div>
   </div>
