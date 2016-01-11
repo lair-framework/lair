@@ -21,7 +21,7 @@ Router.route('/projects/:id/hosts/:hid/services/new', {
 Router.route('/projects/:id/hosts/:hid/services/:sid', {
   controller: 'ProjectController',
   onBeforeAction: function () {
-    this.redirect('/projects/' + this.params.id + '/hosts/' + this.params.hid + '/services/' + this.params.sid + '/issues')
+    this.redirect('/projects/' + this.params.id + '/hosts/' + this.params.hid + '/services/' + this.params.sid + '/issues', {}, {replaceState: true})
     this.next()
   }
 })

@@ -11,7 +11,7 @@ Router.route('/signin', {
 Router.route('/signout', {
   onBeforeAction: function () {
     Meteor.logout()
-    this.redirect('signin')
+    this.redirect('signin', {}, {replaceState: true})
     this.next()
   }
 })

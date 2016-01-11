@@ -2,7 +2,7 @@
 ProjectController = RouteController.extend({ // eslint-disable-line
   onBeforeAction: function () {
     if (!(Meteor.loggingIn() || Meteor.user())) {
-      this.redirect('signin')
+      this.redirect('signin', {}, {replaceState: true})
       this.next()
       return
     }
@@ -37,12 +37,12 @@ ProjectController = RouteController.extend({ // eslint-disable-line
 SettingsController = RouteController.extend({// eslint-disable-line
   onBeforeAction: function () {
     if (!(Meteor.loggingIn() || Meteor.user())) {
-      this.redirect('signin')
+      this.redirect('signin', {}, {replaceState: true})
       this.next()
       return
     }
     if (!Meteor.user().isAdmin) {
-      this.redirect('/')
+      this.redirect('/', {}, {replaceState: true})
       this.next()
       return
     }
@@ -59,7 +59,7 @@ SettingsController = RouteController.extend({// eslint-disable-line
 MeController = RouteController.extend({// eslint-disable-line
   onBeforeAction: function () {
     if (!(Meteor.loggingIn() || Meteor.user())) {
-      this.redirect('signin')
+      this.redirect('signin', {}, {replaceState: true})
       this.next()
       return
     }
