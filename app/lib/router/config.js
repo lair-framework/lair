@@ -11,7 +11,7 @@ Router.configure({
 
 Router.onBeforeAction(function () {
   if (!Meteor.loggingIn() && !Meteor.user()) {
-    this.redirect('signin')
+    this.redirect('signin', {}, {replaceState: true})
   }
   this.next()
 }, {

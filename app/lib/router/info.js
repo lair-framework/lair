@@ -12,7 +12,7 @@ Router.route('/info/hotkeys', {
 
 Router.route('/info', {
   onBeforeAction: function () {
-    this.redirect('hotKeys')
+    this.redirect('hotKeys', {}, {replaceState: true})
     this.next()
   }
 })

@@ -126,7 +126,7 @@ Router.route('/projects/:id/issues/new', {
 Router.route('/projects/:id/issues/:iid', {
   controller: 'ProjectController',
   onBeforeAction: function () {
-    this.redirect('/projects/' + this.params.id + '/issues/' + this.params.iid + '/description')
+    this.redirect('/projects/' + this.params.id + '/issues/' + this.params.iid + '/description', {}, {replaceState: true})
     this.next()
   }
 })
