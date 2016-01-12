@@ -50,7 +50,7 @@
         {{#each servicesWithHosts}}
           <li>
             <div class="row service-row">
-              <span class="u-pull-left service-search-ip"><a href="/projects/{{projectId}}/hosts/{{hostId}}/services/{{_id}}">{{ipv4}} {{port}}/{{protocol}}</a></span>
+              <span class="u-pull-left service-search-ip">{{#linkTo route="serviceIssueList" id=projectId hid=hostId sid=_id}}{{ipv4}} {{port}}/{{protocol}}{{/linkTo}}</span>
               {{#if isFlagged}}
                 <span class="u-pull-left"><i class="fa fa-flag flag-enabled clickable"></i></span>
               {{else}}

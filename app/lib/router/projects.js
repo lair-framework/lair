@@ -2,7 +2,7 @@
 
 Router.route('/', {
   onBeforeAction: function () {
-    this.redirect('projectList')
+    this.redirect('projectList', {}, {replaceState: true})
     this.next()
   }
 })
@@ -27,7 +27,7 @@ Router.route('/projects/new', {
 Router.route('/projects/:id', {
   controller: 'ProjectController',
   onBeforeAction: function () {
-    this.redirect('/projects/' + this.params.id + '/hosts')
+    this.redirect('/projects/' + this.params.id + '/hosts', {}, {replaceState: true})
     this.next()
   }
 })
