@@ -45,6 +45,7 @@ Router.route('/projects/:id/hosts', {
     var total = Hosts.find({
       projectId: this.params.id
     }).count()
+    var search = Session.get('hostListSearch')
     var self = this
     return {
       moreToShow: function () {
@@ -54,6 +55,7 @@ Router.route('/projects/:id/hosts', {
       total: total,
       projectId: self.params.id,
       projectName: project.name,
+      savedSearch: search,
       hostStatusButtonActive: function (color) {
         if (Session.equals('hostListStatusButton' + color, 'disabled')) {
           return 'disabled'
