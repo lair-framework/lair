@@ -29,6 +29,11 @@ Template.hostList.events({
   'keyup #host-list-search': function (event, tpl) {
     Session.set('hostListSearch', tpl.find('#host-list-search').value)
   },
+  
+  'click #remove-host-list-search': function (event, tpl) {
+    tpl.find('#host-list-search').value = ""
+    Session.set('hostListSearch', null)
+  },
 
   'click .host-status': function () {
     var status = StatusMap[StatusMap.indexOf(this.status) + 1]
