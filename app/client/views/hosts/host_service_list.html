@@ -18,7 +18,8 @@
             <li><button id="flag-filter-enable" class="button"><i class="fa fa-flag-o fa-lg"></i></button></li>
           {{/if}}
           <li><button id="remove-services" class="button lair-red"><i class="fa fa-trash fa-lg"></i></button></li>
-          <li><input type="text" id="service-list-search" placeholder="Search..." name="search"></li>
+          <li><input type="text" id="service-list-search" placeholder="Search..." name="search" value="{{savedSearch}}"></li>
+          <li><i class="fa fa-refresh fa-lg clickable" id="remove-service-list-search" title="Clear text search"></i></li>
           <li class="u-pull-right"><a href="/projects/{{projectId}}/hosts/{{host._id}}/services/new" class="button button-primary">New Service</a></li>
         </ul>
       </div>

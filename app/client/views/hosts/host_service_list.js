@@ -30,6 +30,11 @@ Template.hostServiceList.events({
     Session.set('hostServiceListSearch', tpl.find('#service-list-search').value)
   },
 
+  'click #remove-service-list-search': function (event, tpl) {
+    tpl.find('#service-list-search').value = ""
+    Session.set('hostServiceListSearch', null)
+  },
+
   'click .service-status': function () {
     var status = StatusMap[StatusMap.indexOf(this.status) + 1]
     if (StatusMap.indexOf(this.status) === 4) {

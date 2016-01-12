@@ -185,11 +185,13 @@ Router.route('/projects/:id/hosts/:hid/services', {
       projectId: this.params.id,
       hostId: this.params.hid
     }).count()
+    var search = Session.get('hostServiceListSearch')
     var self = this
     return {
       projectId: this.params.id,
       projectName: project.name,
       hostId: this.params.hid,
+      savedSearch: search,
       host: Hosts.findOne({
         _id: this.params.hid
       }),
