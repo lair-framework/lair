@@ -19,5 +19,11 @@ Template.credentials.events({
 
   'keyup #credentials-search': function (event, tpl) {
     Session.set('credentialsSearch', tpl.find('#credentials-search').value)
+  },
+
+  'click #remove-credentials-search': function (event, tpl) {
+    tpl.find('#credentials-search').value = ""
+    Session.set('credentialsSearch', null)
   }
+
 })

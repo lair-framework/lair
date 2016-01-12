@@ -38,6 +38,11 @@ Template.hostIssueList.events({
     Session.set('hostIssueListSearch', tpl.find('#issue-list-search').value)
   },
 
+  'click #remove-issue-list-search': function (event, tpl) {
+    tpl.find('#issue-list-search').value = ""
+    Session.set('hostIssueListSearch', null)
+  },
+
   'click .issue-status': function () {
     var status = StatusMap[StatusMap.indexOf(this.status) + 1]
     if (StatusMap.indexOf(this.status) === 4) {

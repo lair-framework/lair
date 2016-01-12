@@ -45,6 +45,7 @@ Router.route('/projects/:id/issues', {
     var total = Issues.find({
       projectId: this.params.id
     }).count()
+    var search = Session.get('issueListSearch')
     var self = this
     return {
       moreToShow: function () {
@@ -54,6 +55,7 @@ Router.route('/projects/:id/issues', {
       total: total,
       projectId: self.params.id,
       projectName: project.name,
+      savedSearch: search,
       issueStatusButtonActive: function (color) {
         if (Session.equals('issueListStatusButton' + color, 'disabled')) {
           return 'disabled'

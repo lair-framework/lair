@@ -4,6 +4,13 @@ Router.route('/projects/:id/people', {
   name: 'peopleList',
   controller: 'ProjectController',
   onRun: function () {
+    if (Settings.findOne({
+      setting: 'persistViewFilters',
+      enabled: true
+    })) {
+      this.next()
+      return
+    }
     Session.set('peopleListSearch', null)
     Session.set('peopleListPerson', null)
     this.next()
@@ -15,6 +22,7 @@ Router.route('/projects/:id/people', {
     if (!project) {
       return null
     }
+    var search = Session.get('peopleListSearch')
     var self = this
     return {
       projectId: this.params.id,
@@ -83,7 +91,8 @@ Router.route('/projects/:id/people', {
           person.credentials.push(cred)
         })
         return person
-      }
+      },
+      savedSearch: search
     }
   }
 })

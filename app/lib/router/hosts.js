@@ -452,6 +452,7 @@ Router.route('/projects/:id/hosts/:hid/issues', {
         }
       },
       issues: issues,
+      savedSearch: search,
       total: total
     }
   }
@@ -595,6 +596,13 @@ Router.route('/projects/:id/hosts/:hid/directories', {
   name: 'hostWebDirectoryList',
   controller: 'ProjectController',
   onRun: function () {
+    if (Settings.findOne({
+      setting: 'persistViewFilters',
+      enabled: true
+    })) {
+      this.next()
+      return
+    }
     Session.set('webDirectoryFlagFilter', null)
     Session.set('webDirectorySearch', null)
     this.next()
@@ -645,7 +653,8 @@ Router.route('/projects/:id/hosts/:hid/directories', {
       projectName: project.name,
       host: host,
       paths: WebDirectories.find(query).fetch(),
-      flagFilter: Session.equals('webDirectoryFlagFilter', 'enabled')
+      flagFilter: Session.equals('webDirectoryFlagFilter', 'enabled'),
+      savedSearch: search
     }
   }
 })

@@ -5,6 +5,11 @@ Template.peopleList.events({
     Session.set('peopleListSearch', tpl.find('#people-search').value)
   },
 
+  'click #remove-people-search': function (event, tpl) {
+    tpl.find('#people-search').value = ""
+    Session.set('peopleListSearch', null)
+  },
+
   'click .person': function () {
     Session.set('peopleListPerson', this._id)
   },
