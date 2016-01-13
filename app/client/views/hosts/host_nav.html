@@ -2,14 +2,16 @@
   <div class="subnav">
     <div class="container">
       <ul>
-        <li class="{{isActive 'hostServiceList' }}"><a href="/projects/{{projectId}}/hosts/{{host._id}}/services">SERVICES</a></li>
-        <li class="{{isActive 'hostIssueList' }}"><a href="/projects/{{projectId}}/hosts/{{host._id}}/issues">ISSUES</a></li>
-        <li class="{{isActive 'hostNoteList' }}"><a href="/projects/{{projectId}}/hosts/{{host._id}}/notes">NOTES</a></li>
-        <li class="{{isActive 'hostHostnameList' }}"><a href="/projects/{{projectId}}/hosts/{{host._id}}/hostnames">HOSTNAMES</a></li>
-        <li class="{{isActive 'hostCredentialList'}}"><a href="/projects/{{projectId}}/hosts/{{host._id}}/credentials">CREDENTIALS</a></li>
-        <li class="{{isActive 'hostWebDirectoryList' }}"><a href="/projects/{{projectId}}/hosts/{{host._id}}/directories">WEB DIRECTORIES</a></li>
-        <li class="{{isActive 'hostFileList' }}"><a href="/projects/{{projectId}}/hosts/{{host._id}}/files">FILES</a></li>
-        <li class="{{isActive 'hostSettings' }}"><a href="/projects/{{projectId}}/hosts/{{host._id}}/settings">SETTINGS</a></li>
+        <li class="{{isActive 'hostServiceList' }}">{{#linkTo route="hostServiceList" id=projectId hid=host._id}}SERVICES{{/linkTo}}</li>
+        <li class="{{isActive 'hostIssueList' }}">{{#linkTo route="hostIssueList" id=projectId hid=host._id}}ISSUES{{/linkTo}}</li>
+        <li class="{{isActive 'hostNoteList' }}">{{#linkTo route="hostNoteList" id=projectId hid=host._id}}NOTES{{/linkTo}}</li>
+        <li class="{{isActive 'hostHostnameList' }}">{{#linkTo route="hostHostnameList" id=projectId hid=host._id}}HOSTNAMES{{/linkTo}}</li>
+        <li class="{{isActive 'hostCredentialList'}}">{{#linkTo route="hostCredentialList" id=projectId hid=host._id}}CREDENTIALS{{/linkTo}}</li>
+        <li class="{{isActive 'hostWebDirectoryList' }}">{{#linkTo route="hostWebDirectoryList" id=projectId hid=host._id}}WEB DIRECTORIES{{/linkTo}}</li>
+        <li class="{{isActive 'hostFileList' }}">{{#linkTo route="hostFileList" id=projectId hid=host._id}}FILES{{/linkTo}}</li>
+        <li class="{{isActive 'hostSettings' }}">{{#linkTo route="hostSettings" id=projectId hid=host._id}}SETTINGS{{/linkTo}}</li>
+        <li><a href="{{pathFor route=routeName id=projectId hid=host._id}}/prev" title="Alt+p"><i class="fa fa-chevron-left fa-lg"></i></a></li>
+        <li><a href="{{pathFor route=routeName id=projectId hid=host._id}}/next" title="Alt+n"><i class="fa fa-chevron-right fa-lg"></i></a></li>
       </ul>
     </div>
   </div>
