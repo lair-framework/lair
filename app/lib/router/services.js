@@ -26,6 +26,30 @@ Router.route('/projects/:id/hosts/:hid/services/:sid', {
   }
 })
 
+
+Router.route('/projects/:id/hosts/:hid/services/:sid/:page/next', {
+  name: 'nextService',
+  controller: 'ProjectController',
+  onBeforeAction: function () {
+    console.log("Executing service next route")
+    var next = getNextService(this.params.id, this.params.hid, this.params.sid, 1)
+    this.redirect('/projects/' + next.projectId + '/hosts/' + next.hostId + '/services/' + next.serviceId + '/' + this.params.page, {}, {replaceState: true})
+    this.next()
+  }
+})
+
+Router.route('/projects/:id/hosts/:hid/services/:sid/:page/prev', {
+  name: 'prevService',
+  controller: 'ProjectController',
+  onBeforeAction: function () {
+    console.log("Executing service prev route")
+    var next = getNextService(this.params.id, this.params.hid, this.params.sid, -1)
+    this.redirect('/projects/' + next.projectId + '/hosts/' + next.hostId + '/services/' + next.serviceId + '/' + this.params.page, {}, {replaceState: true})
+    this.next()
+  }
+})
+
+
 Router.route('/projects/:id/hosts/:hid/services/:sid/issues', {
   name: 'serviceIssueList',
   controller: 'ProjectController',
@@ -65,6 +89,7 @@ Router.route('/projects/:id/hosts/:hid/services/:sid/issues', {
     })
     var self = this
     return {
+      routeName: Router.current().route.getName(),
       projectId: this.params.id,
       projectName: project.name,
       host: host,
@@ -156,6 +181,7 @@ Router.route('/projects/:id/hosts/:hid/services/:sid/notes', {
       return null
     }
     return {
+      routeName: Router.current().route.getName(),
       projectId: this.params.id,
       projectName: project.name,
       host: host,
@@ -198,6 +224,7 @@ Router.route('/projects/:id/hosts/:hid/services/:sid/credentials', {
       return null
     }
     return {
+      routeName: Router.current().route.getName(),
       projectId: this.params.id,
       projectName: project.name,
       host: host,
@@ -242,6 +269,7 @@ Router.route('/projects/:id/hosts/:hid/services/:sid/settings', {
       return null
     }
     return {
+      routeName: Router.current().route.getName(),
       projectId: this.params.id,
       projectName: project.name,
       host: host,
@@ -249,3 +277,37 @@ Router.route('/projects/:id/hosts/:hid/services/:sid/settings', {
     }
   }
 })
+
+function getNextService(projectId, hostId, currentServiceId, increment) {
+  var services = Services.find({
+    projectId: projectId,
+    hostId: hostId
+  }, {
+    sort: {
+      port: 1
+    },
+    fields: {
+      _id: 1
+    }
+  }).fetch()
+  var i = getNextItemIndex(services, currentServiceId, increment)
+  var next = {
+    projectId: projectId,
+    hostId: hostId,
+    serviceId: services[i]._id
+  }
+  return next
+}
+
+function getNextItemIndex(idArray, matchId, increment) {
+  // Gets the ID of the next item from the array in a circular fashion
+  // idArray is expected to be an array of objects returned from a
+  // find(...).fetch() operation
+  // The returned item index will wrap as necessary to return a valid item (if any are present)
+  increment = increment || 1
+  var k = _.indexOf(_.pluck(idArray, '_id'), matchId)
+  // increment (or decrement) and return a positive index
+  k = (((k + increment) % idArray.length) + idArray.length) % idArray.length
+
+  return k
+}
