@@ -131,6 +131,26 @@ Router.route('/projects/:id/issues/:iid', {
   }
 })
 
+Router.route('/projects/:id/issues/:iid/:page/next', {
+  name: 'nextIssue',
+  controller: 'ProjectController',
+  onBeforeAction: function () {
+    var next = getNextIssue(this.params.id, this.params.iid, 1)
+    this.redirect('/projects/' + next.projectId + '/issues/' + next.issueId + '/' + this.params.page, {}, {replaceState: true})
+    this.next()
+  }
+})
+
+Router.route('/projects/:id/issues/:iid/:page/prev', {
+  name: 'prevIssue',
+  controller: 'ProjectController',
+  onBeforeAction: function () {
+    var next = getNextIssue(this.params.id, this.params.iid, -1)
+    this.redirect('/projects/' + next.projectId + '/issues/' + next.issueId + '/' + this.params.page, {}, {replaceState: true})
+    this.next()
+  }
+})
+
 Router.route('/projects/:id/issues/:iid/description', {
   name: 'issueDescription',
   controller: 'ProjectController',
@@ -147,6 +167,7 @@ Router.route('/projects/:id/issues/:iid/description', {
       return null
     }
     return {
+      routeName: Router.current().route.getName(),
       projectId: this.params.id,
       projectName: project.name,
       issue: Issues.findOne({
@@ -172,6 +193,7 @@ Router.route('/projects/:id/issues/:iid/evidence', {
       return null
     }
     return {
+      routeName: Router.current().route.getName(),
       projectId: this.params.id,
       projectName: project.name,
       issue: Issues.findOne({
@@ -197,6 +219,7 @@ Router.route('/projects/:id/issues/:iid/solution', {
       return null
     }
     return {
+      routeName: Router.current().route.getName(),
       projectId: this.params.id,
       projectName: project.name,
       issue: Issues.findOne({
@@ -237,6 +260,7 @@ Router.route('/projects/:id/issues/:iid/hosts', {
       })
     }
     return {
+      routeName: Router.current().route.getName(),
       projectId: this.params.id,
       projectName: project.name,
       issue: issue
@@ -283,6 +307,7 @@ Router.route('/projects/:id/issues/:iid/hosts/bulk', {
       return null
     }
     return {
+      routeName: Router.current().route.getName(),
       projectId: this.params.id,
       projectName: project.name,
       issueId: this.params.iid
@@ -306,6 +331,7 @@ Router.route('/projects/:id/issues/:iid/cves', {
       return null
     }
     return {
+      routeName: Router.current().route.getName(),
       projectId: this.params.id,
       projectName: project.name,
       issue: Issues.findOne({
@@ -331,6 +357,7 @@ Router.route('/projects/:id/issues/:iid/references', {
       return null
     }
     return {
+      routeName: Router.current().route.getName(),
       projectId: this.params.id,
       projectName: project.name,
       issue: Issues.findOne({
@@ -361,6 +388,7 @@ Router.route('/projects/:id/issues/:iid/notes', {
       return null
     }
     return {
+      routeName: Router.current().route.getName(),
       projectId: this.params.id,
       projectName: project.name,
       issue: issue,
@@ -390,6 +418,7 @@ Router.route('/projects/:id/issues/:iid/files', {
       return null
     }
     return {
+      routeName: Router.current().route.getName(),
       progress: Session.get('progress'),
       projectId: this.params.id,
       projectName: project.name,
@@ -415,6 +444,7 @@ Router.route('/projects/:id/issues/:iid/settings', {
       return null
     }
     return {
+      routeName: Router.current().route.getName(),
       projectId: this.params.id,
       projectName: project.name,
       issue: Issues.findOne({
@@ -423,3 +453,36 @@ Router.route('/projects/:id/issues/:iid/settings', {
     }
   }
 })
+
+function getNextIssue(projectId, currentIssueId, increment) {
+  var issues = Issues.find({
+    projectId: projectId
+  }, {
+    sort: {
+      cvss: -1,
+      title: 1
+    },
+    fields: {
+      _id: 1
+    }
+  }).fetch()
+  var i = getNextItemIndex(issues, currentIssueId, increment)
+  var next = {
+    projectId: projectId,
+    issueId: issues[i]._id
+  }
+  return next
+}
+
+function getNextItemIndex(idArray, matchId, increment) {
+  // Gets the ID of the next item from the array in a circular fashion
+  // idArray is expected to be an array of objects returned from a
+  // find(...).fetch() operation
+  // The returned item index will wrap as necessary to return a valid item (if any are present)
+  increment = increment || 1
+  var k = _.indexOf(_.pluck(idArray, '_id'), matchId)
+  // increment (or decrement) and return a positive index
+  k = (((k + increment) % idArray.length) + idArray.length) % idArray.length
+
+  return k
+}

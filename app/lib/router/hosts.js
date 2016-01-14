@@ -693,27 +693,6 @@ function getNextHost(projectId, currentHostId, increment) {
   return next
 }
 
-function getNextService(projectId, hostId, currentServiceId, increment) {
-  var services = Services.find({
-    projectId: projectId,
-    hostId: hostId
-  }, {
-    sort: {
-      port: 1
-    },
-    fields: {
-      _id: 1
-    }
-  }).fetch()
-  var i = getNextItemIndex(hosts, currentHostId, increment)
-  var next = {
-    projectId: projectId,
-    hostId: hostId,
-    serviceId: services[i]._id
-  }
-  return next
-}
-
 function getNextItemIndex(idArray, matchId, increment) {
   // Gets the ID of the next item from the array in a circular fashion
   // idArray is expected to be an array of objects returned from a
