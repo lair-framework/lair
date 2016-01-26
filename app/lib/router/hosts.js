@@ -45,6 +45,7 @@ Router.route('/projects/:id/hosts', {
     var total = Hosts.find({
       projectId: this.params.id
     }).count()
+    var search = Session.get('hostListSearch')
     var self = this
     return {
       moreToShow: function () {
@@ -54,6 +55,7 @@ Router.route('/projects/:id/hosts', {
       total: total,
       projectId: self.params.id,
       projectName: project.name,
+      savedSearch: search,
       hostStatusButtonActive: function (color) {
         if (Session.equals('hostListStatusButton' + color, 'disabled')) {
           return 'disabled'
@@ -183,11 +185,13 @@ Router.route('/projects/:id/hosts/:hid/services', {
       projectId: this.params.id,
       hostId: this.params.hid
     }).count()
+    var search = Session.get('hostServiceListSearch')
     var self = this
     return {
       projectId: this.params.id,
       projectName: project.name,
       hostId: this.params.hid,
+      savedSearch: search,
       host: Hosts.findOne({
         _id: this.params.hid
       }),
@@ -448,6 +452,7 @@ Router.route('/projects/:id/hosts/:hid/issues', {
         }
       },
       issues: issues,
+      savedSearch: search,
       total: total
     }
   }
@@ -591,6 +596,13 @@ Router.route('/projects/:id/hosts/:hid/directories', {
   name: 'hostWebDirectoryList',
   controller: 'ProjectController',
   onRun: function () {
+    if (Settings.findOne({
+      setting: 'persistViewFilters',
+      enabled: true
+    })) {
+      this.next()
+      return
+    }
     Session.set('webDirectoryFlagFilter', null)
     Session.set('webDirectorySearch', null)
     this.next()
@@ -641,7 +653,8 @@ Router.route('/projects/:id/hosts/:hid/directories', {
       projectName: project.name,
       host: host,
       paths: WebDirectories.find(query).fetch(),
-      flagFilter: Session.equals('webDirectoryFlagFilter', 'enabled')
+      flagFilter: Session.equals('webDirectoryFlagFilter', 'enabled'),
+      savedSearch: search
     }
   }
 })

@@ -4,6 +4,13 @@ Router.route('/projects/:id/credentials', {
   name: 'credentials',
   controller: 'ProjectController',
   onRun: function () {
+    if (Settings.findOne({
+      setting: 'persistViewFilters',
+      enabled: true
+    })) {
+      this.next()
+      return
+    }
     Session.set('credentialsSearch', null)
     this.next()
   },
@@ -56,6 +63,7 @@ Router.route('/projects/:id/credentials', {
       projectId: self.params.id,
       projectName: project.name,
       credentials: Credentials.find(query).fetch(),
+      savedSearch: search,
       total: Credentials.find({projectId: self.params.id}).count()
     }
   }

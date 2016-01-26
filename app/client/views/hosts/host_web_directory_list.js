@@ -54,6 +54,11 @@ Template.hostWebDirectoryList.events({
     })
   },
 
+  'click #remove-directory-search': function (event, tpl) {
+    tpl.find('#directory-search').value = ""
+    Session.set('webDirectorySearch', null)
+  },
+
   'submit form': function (event, tpl) {
     event.preventDefault()
     var projectId = this.projectId
