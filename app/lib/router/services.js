@@ -31,7 +31,6 @@ Router.route('/projects/:id/hosts/:hid/services/:sid/:page/next', {
   name: 'nextService',
   controller: 'ProjectController',
   onBeforeAction: function () {
-    console.log("Executing service next route")
     var next = getNextService(this.params.id, this.params.hid, this.params.sid, 1)
     this.redirect('/projects/' + next.projectId + '/hosts/' + next.hostId + '/services/' + next.serviceId + '/' + this.params.page, {}, {replaceState: true})
     this.next()
@@ -42,7 +41,6 @@ Router.route('/projects/:id/hosts/:hid/services/:sid/:page/prev', {
   name: 'prevService',
   controller: 'ProjectController',
   onBeforeAction: function () {
-    console.log("Executing service prev route")
     var next = getNextService(this.params.id, this.params.hid, this.params.sid, -1)
     this.redirect('/projects/' + next.projectId + '/hosts/' + next.hostId + '/services/' + next.serviceId + '/' + this.params.page, {}, {replaceState: true})
     this.next()
