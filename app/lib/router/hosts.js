@@ -134,6 +134,26 @@ Router.route('/projects/:id/hosts/:hid', {
   }
 })
 
+Router.route('/projects/:id/hosts/:hid/:page/next', {
+  name: 'nextHost',
+  controller: 'ProjectController',
+  onBeforeAction: function () {
+    var next = getNextHost(this.params.id, this.params.hid, 1)
+    this.redirect('/projects/' + next.projectId + '/hosts/' + next.hostId + '/' + this.params.page, {}, {replaceState: true})
+    this.next()
+  }
+})
+
+Router.route('/projects/:id/hosts/:hid/:page/prev', {
+  name: 'prevHost',
+  controller: 'ProjectController',
+  onBeforeAction: function () {
+    var next = getNextHost(this.params.id, this.params.hid, -1)
+    this.redirect('/projects/' + next.projectId + '/hosts/' + next.hostId + '/' + this.params.page, {}, {replaceState: true})
+    this.next()
+  }
+})
+
 Router.route('/projects/:id/hosts/:hid/services', {
   name: 'hostServiceList',
   controller: 'ProjectController',
@@ -188,6 +208,7 @@ Router.route('/projects/:id/hosts/:hid/services', {
     var search = Session.get('hostServiceListSearch')
     var self = this
     return {
+      routeName: Router.current().route.getName(),
       projectId: this.params.id,
       projectName: project.name,
       hostId: this.params.hid,
@@ -295,6 +316,7 @@ Router.route('/projects/:id/hosts/:hid/notes', {
       }
     }
     return {
+      routeName: Router.current().route.getName(),
       projectId: this.params.id,
       projectName: project.name,
       hostId: this.params.hid,
@@ -441,6 +463,7 @@ Router.route('/projects/:id/hosts/:hid/issues', {
     })
 
     return {
+      routeName: Router.current().route.getName(),
       projectId: this.params.id,
       projectName: project.name,
       hostId: this.params.hid,
@@ -495,6 +518,7 @@ Router.route('/projects/:id/hosts/:hid/hostnames', {
       }
     }
     return {
+      routeName: Router.current().route.getName(),
       projectId: this.params.id,
       projectName: project.name,
       hostId: this.params.hid,
@@ -525,6 +549,7 @@ Router.route('/projects/:id/hosts/:hid/credentials', {
     })
     var self = this
     return {
+      routeName: Router.current().route.getName(),
       projectId: self.params.id,
       projectName: project.name,
       host: host,
@@ -557,6 +582,7 @@ Router.route('/projects/:id/hosts/:hid/settings', {
       return null
     }
     return {
+      routeName: Router.current().route.getName(),
       projectId: this.params.id,
       projectName: project.name,
       host: Hosts.findOne({
@@ -582,6 +608,7 @@ Router.route('/projects/:id/hosts/:hid/files', {
       return null
     }
     return {
+      routeName: Router.current().route.getName(),
       projectId: this.params.id,
       projectName: project.name,
       host: Hosts.findOne({
@@ -649,6 +676,7 @@ Router.route('/projects/:id/hosts/:hid/directories', {
       }]
     }
     return {
+      routeName: Router.current().route.getName(),
       projectId: this.params.id,
       projectName: project.name,
       host: host,
@@ -658,3 +686,36 @@ Router.route('/projects/:id/hosts/:hid/directories', {
     }
   }
 })
+
+function getNextHost(projectId, currentHostId, increment) {
+  var hosts = Hosts.find({
+    projectId: projectId
+  }, {
+    sort: {
+      longIpv4Addr: 1
+    },
+    fields: {
+      _id: 1
+    }
+  }).fetch()
+  var i = getNextItemIndex(hosts, currentHostId, increment)
+  var next = {
+    projectId: projectId,
+    hostId: hosts[i]._id
+  }
+  return next
+}
+
+function getNextItemIndex(idArray, matchId, increment) {
+  // Gets the ID of the next item from the array in a circular fashion
+  // idArray is expected to be an array of objects returned from a
+  // find(...).fetch() operation
+  // The returned item index will wrap as necessary to return a valid item (if any are present)
+  increment = increment || 1
+  var k = _.indexOf(_.pluck(idArray, '_id'), matchId)
+  // increment (or decrement) and return a positive index
+  k = (((k + increment) % idArray.length) + idArray.length) % idArray.length
+
+  return k
+}
+
