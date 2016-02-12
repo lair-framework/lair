@@ -6,8 +6,8 @@
       <li class="{{isActive 'serviceNoteList' }}">{{#linkTo route="serviceNoteList" id=projectId hid=host._id sid=service._id}}NOTES{{/linkTo}}</li>
       <li class="{{isActive 'serviceCredentialList' }}">{{#linkTo route="serviceCredentialList" id=projectId hid=host._id sid=service._id}}CREDENTIALS{{/linkTo}}</li>
       <li class="{{isActive 'serviceSettings' }}">{{#linkTo route="serviceSettings" id=projectId hid=host._id sid=service._id}}SETTINGS{{/linkTo}}</li>
-      <li><a href="{{pathFor route=routeName id=projectId hid=host._id sid=service._id}}/prev" title="Alt+p"><i class="fa fa-chevron-left fa-lg"></i></a></li>
-      <li><a href="{{pathFor route=routeName id=projectId hid=host._id sid=service._id}}/next" title="Alt+n"><i class="fa fa-chevron-right fa-lg"></i></a></li>
+      <li class="pull-right"><a class="no-border" href="{{pathFor route=routeName id=projectId hid=host._id sid=service._id}}/next" title="Alt+n"><i class="fa fa-chevron-right fa-lg"></i></a></li>
+      <li class="pull-right"><a class="no-border" href="{{pathFor route=routeName id=projectId hid=host._id sid=service._id}}/prev" title="Alt+p"><i class="fa fa-chevron-left fa-lg"></i></a></li>
     </ul>
   </div>
 </div>

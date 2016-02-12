@@ -150,6 +150,7 @@ function removeHostname (id, hostId, hostname) {
     }
   })
 }
+
 function setHostStatusMessage (id, hostId, status) {
   check(id, Matchers.isObjectId)
   check(hostId, Matchers.isObjectId)

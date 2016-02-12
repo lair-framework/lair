@@ -11,8 +11,8 @@
       <li class="{{isActive 'issueNoteList' }}">{{#linkTo route="issueNoteList" id=projectId iid=issue._id}}NOTES{{/linkTo}}</li>
       <li class="{{isActive 'issueFileList' }}">{{#linkTo route="issueFileList" id=projectId iid=issue._id}}FILES{{/linkTo}}</li>
       <li class="{{isActive 'issueSettings' }}">{{#linkTo route="issueSettings" id=projectId iid=issue._id}}SETTINGS{{/linkTo}}</li>
-      <li><a href="{{pathFor route=routeName id=projectId iid=issue._id}}/prev" title="Alt+p"><i class="fa fa-chevron-left fa-lg"></i></a></li>
-      <li><a href="{{pathFor route=routeName id=projectId iid=issue._id}}/next" title="Alt+n"><i class="fa fa-chevron-right fa-lg"></i></a></li>
+      <li class="pull-right"><a class="no-border" href="{{pathFor route=routeName id=projectId iid=issue._id}}/next" title="Alt+n"><i class="fa fa-chevron-right fa-lg"></i></a></li>
+      <li class="pull-right"><a class="no-border" href="{{pathFor route=routeName id=projectId iid=issue._id}}/prev" title="Alt+p"><i class="fa fa-chevron-left fa-lg"></i></a></li>
     </ul>
   </div>
 </div>

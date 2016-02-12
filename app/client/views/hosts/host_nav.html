@@ -10,8 +10,8 @@
         <li class="{{isActive 'hostWebDirectoryList' }}">{{#linkTo route="hostWebDirectoryList" id=projectId hid=host._id}}WEB DIRECTORIES{{/linkTo}}</li>
         <li class="{{isActive 'hostFileList' }}">{{#linkTo route="hostFileList" id=projectId hid=host._id}}FILES{{/linkTo}}</li>
         <li class="{{isActive 'hostSettings' }}">{{#linkTo route="hostSettings" id=projectId hid=host._id}}SETTINGS{{/linkTo}}</li>
-        <li><a href="{{pathFor route=routeName id=projectId hid=host._id}}/prev" title="Alt+p"><i class="fa fa-chevron-left fa-lg"></i></a></li>
-        <li><a href="{{pathFor route=routeName id=projectId hid=host._id}}/next" title="Alt+n"><i class="fa fa-chevron-right fa-lg"></i></a></li>
+        <li class="pull-right"><a class="no-border" href="{{pathFor route=routeName id=projectId hid=host._id}}/next" title="Alt+n"><i class="fa fa-chevron-right fa-lg"></i></a></li>
+        <li class="pull-right"><a class="no-border" href="{{pathFor route=routeName id=projectId hid=host._id}}/prev" title="Alt+p"><i class="fa fa-chevron-left fa-lg"></i></a></li>
       </ul>
     </div>
   </div>
