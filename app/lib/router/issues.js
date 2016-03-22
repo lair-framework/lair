@@ -29,7 +29,7 @@ Router.route('/projects/:id/issues', {
     if (numViewItemsSetting) {
       numViewItems = numViewItemsSetting.value
     }
-    if ( Session.get('issueViewLimit') == Session.get('viewIncrement')) {
+    if (Session.get('issueViewLimit') === Session.get('viewIncrement')) {
       Session.set('issueViewLimit', numViewItems)
     } else if (Session.get('issueViewLimit') < numViewItems) {
       Session.set('issueViewLimit', numViewItems)
@@ -456,7 +456,7 @@ Router.route('/projects/:id/issues/:iid/settings', {
   }
 })
 
-function getNextIssue(projectId, currentIssueId, increment) {
+function getNextIssue (projectId, currentIssueId, increment) {
   var issues = Issues.find({
     projectId: projectId
   }, {
@@ -476,7 +476,7 @@ function getNextIssue(projectId, currentIssueId, increment) {
   return next
 }
 
-function getNextItemIndex(idArray, matchId, increment) {
+function getNextItemIndex (idArray, matchId, increment) {
   // Gets the ID of the next item from the array in a circular fashion
   // idArray is expected to be an array of objects returned from a
   // find(...).fetch() operation

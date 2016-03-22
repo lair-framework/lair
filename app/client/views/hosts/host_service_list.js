@@ -31,7 +31,7 @@ Template.hostServiceList.events({
   },
 
   'click #remove-service-list-search': function (event, tpl) {
-    tpl.find('#service-list-search').value = ""
+    tpl.find('#service-list-search').value = ''
     Session.set('hostServiceListSearch', null)
   },
 

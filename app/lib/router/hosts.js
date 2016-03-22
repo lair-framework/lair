@@ -29,7 +29,7 @@ Router.route('/projects/:id/hosts', {
     if (numViewItemsSetting) {
       numViewItems = numViewItemsSetting.value
     }
-    if ( Session.get('hostViewLimit') == Session.get('viewIncrement')) {
+    if (Session.get('hostViewLimit') === Session.get('viewIncrement')) {
       Session.set('hostViewLimit', numViewItems)
     } else if (Session.get('hostViewLimit') < numViewItems) {
       Session.set('hostViewLimit', numViewItems)
@@ -183,7 +183,7 @@ Router.route('/projects/:id/hosts/:hid/services', {
     if (numViewItemsSetting) {
       numViewItems = numViewItemsSetting.value
     }
-    if ( Session.get('hostServiceViewLimit') == Session.get('viewIncrement')) {
+    if (Session.get('hostServiceViewLimit') === Session.get('viewIncrement')) {
       Session.set('hostServiceViewLimit', numViewItems)
     } else if (Session.get('hostServiceViewLimit') < numViewItems) {
       Session.set('hostServiceViewLimit', numViewItems)
@@ -687,7 +687,7 @@ Router.route('/projects/:id/hosts/:hid/directories', {
   }
 })
 
-function getNextHost(projectId, currentHostId, increment) {
+function getNextHost (projectId, currentHostId, increment) {
   var hosts = Hosts.find({
     projectId: projectId
   }, {
@@ -706,7 +706,7 @@ function getNextHost(projectId, currentHostId, increment) {
   return next
 }
 
-function getNextItemIndex(idArray, matchId, increment) {
+function getNextItemIndex (idArray, matchId, increment) {
   // Gets the ID of the next item from the array in a circular fashion
   // idArray is expected to be an array of objects returned from a
   // find(...).fetch() operation

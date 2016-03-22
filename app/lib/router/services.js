@@ -1,4 +1,4 @@
-/* global Router Projects Services Hosts Issues Settings Session Credentials*/
+/* global Router Projects Services Hosts Issues Settings Session Credentials  _*/
 
 Router.route('/projects/:id/hosts/:hid/services/new', {
   name: 'newService',
@@ -26,7 +26,6 @@ Router.route('/projects/:id/hosts/:hid/services/:sid', {
   }
 })
 
-
 Router.route('/projects/:id/hosts/:hid/services/:sid/:page/next', {
   name: 'nextService',
   controller: 'ProjectController',
@@ -46,7 +45,6 @@ Router.route('/projects/:id/hosts/:hid/services/:sid/:page/prev', {
     this.next()
   }
 })
-
 
 Router.route('/projects/:id/hosts/:hid/services/:sid/issues', {
   name: 'serviceIssueList',
@@ -276,7 +274,7 @@ Router.route('/projects/:id/hosts/:hid/services/:sid/settings', {
   }
 })
 
-function getNextService(projectId, hostId, currentServiceId, increment) {
+function getNextService (projectId, hostId, currentServiceId, increment) {
   var services = Services.find({
     projectId: projectId,
     hostId: hostId
@@ -297,7 +295,7 @@ function getNextService(projectId, hostId, currentServiceId, increment) {
   return next
 }
 
-function getNextItemIndex(idArray, matchId, increment) {
+function getNextItemIndex (idArray, matchId, increment) {
   // Gets the ID of the next item from the array in a circular fashion
   // idArray is expected to be an array of objects returned from a
   // find(...).fetch() operation
