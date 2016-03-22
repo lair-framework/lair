@@ -1,4 +1,4 @@
-/* globals Template key Hosts Router _ StatusMap Meteor Issues Alerts Services*/
+/* globals Template key Hosts Router _ StatusMap Meteor Issues Alerts Services Session */
 
 Template.body.rendered = function () {
   key('alt+n', navNextItem)
@@ -158,7 +158,7 @@ function getIssuePathGroups (path) {
   return match
 }
 
-function getNextItemIndex(idArray, matchId, increment) {
+function getNextItemIndex (idArray, matchId, increment) {
   // Gets the ID of the next item from the array in a circular fashion
   // idArray is expected to be an array of objects returned from a
   // find(...).fetch() operation
@@ -171,16 +171,39 @@ function getNextItemIndex(idArray, matchId, increment) {
   return k
 }
 
-function navigateNextPreviousItem(increment) {
+function navigateNextPreviousItem (increment) {
   // Navigates to the next (previous) item in a circular fashion
   increment = increment || 1
 
   var servicematch = getServicePathGroups(document.location.pathname)
   if (servicematch.isMatched) {
-    var services = Services.find({
+    var servicequery = {
       projectId: servicematch.projectId,
-      hostId: servicematch.hostId
-    }, {
+      hostId: servicematch.hostId,
+      status: {
+        $in: []
+      }
+    }
+    if (Session.equals('serviceIssueListFlagFilter', 'enabled')) {
+      servicequery.isFlagged = true
+    }
+    if (!Session.equals('serviceIssueListStatusButtongrey', 'disabled')) {
+      servicequery.status.$in.push('lair-grey')
+    }
+    if (!Session.equals('serviceIssueListStatusButtonblue', 'disabled')) {
+      servicequery.status.$in.push('lair-blue')
+    }
+    if (!Session.equals('serviceIssueListStatusButtongreen', 'disabled')) {
+      servicequery.status.$in.push('lair-green')
+    }
+    if (!Session.equals('serviceIssueListStatusButtonorange', 'disabled')) {
+      servicequery.status.$in.push('lair-orange')
+    }
+    if (!Session.equals('serviceIssueListStatusButtonred', 'disabled')) {
+      servicequery.status.$in.push('lair-red')
+    }
+
+    var services = Services.find(servicequery, {
       sort: {
         port: 1
       },
@@ -193,10 +216,33 @@ function navigateNextPreviousItem(increment) {
     return
   }
   var hostmatch = getHostPathGroups(document.location.pathname)
+  var hostquery = {
+    projectId: hostmatch.projectId,
+    status: {
+      $in: []
+    }
+  }
+  if (Session.equals('hostListFlagFilter', 'enabled')) {
+    hostquery.isFlagged = true
+  }
+  if (!Session.equals('hostListStatusButtongrey', 'disabled')) {
+    hostquery.status.$in.push('lair-grey')
+  }
+  if (!Session.equals('hostListStatusButtonblue', 'disabled')) {
+    hostquery.status.$in.push('lair-blue')
+  }
+  if (!Session.equals('hostListStatusButtongreen', 'disabled')) {
+    hostquery.status.$in.push('lair-green')
+  }
+  if (!Session.equals('hostListStatusButtonorange', 'disabled')) {
+    hostquery.status.$in.push('lair-orange')
+  }
+  if (!Session.equals('hostListStatusButtonred', 'disabled')) {
+    hostquery.status.$in.push('lair-red')
+  }
+
   if (hostmatch.isMatched) {
-    var hosts = Hosts.find({
-      projectId: hostmatch.projectId
-    }, {
+    var hosts = Hosts.find(hostquery, {
       sort: {
         longIpv4Addr: 1
       },
@@ -210,9 +256,32 @@ function navigateNextPreviousItem(increment) {
   }
   var issuematch = getIssuePathGroups(document.location.pathname)
   if (issuematch.isMatched) {
-    var issues = Issues.find({
-      projectId: issuematch.projectId
-    }, {
+    var issuequery = {
+      projectId: issuematch.projectId,
+      status: {
+        $in: []
+      }
+    }
+    if (Session.equals('issueListFlagFilter', 'enabled')) {
+      issuequery.isFlagged = true
+    }
+    if (!Session.equals('issueListStatusButtongrey', 'disabled')) {
+      issuequery.status.$in.push('lair-grey')
+    }
+    if (!Session.equals('issueListStatusButtonblue', 'disabled')) {
+      issuequery.status.$in.push('lair-blue')
+    }
+    if (!Session.equals('issueListStatusButtongreen', 'disabled')) {
+      issuequery.status.$in.push('lair-green')
+    }
+    if (!Session.equals('issueListStatusButtonorange', 'disabled')) {
+      issuequery.status.$in.push('lair-orange')
+    }
+    if (!Session.equals('issueListStatusButtonred', 'disabled')) {
+      issuequery.status.$in.push('lair-red')
+    }
+
+    var issues = Issues.find(issuequery, {
       sort: {
         cvss: -1,
         title: 1
@@ -227,10 +296,10 @@ function navigateNextPreviousItem(increment) {
   }
 }
 
-var navNextItem = function navigateNextItem() {
+var navNextItem = function navigateNextItem () {
   return navigateNextPreviousItem(1)
 }
 
-var navPrevItem = function navigatePrevItem() {
+var navPrevItem = function navigatePrevItem () {
   return navigateNextPreviousItem(-1)
 }
