@@ -1,4 +1,4 @@
-/* globals Template Session StatusMap Meteor _ $*/
+/* globals Template Session StatusMap Meteor _ $ Blob saveAs*/
 
 function escapeRegex (text) {
   return text.replace(/[-[\]{}()*+?.,\\^$|#\s]/g, '\\$&')
@@ -83,5 +83,33 @@ Template.serviceSearch.events({
 
   'click .flag-disabled': function () {
     return Meteor.call('enableServiceFlag', this.projectId, this._id)
+  },
+
+  'click #download-services': function (event, tpl) {
+    var blob = new Blob([this.hosts.replace(/\n/g, '\r\n')], {type: 'text/plain'})
+    var query = Session.get('servicesViewQuery')
+    var filename = ''
+    if (query !== null && typeof query === 'object') {
+      if (typeof query.port === 'number' && query.port.toString() !== '') {
+        filename += query.port.toString() + '_'
+      }
+      if (typeof query.protocol === 'string' && query.protocol !== '') {
+        filename += query.protocol + '_'
+      } else if (typeof query.protocol === 'object' && query.protocol.$regex !== '') {
+        filename += query.protocol.$regex + '_'
+      }
+      if (typeof query.service === 'string' && query.service !== '') {
+        filename += query.service + '_'
+      } else if (typeof query.service === 'object' && query.service.$regex !== '') {
+        filename += query.service.$regex + '_'
+      }
+      if (typeof query.product === 'string' && query.product !== '') {
+        filename += query.product + '_'
+      } else if (typeof query.product === 'object' && query.product.$regex !== '') {
+        filename += query.product.$regex + '_'
+      }
+    }
+    filename += 'hosts.txt'
+    saveAs(blob, filename)
   }
 })
