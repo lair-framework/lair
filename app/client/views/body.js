@@ -4,6 +4,12 @@ Template.body.rendered = function () {
   key('alt+n', navNextItem)
   key('alt+p', navPrevItem)
 
+  key('ctrl+shift+alt+g', changeStatus('lair-grey'))
+  key('shift+alt+b', changeStatus('lair-blue'))
+  key('shift+alt+g', changeStatus('lair-green'))
+  key('shift+alt+o', changeStatus('lair-orange'))
+  key('shift+alt+r', changeStatus('lair-red'))
+
   key('alt+s', function () {
     var servicematch = getServicePathGroups(document.location.pathname)
     if (servicematch.isMatched) {
@@ -293,6 +299,44 @@ function navigateNextPreviousItem (increment) {
     var j = getNextItemIndex(issues, issuematch.issueId, increment)
     Router.go('/projects/' + issuematch.projectId + '/issues/' + issues[j]._id + '/description')
     return
+  }
+}
+
+function changeStatus (color) {
+  return function () {
+    var servicematch = getServicePathGroups(document.location.pathname)
+    if (servicematch.isMatched) {
+      var service = Services.findOne({
+        _id: servicematch.serviceId
+      })
+      if (!service) {
+        return
+      }
+      Meteor.call('setServiceStatus', servicematch.projectId, servicematch.serviceId, color)
+      return
+    }
+    var hostmatch = getHostPathGroups(document.location.pathname)
+    if (hostmatch.isMatched) {
+      var host = Hosts.findOne({
+        _id: hostmatch.hostId
+      })
+      if (!host) {
+        return
+      }
+      Meteor.call('setHostStatus', hostmatch.projectId, hostmatch.hostId, color)
+      return
+    }
+    var issuematch = getIssuePathGroups(document.location.pathname)
+    if (issuematch.isMatched) {
+      var issue = Issues.findOne({
+        _id: issuematch.issueId
+      })
+      if (!issue) {
+        return
+      }
+      Meteor.call('setIssueStatus', issuematch.projectId, issuematch.issueId, color)
+      return
+    }
   }
 }
 
