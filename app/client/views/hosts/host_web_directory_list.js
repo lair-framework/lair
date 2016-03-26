@@ -55,7 +55,7 @@ Template.hostWebDirectoryList.events({
   },
 
   'click #remove-directory-search': function (event, tpl) {
-    tpl.find('#directory-search').value = ""
+    tpl.find('#directory-search').value = ''
     Session.set('webDirectorySearch', null)
   },
 
