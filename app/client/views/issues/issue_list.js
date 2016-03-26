@@ -38,7 +38,7 @@ Template.issueList.events({
   },
 
   'click #remove-issue-list-search': function (event, tpl) {
-    tpl.find('#issue-list-search').value = ""
+    tpl.find('#issue-list-search').value = ''
     Session.set('issueListSearch', null)
   },
   'click .issue-status': function () {
@@ -74,5 +74,18 @@ Template.issueList.events({
     inputs.each(function () {
       $(this).prop('checked', false)
     })
+    $('#select-all-shown').prop('checked', false)
+  },
+
+  'change #select-all-shown': function () {
+    if ($('input[name="select-all-shown"]').is(':checked')) {
+      $('.issue-checked').each(function () {
+        $(this).prop('checked', true)
+      })
+    } else {
+      $('.issue-checked').each(function () {
+        $(this).prop('checked', false)
+      })
+    }
   }
 })
