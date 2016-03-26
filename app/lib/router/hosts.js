@@ -345,6 +345,43 @@ Router.route('/projects/:id/hosts/:hid/notes', {
   }
 })
 
+Router.route('/projects/:id/hosts/:hid/issues/new', {
+  name: 'newHostIssue',
+  controller: 'ProjectController',
+  data: function () {
+    var project = Projects.findOne({
+      _id: this.params.id
+    })
+    if (!project) {
+      return null
+    }
+    var host = Hosts.findOne({
+      _id: this.params.hid
+    })
+    if (!host) {
+      return null
+    }
+    var issues = Issues.find({}).fetch()
+    var services = Services.find({
+      hostId: this.params.hid
+    }, {
+      sort: {
+        port: 1
+      }
+    }).fetch()
+
+    return {
+      routeName: Router.current().route.getName(),
+      projectId: this.params.id,
+      projectName: project.name,
+      hostId: this.params.hid,
+      host: host,
+      issues: issues,
+      services: services
+    }
+  }
+})
+
 Router.route('/projects/:id/hosts/:hid/issues', {
   name: 'hostIssueList',
   controller: 'ProjectController',
