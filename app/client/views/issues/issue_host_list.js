@@ -1,4 +1,4 @@
-/* globals Template Meteor $ */
+/* globals Template Meteor $ Blob saveAs */
 
 Template.issueHostList.events({
   'click #remove-hosts': function () {
@@ -18,5 +18,13 @@ Template.issueHostList.events({
     inputs.each(function () {
       $(this).prop('checked', false)
     })
+  },
+
+  'click #download-hosts': function (event, tpl) {
+    var hosts = this.issue.hosts.map(function (host) {
+      return host.ipv4 + ':' + host.port.toString()
+    })
+    var blob = new Blob([hosts.join('\n')], {type: 'text/plain'})
+    saveAs(blob, this.issue.title + '_hosts.txt')
   }
 })
