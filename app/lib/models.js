@@ -23,7 +23,7 @@ Models = { // eslint-disable-line
       ipv4: '',
       mac: '',
       hostnames: [],
-      os: '',
+      os: {},
       notes: [],
       statusMessage: '',
       tags: [],
