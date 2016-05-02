@@ -455,6 +455,7 @@ Router.route('/projects/:id/hosts/:hid/issues', {
       ]
     }
     var self = this
+    var total = 0
     var issues = []
     Issues.find(query, {
       sort: {
@@ -487,16 +488,8 @@ Router.route('/projects/:id/hosts/:hid/issues', {
           status: issue.status,
           host: h
         })
+        total += 1
       })
-    })
-    var total = 0
-    Issues.find({
-      projectId: this.params.id,
-      hosts: {
-        $elemMatch: {ipv4: ipv4}
-      }
-    }).fetch().forEach(function (i) {
-      total += i.hosts.length
     })
 
     return {
