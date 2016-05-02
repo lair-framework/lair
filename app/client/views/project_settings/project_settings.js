@@ -24,6 +24,7 @@ Template.projectSettings.events({
   },
   'submit form#export': function (event, tpl) {
     event.preventDefault()
+    $('#export-button').val('Export in progress...').prop('disabled', true)
     var projectId = this.projectId
     var url = tpl.find('[name=url]').value
     var username = tpl.find('[name=username]').value
@@ -38,6 +39,7 @@ Template.projectSettings.events({
           strong: 'Error',
           message: 'Export Failed'
         })
+        $('#export-button').val('submit').prop('disabled', false)
         return
       }
       Alerts.insert({
@@ -45,6 +47,7 @@ Template.projectSettings.events({
         strong: 'Success',
         message: 'Export Complete'
       })
+      $('#export-button').val('submit').prop('disabled', false)
       return
     })
   },
