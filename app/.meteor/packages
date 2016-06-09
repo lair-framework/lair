@@ -18,7 +18,6 @@ pfafman:filesaver
 http
 d4nyll:epic
 percolate:momentum
-standard-minifiers
 meteor-base
 mobile-experience
 mongo
@@ -32,3 +31,5 @@ ejson
 spacebars
 check
 sergeyt:typeahead
+standard-minifier-css
+standard-minifier-js
