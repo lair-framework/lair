@@ -109,7 +109,7 @@ function prepareExport (id) {
   project.issues = issues
   project.credentials = Credentials.find({projectId: id}).fetch()
   project.authInterfaces = AuthInterfaces.find({projectId: id}).fetch()
-  project.netblocks = Netblocks.find({projectid: id}).fetch()
+  project.netblocks = Netblocks.find({projectId: id}).fetch()
   return project
 }
 
