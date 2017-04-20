@@ -4,6 +4,12 @@ function escapeRegex (text) {
   return text.replace(/[-[\]{}()*+?.,\\^$|#\s]/g, '\\$&')
 }
 
+Template.serviceSearch.helpers({
+  services: function() {
+    return Services.find({}, { sort: { port: 1 } })
+  }
+})
+
 Template.serviceSearch.rendered = function () {
   $('#host-textarea').height($('#host-textarea')[0].scrollHeight)
 }
