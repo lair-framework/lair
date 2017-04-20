@@ -1,0 +1,8 @@
+{
+  "name": "lair",
+  "description": "Lair is a reactive attack collaboration framework and web application built with meteor",
+  "version": "2.5.0",
+  "dependencies": {
+    "babel-runtime": "6.23.0"
+  }
+}
