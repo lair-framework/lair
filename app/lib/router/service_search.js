@@ -43,18 +43,23 @@ Router.route('/projects/:id/services', {
     }
 
     services = _.uniq(services, function (i) {
-        return JSON.stringify({
-          port: i.port,
-          protocol: i.protocol,
-          service: i.service,
-          product: i.product
-        })
+      return JSON.stringify({
+        port: i.port,
+        protocol: i.protocol,
+        service: i.service,
+        product: i.product
+      })
     })
 
     return {
       projectId: this.params.id,
       projectName: project.name,
-      services: _.sortBy(services, 'port'),
+      services: _.chain(services)
+        .sortBy(function(s){
+          return s.product.toLowerCase()
+        })
+        .sortBy('port')
+        .value(),
       servicesWithHosts: servicesWithHosts,
       hosts: _.pluck(_.uniq(hosts.sort(IPUtils.sortLongAddr), function (i) {
         return i.ipv4
