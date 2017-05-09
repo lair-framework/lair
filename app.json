@@ -1,7 +1,7 @@
 {
   "name": "Lair",
   "description": "Lair is a reactive attack collaboration framework and web application built with meteor",
-  "repository": "git://github.com/ilyaglow/lair.git#heroku-button",
+  "repository": "git://github.com/lair-framework/lair.git",
   "logo": "https://node-js-sample.herokuapp.com/node.svg",
   "env": {
     "BUILDPACK_URL": "https://github.com/AdmitHub/meteor-buildpack-horse.git",
