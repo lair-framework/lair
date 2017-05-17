@@ -18,7 +18,7 @@ Router.route('/projects/:id/netblocks', {
     return {
       projectId: self.params.id,
       projectName: project.name,
-      netblocks: Netblocks.find({}).fetch(),
+      netblocks: Netblocks.find({}, {sort: {cidr: 1}}).fetch(),
       netblock: Netblocks.findOne({
         _id: Session.get('netblocksSelected')
       })

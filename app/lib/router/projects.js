@@ -16,7 +16,7 @@ Router.route('/projects', {
     ]
   },
   data: function () {
-    return Projects.find({}).fetch()
+    return Projects.find({}, {sort: {name: 1}}).fetch()
   }
 })
 
