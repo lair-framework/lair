@@ -2,6 +2,7 @@
 Meteor.methods({
   createService: createService,
   removeService: removeService,
+  removeServices: removeServices,
   disableServiceFlag: disableServiceFlag,
   enableServiceFlag: enableServiceFlag,
   setServiceStatus: setServiceStatus,
@@ -34,7 +35,7 @@ function createService (id, hostId, port, protocol, service, product) {
     hostId: hostId,
     port: port,
     protocol: protocol,
-    service: service,
+    service: service.toUpperCase(),
     product: product,
     lastModifiedBy: Meteor.user().emails[0].address
   })
@@ -80,6 +81,10 @@ function removeService (id, hostId, serviceId) {
     projectId: id,
     _id: serviceId
   })
+}
+
+function removeServices(id, query){
+
 }
 
 function setServiceStatus (id, serviceId, status) {

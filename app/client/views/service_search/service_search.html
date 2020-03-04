@@ -16,6 +16,13 @@
     </div>
     <div class="row">
       <div class="twelve columns">
+        {{#if searched}}
+          <button id="services-remove" class="button"><i class="fa fa-times-rectangle-o fa-wt"></i>Delete Visible Services</button>
+        {{/if}}
+      </div>
+    </div>
+    <div class="row">
+      <div class="twelve columns">
         {{#unless services}}
         {{#if searched}}
           <p>No services found.</p>

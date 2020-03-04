@@ -69,6 +69,21 @@ Template.serviceSearch.events({
     return Session.set('servicesViewQuery', null)
   },
 
+  'click #services-remove': function (event, tpl) {
+    var query = Session.get('servicesViewQuery');
+    Meteor.call('removeServices', this.projectId, query, function (err) {
+      if (err) {
+        Alerts.insert({
+          class: 'alert-error',
+          strong: 'Error',
+          message: err.reason
+        })
+        return
+      }
+      Router.go('/projects/' + self.projectId + '/services')
+    })
+  },
+
   'click .service-status': function () {
     var status = StatusMap[StatusMap.indexOf(this.status) + 1]
     if (StatusMap.indexOf(this.status) + 1 > 4) {
