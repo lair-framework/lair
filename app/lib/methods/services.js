@@ -3,6 +3,7 @@ Meteor.methods({
   createService: createService,
   removeService: removeService,
   removeServices: removeServices,
+  normalizeServices: normalizeServices,
   disableServiceFlag: disableServiceFlag,
   enableServiceFlag: enableServiceFlag,
   setServiceStatus: setServiceStatus,
@@ -84,7 +85,92 @@ function removeService (id, hostId, serviceId) {
 }
 
 function removeServices(id, query){
+  if (!AuthorizeChange(id, this.userId)) {
+    throw new Meteor.Error(403, 'Access Denied')
+  }
+  var results = Services.find(query);
+  results.forEach((result) => {
+    Services.remove({
+      projectId: result.projectId,
+      _id: result._id
+    }, {
+      $set: {
+        lastModifiedBy: Meteor.user().emails[0].address
+      }
+    })
+  });
 
+  return Services.find(query); 
+}
+
+function normalizeServices(id, query){
+  if (!AuthorizeChange(id, this.userId)) {
+    throw new Meteor.Error(403, 'Access Denied')
+  }
+  var normalizedServiceNames = {
+    22: 'SSH',
+    21: 'FTP',
+    23: 'TELNET',
+    25: 'SMTP',
+    53: 'DNS',
+    79: 'FINGER',
+    80: 'HTTP',
+    81: 'HTTP',
+    111: 'RPC',
+    123: 'NTP',
+    135: 'MS-RPC',
+    137: 'NETBIOS',
+    139: 'CIFS',
+    161: 'SNMP',
+    443: 'HTTPS',
+    445: 'CIFS',
+    500: 'ISAKMP',
+    1433: 'MS-SQL-TDS',
+    1434: 'MS-SQL-MONITOR',
+    2222: 'SSH',
+    2638: 'SYBASE',
+    3389: 'MS RDP',
+    4786: 'SMARTINSTALL',
+    5060: 'SIP',
+    5222: 'XMPPCLIENT',
+    7777: 'HTTP',
+    8000: 'HTTP',
+    8080: 'HTTP',
+    8081: 'HTTP',
+    8443: 'HTTPS',
+    9090: 'HTTP',
+    49316: 'MS-SQL-TDS'
+  }
+  var results = Services.find();
+  if (query) {
+    results = Services.find(query);
+  }
+
+  results.forEach((result) => {
+    var serviceName = result.service.toUpperCase();
+    var normalizedServiceName = normalizedServiceNames[result.port];
+    if (normalizedServiceName){
+      serviceName = normalizedServiceName;
+    }
+    if (serviceName ==='') {
+      serviceName = 'UNKNOWN'
+    }
+    serviceName = serviceName.replace('WWW','HTTP')
+    serviceName = serviceName.replace('HTTP-ALT','HTTP')
+    serviceName = serviceName.replace('HTTPS-ALT','HTTP')
+
+    Services.update({
+      projectId: result.projectId,
+      _id: result._id,
+    }, {
+      $set: {
+        service: serviceName,
+        lastModifiedBy: Meteor.user().emails[0].address
+      }
+    })
+  });
+
+  return Services.find(query); 
 }
 
 function setServiceStatus (id, serviceId, status) {

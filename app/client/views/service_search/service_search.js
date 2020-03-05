@@ -71,17 +71,12 @@ Template.serviceSearch.events({
 
   'click #services-remove': function (event, tpl) {
     var query = Session.get('servicesViewQuery');
-    Meteor.call('removeServices', this.projectId, query, function (err) {
-      if (err) {
-        Alerts.insert({
-          class: 'alert-error',
-          strong: 'Error',
-          message: err.reason
-        })
-        return
-      }
-      Router.go('/projects/' + self.projectId + '/services')
-    })
+    return Meteor.call('removeServices', this.projectId, query)
+  },
+
+  'click #services-normalize': function (event, tpl) {
+    var query = Session.get('servicesViewQuery');
+    return Meteor.call('normalizeServices', this.projectId, query)
   },
 
   'click .service-status': function () {
